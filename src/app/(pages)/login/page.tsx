@@ -1,6 +1,7 @@
 "use client"
+
 import { useState, FormEvent } from 'react';
-import { useAuth } from '@/api/AuthContext';
+import { useAuth } from '@/api/AuthContext'; // Mantenha o uso do AuthContext
 import { LogIn, ArrowLeft, User, Lock } from 'lucide-react';
 import footerBackground from '@/assets/footer-background.jpg';
 import logoClinicaBranca from '@/assets/logo-branca.png';
@@ -22,21 +23,26 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
-    
+
+    if (!username || !password) {
+      setError('Por favor, preencha todos os campos');
+      return;
+    }
+
     try {
-      if (login(username, password)) {
+      // Alterado para passar CPF e Senha para o login via AuthContext
+      if (await login(username, password)) {
         route.push('/dashboard');
       } else {
         setError('Credenciais inválidas');
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError('Erro ao fazer login. Tente novamente.');
     }
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center p-4 relative"
       style={{
         backgroundImage: `url(${footerBackground.src})`,
@@ -49,21 +55,34 @@ export default function Login() {
       <div className="w-full max-w-4xl flex rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-lg relative z-10  animate-fade">
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-900/80 to-blue-700/80 p-12 flex-col justify-between">
           <div className="flex flex-col gap-4">
-            <img src={logoClinicaBranca.src} className="w-full -mt-10" alt="Logo" />
-            <h1 className="text-4xl font-bold text-white text-center -mt-2">Portal de Resultados</h1>
+            <img
+              src={logoClinicaBranca.src}
+              className="w-full -mt-10"
+              alt="Logo"
+            />
+            <h1 className="text-4xl font-bold text-white text-center -mt-2">
+              Portal de Resultados
+            </h1>
             <p className="text-white/80 text-lg">
-              Acesse seus exames laboratoriais de forma rápida e segura. Resultados disponíveis 24 horas por dia, 7 dias por semana.
+              Acesse seus exames laboratoriais de forma rápida e segura.
+              Resultados disponíveis 24 horas por dia, 7 dias por semana.
             </p>
           </div>
-          
+
           <div className="space-y-4 text-white/80">
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur">
               <h3 className="font-semibold mb-2">Precisão e Qualidade</h3>
-              <p className="text-sm">Tecnologia avançada e profissionais especializados para garantir a precisão dos seus resultados.</p>
+              <p className="text-sm">
+                Tecnologia avançada e profissionais especializados para garantir
+                a precisão dos seus resultados.
+              </p>
             </div>
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur">
               <h3 className="font-semibold mb-2">Acesso Simplificado</h3>
-              <p className="text-sm">Visualize seus exames de forma prática e faça o download dos resultados quando precisar.</p>
+              <p className="text-sm">
+                Visualize seus exames de forma prática e faça o download dos
+                resultados quando precisar.
+              </p>
             </div>
           </div>
         </div>
@@ -71,7 +90,9 @@ export default function Login() {
         <div className="w-full lg:w-1/2 p-8 md:p-12 bg-white/20 ">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-2">Área do Paciente</h2>
-            <p className="text-blue-100">Digite suas credenciais para acessar seus exames</p>
+            <p className="text-blue-100">
+              Digite suas credenciais para acessar seus exames
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -130,7 +151,8 @@ export default function Login() {
 
           <div className="mt-6 text-center">
             <p className="text-white/80 text-sm">
-              Primeira vez acessando? Entre em contato com o laboratório para obter suas credenciais.
+              Primeira vez acessando? Entre em contato com o laboratório para
+              obter suas credenciais.
             </p>
           </div>
         </div>
