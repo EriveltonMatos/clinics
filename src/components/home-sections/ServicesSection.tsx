@@ -155,7 +155,7 @@ export default function ServicesSection() {
         p-5
         cursor-pointer 
         relative  
-        text-xl 
+        text-[2vh]
         md:text-[2vh]
         font-normal 
         border-0 

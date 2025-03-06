@@ -13,6 +13,7 @@ import UnitsSection from "@/components/home-sections/UnitsSection";
 import FooterSection from "@/components/home-sections/FooterSection";
 
 export default function Home() {
+  
   const links = [
     { href: "#", label: "Home" },
     { href: "#about", label: "Sobre Nós" },

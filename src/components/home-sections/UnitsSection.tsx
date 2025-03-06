@@ -4,6 +4,7 @@ import clinicaOdonto from "@/assets/unidades/clinica-odonto.jpg";
 import clinicaSaude from "@/assets/unidades/ces.jpeg";
 import clinicaPsicologia from "@/assets/unidades/clinica-psicologia.jpg";
 import clinicaFisioterapia from "@/assets/unidades/clinica-fisio.jpg";
+import clinicaFisioteraria2 from "@/assets/unidades/clinica-fisio.png";
 import unitsBackground from "@/assets/units-background.png";
 import clinicaCesiu from "@/assets/unidades/cesiu.jpeg";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -35,9 +36,15 @@ export default function UnitsSection() {
     },
     {
       src: clinicaFisioterapia.src,
-      alt: "Clínica Escola de Fisioterapia",
+      alt: "Clínica Escola de Fisioterapia - Campus Parque Ecológico",
       description: "Rua Vereador Paulo Mamede - Cocó, Fortaleza - CE,60192-350",
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede+-+Cocó,+Fortaleza+-+CE,+60192-350",
+    },
+    {
+      src: clinicaFisioteraria2.src,
+      alt: "Clínica Escola de Fisioterapia - Campus Campus Parquelândia",
+      description: "Rua uruguai, 11 - Bela vista - CEP: 60442-590",
+      url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Uruguai,11+-+Bela+Vista,+Fortaleza+-+CE,+60442-590",
     },
     {
       src: clinicaCesiu.src,
@@ -110,8 +117,8 @@ export default function UnitsSection() {
             Como Chegar
           </a>
         </div>
-        <h4 className="md:text-[2.2vh]  text-[1.8vh] font-bold mt-6 text-[#1F2B6C]">{image.alt}</h4>
-        <p className="md:text-[1.5vh] text-[1.5vh] p-5 whitespace-pre-line text-gray-700 flex">
+        <h4 className="md:text-[2.2vh]  text-[1.8vh] font-bold mt-6 text-[#1F2B6C] p-0.5">{image.alt}</h4>
+        <p className="md:text-[1.5vh] text-[1.5vh] p-5 whitespace-pre-line text-gray-700 flex justify-center gap-1">
         <FaLocationDot/>
           {image.description}
         </p>

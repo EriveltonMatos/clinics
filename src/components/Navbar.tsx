@@ -9,15 +9,16 @@ import ContactDialog from "./ContactDialog";
 export default function NavBar() {
   const [visibleContacts, setVisibleContacts] = useState(false);
   const [visibleWhatsapp, setVisibleWhatsapp] = useState(false);
-  //const [visibleEmails, setVisibleEmails] = useState(false);
+  const [visibleEmails, setVisibleEmails] = useState(false);
 
   const contacts = [
     { clinic: "Clínica Escola de Saúde e Imagem (CESIU)", phone: "3306-8232 e 3306-8933" },
     { clinic: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "3468-2500" },
     { clinic: "Clínica Escola de Odontologia", phone: "3265-8139"},
+    { clinic: "Clínica Escola de Atenção Primária (CEAP)", phone: "3214-8776"},
   ];
-  const whatsapp = [{ clinic: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "994015648" }];
-  //const emails = [{ clinic: "Clinica", phone: "(11) 1234-5678" }];
+  const whatsapp = [{ clinic: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "99401-5648" }];
+  const emails = [{ clinic: "Serviço Escola de Psicologia Aplicada (SEPA)", email: "secsepa@unichristus.edu.br" }];
 
   return (
     <div>
@@ -78,7 +79,7 @@ export default function NavBar() {
             <div className="flex space-x-10 ml-96 animate-fade-right">
               <div
                 className="flex items-center space-x-1 border rounded-xl p-2 bg-[#159EEC] group hover:scale-105 transition-all"
-                //onClick={() => setVisibleEmails(true)}
+                onClick={() => setVisibleEmails(true)}
               >
                 <MdOutlineEmail className="text-white text-xl group-hover:animate-wiggle-more" />
                 <div className="flex flex-col">
@@ -88,15 +89,15 @@ export default function NavBar() {
                 </div>
               </div>
             </div>
-            {/*<ContactDialog
+            <ContactDialog
               header="Emails das Clínicas"
               visible={visibleEmails}
               onHide={() => setVisibleEmails(false)}
               data={emails}
               fieldName="clinic"
-              fieldValue="phone"
-              contactLabel="Email:"
-            />*/}
+              fieldValue="email"
+              contactLabel="email:"
+             />
           </div>
         </div>
       </nav>

@@ -1,58 +1,55 @@
-"use client"
+"use client";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/api/AuthContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Lock, LogIn, User } from "lucide-react";
+import footerBackground from "@/assets/footer-background.jpg";
+import logoClinicaBranca from "@/assets/logo-branca.png";
 
-import { useState, FormEvent } from 'react';
-import { useAuth } from '@/api/AuthContext'; // Mantenha o uso do AuthContext
-import { LogIn, ArrowLeft, User, Lock } from 'lucide-react';
-import footerBackground from '@/assets/footer-background.jpg';
-import logoClinicaBranca from '@/assets/logo-branca.png';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+export default function LoginPage() {
+  const { login, user, loading, isAuthenticated } = useAuth();
+  const [cpf, setCpf] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string>("");
+  const router = useRouter();
 
-export default function Login() {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const { login, user } = useAuth();
-  const route = useRouter();
-
-  if (user) {
-    route.push('/dashboard');
-    return null;
-  }
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
-
-    if (!username || !password) {
-      setError('Por favor, preencha todos os campos');
-      return;
+  // Efeito para redirecionar usuário já autenticado
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      router.push("/dashboard");
     }
+  }, [loading, isAuthenticated, router]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    
     try {
-      // Alterado para passar CPF e Senha para o login via AuthContext
-      if (await login(username, password)) {
-        route.push('/dashboard');
-      } else {
-        setError('Credenciais inválidas');
-      }
+      await login(cpf, password);
+      // Após login bem-sucedido, o useEffect acima vai redirecionar
     } catch (err) {
-      setError('Erro ao fazer login. Tente novamente.');
+      setError(err instanceof Error ? err.message : "Erro ao fazer login");
     }
   };
+
+  // Se já estiver autenticado, não mostra nada enquanto redireciona
+  if (isAuthenticated) {
+    return null;
+  }
 
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 relative"
       style={{
         backgroundImage: `url(${footerBackground.src})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div className="absolute inset-0 bg-black/60" />
 
-      <div className="w-full max-w-4xl flex rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-lg relative z-10  animate-fade">
+      <div className="w-full max-w-4xl flex rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-lg relative z-10 animate-fade">
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-900/80 to-blue-700/80 p-12 flex-col justify-between">
           <div className="flex flex-col gap-4">
             <img
@@ -89,7 +86,9 @@ export default function Login() {
 
         <div className="w-full lg:w-1/2 p-8 md:p-12 bg-white/20 ">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">Área do Paciente</h2>
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Área do Paciente
+            </h2>
             <p className="text-blue-100">
               Digite suas credenciais para acessar seus exames
             </p>
@@ -108,8 +107,8 @@ export default function Login() {
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-300 w-5 h-5" />
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-10 py-3 text-white placeholder:text-blue-200/50 focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-all"
                   placeholder="Digite seu CPF ou código de acesso"
                 />

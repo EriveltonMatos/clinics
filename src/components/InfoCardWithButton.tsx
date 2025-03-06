@@ -1,4 +1,5 @@
 "use client"
+import { ExternalLink } from "lucide-react";
 import { Dialog } from "primereact/dialog";
 import { JSX, useState } from "react";
 
@@ -61,8 +62,8 @@ export default function InfoCardWithButton({
           >
             <div className="absolute inset-0 flex translate-y-[100%] items-center justify-center bg-white/10 transition-transform duration-300 group-hover:translate-y-[0%]"></div>
             <div className="relative flex items-center justify-center gap-2 text-white">
-              <i className="pi pi-external-link text-sm transition-transform duration-300 "></i>
-              <span className="font-medium md:text-[1.5vh]">Saiba Mais</span>
+            <ExternalLink size={18} className="transition-transform duration-300" />
+            <span className="font-medium md:text-[1.5vh]">Saiba Mais</span>
             </div>
           </button>
           <Dialog
