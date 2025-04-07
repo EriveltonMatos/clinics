@@ -10,6 +10,7 @@ import clinicaCesiu from "@/assets/unidades/cesiu.jpeg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { ScrollFromBottom } from "../ScrollComponent";
 import { FaLocationDot } from "react-icons/fa6";
+import Image from "next/image";
 
 export default function UnitsSection() {
   const images = [
@@ -53,13 +54,6 @@ export default function UnitsSection() {
         "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
       url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
     },
-    {
-      src: clinicaFisioterapia.src,
-      alt: "Clínica Escola de Atenção Primária (CEAP)",
-      description:
-        "R. Luís de Miranda, 536 - Benfica, Fortaleza - CE, 60015-330",
-      url: "https://www.google.com/maps/dir/?api=1&destination=R.+Lúis+de+Miranda,+536+-+Benfica,+Fortaleza+-+CE,+60015-330",
-    },
   ];
 
   const responsiveOptions: CarouselResponsiveOption[] = [
@@ -98,12 +92,14 @@ export default function UnitsSection() {
     className?: string;
   }) => {
     return (
-      <div className="rounded-xl m-7 text-center border-gray-300 shadow-2xl hover:shadow-3xl transition-shadow duration-300 max-h-screen border-2 border-b-blue-900 md:h-[65vh] ">
+      <div className="rounded-xl m-7 text-center border-gray-300 shadow-xl hover:shadow-3xl transition-shadow duration-300 max-h-screen border-2 border-b-blue-900 md:h-[65vh] ">
         <div className="shadow-xl overflow-hidden w-full rounded-t-xl">
-          <img
+          <Image
             src={image.src}
             alt={image.alt}
             className="w-full h-64 md:h-[40vh] shadow-lg rounded-t-xl transition-transform brightness-105 hover:brightness-90 duration-300 transform hover:scale-110 object-cover"
+            width={1000}
+            height={1000}
           />
         </div>
         <div className="rounded-lg md:h-[5vh] mt-3 flex justify-center items-center">

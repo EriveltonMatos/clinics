@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { JSX } from "react";
 
 export default function InfoCard({
@@ -34,10 +35,12 @@ export default function InfoCard({
               shadow-[20px_20px_20px_#0000008c_inset]
             "
           >
-            <img
+            <Image
               src={imageSrc}
               alt={title}
               className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-60"
+              width={1000}
+              height={1000}
             />
             <h2 className="relative flex justify-center text-white text-2xl w-48 font-bold py-2 rounded-md shadow-lg">
               {title}

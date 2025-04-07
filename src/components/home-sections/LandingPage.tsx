@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import carrossel1 from "@/assets/carrossel1.png";
+import Image from "next/image";
 //import { Link } from "react-router-dom";
 
 const slidesData = [
@@ -37,10 +38,12 @@ export default function LandingPage() {
             }}
          >*/}
           <div className="w-full md:h-screen md:w-screen flex justify-center items-center md:mt-16 mt-16 animate-fade">
-            <img
+            <Image
               src={slide.image.src}
               alt={slide.alt}
               className="w-full h-full object-center object-cover saturate-[1.5]"
+              height={5000}
+              width={5000}
             />
           </div>
           <div className="absolute inset-0 flex flex-col items-start pl-4 sm:pl-8 md:pl-20 lg:pl-72 justify-center tracking-widest">

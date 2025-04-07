@@ -43,6 +43,12 @@ body {
     animation: gradient 5s ease infinite;
 }
 
+.custom-carousel .p-carousel-indicators {
+  display: flex !important;
+  justify-content: center;
+  bottom: 10px; /* Ajuste conforme necessário */
+}
+
 .rgb-button2 {
   background: linear-gradient(45deg, #FF0000, #DB5B18, #FF0000);
   background-size: 600% 600%;

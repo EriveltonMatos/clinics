@@ -1,5 +1,6 @@
 import footerBackground from "@/assets/footer-background.jpg";
 import logoUnichristus from "@/assets/logo-unichristus.png";
+import Image from "next/image";
 import {
   FaFacebookF,
   FaTwitter,
@@ -22,15 +23,17 @@ export default function FooterSection() {
       <footer className="relative container mx-auto text-white p-12 h-auto rounded-lg z-10">
         {/* Centralizar logo */}
         <div className="flex justify-center items-center flex-col mb-8 -mt-20">
-          <img
+          <Image
             src={logoUnichristus.src}
             alt="Logo Unichristus"
             className="w-72 mb-4 object-cover filter drop-shadow-neon transition-transform duration-500 ease-in-out transform hover:scale-110"
+            width={1000}
+            height={1000}
           />
            <p className="text-sm opacity-80 text-center">
-              Unichristus © 2024. Todos os direitos reservados. 
+              Unichristus © 2025. Todos os direitos reservados. 
             </p>
-            <div className="flex justify-center mt-8 space-x-6">
+           {/* <div className="flex justify-center mt-8 space-x-6">
           <a href="#" className="hover:text-cyan-300 transition transform hover:scale-125">
             <FaFacebookF />
           </a>
@@ -45,6 +48,7 @@ export default function FooterSection() {
           </a>
         </div>
         </div>
+        *
 
         <div className="grid grid-cols-2 md:grid-cols-3 place-items-center text-center md:text-left">
           <div className="flex flex-col md:mt-0">
@@ -78,7 +82,7 @@ export default function FooterSection() {
             </ul>
           </div>
 
-          {/* Serviços */}
+          
           <div className="flex flex-col">
             <h3 className="md:text-2xl text-xl font-bold mb-4 text-gradient">Serviços</h3>
             <ul className="space-y-2 md:text-lg text-sm">

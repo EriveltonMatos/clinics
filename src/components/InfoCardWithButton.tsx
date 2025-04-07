@@ -1,5 +1,6 @@
 "use client"
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import { Dialog } from "primereact/dialog";
 import { JSX, useState } from "react";
 
@@ -47,10 +48,12 @@ export default function InfoCardWithButton({
             gap-4
           "
         >
-          <img
+          <Image
             src={imageSrc}
             alt={title}
             className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-60"
+            width={1000}
+            height={1000}
           />
           <h2 className="relative flex justify-center text-white text-2xl md:text-[3vh] w-48 font-bold py-2 rounded-md">
             {title}
@@ -81,10 +84,12 @@ export default function InfoCardWithButton({
               </h1>
               <p className="text-white text-sm md:text-lg leading-relaxed bg-black bg-opacity-30 p-4 mx-auto rounded-lg shadow-md flex justify-center items-center gap-8 max-lg:flex-col">
                 {description}
-                <img
+                <Image
                   src={imageCard}
                   alt={title}
                   className="object-cover rounded-lg border w-64 h-64 mx-auto"
+                  width={1000}
+                  height={1000}
                 />
               </p>
             </div>

@@ -11,6 +11,7 @@ import ExamSection from "@/components/home-sections/ExamSection";
 import ServicesSection from "@/components/home-sections/ServicesSection";
 import UnitsSection from "@/components/home-sections/UnitsSection";
 import FooterSection from "@/components/home-sections/FooterSection";
+import ButtonContact from "@/components/ButtonContact";
 
 export default function Home() {
   
@@ -37,7 +38,8 @@ export default function Home() {
         <NavBar />
         <SecondNavbar links={links} logoSrc={unichristusNavbar.src} />
         <MobileNav links={mobLinks} />
-        <IconPhone />
+        {/*<IconPhone />*/}
+        <ButtonContact />
         <LandingPage />
         <AboutSection />
         <ScheduleSection />

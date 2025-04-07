@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import unichristusNavbar from "../assets/u-unichristus.png";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SecondNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,10 +35,12 @@ export default function SecondNavbar() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src={unichristusNavbar.src}
             alt="U em cor branca"
             className="w-11 h-11 hover:animate-jump"
+            width={1000}
+            height={1000}
           />
         </a>
       </div>

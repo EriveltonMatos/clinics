@@ -22,18 +22,10 @@ import {
   FileText,
   FlaskConical,
   Microscope,
+  Layers,
 } from "lucide-react";
+import { RequisitionTest, Requisition, GroupedTests } from '@/types/types';
 
-interface Requisition {
-  id: string;
-  date: string;
-  doctorName: string;
-  requisitionTests: {
-    id: string;
-    test: { description: string; abbreviation: string };
-    testStatus: string;
-  }[];
-}
 
 export default function Dashboard() {
   const { user, logout, loading } = useAuth();
@@ -92,6 +84,23 @@ export default function Dashboard() {
       });
     });
     return count;
+  };
+
+  // Função para agrupar os testes por grouping
+  const groupTestsByGrouping = (tests: RequisitionTest[]): GroupedTests => {
+    const grouped: GroupedTests = {};
+    
+    tests.forEach((test) => {
+      const groupName = test.test.grouping || "Sem Grupo"; // Caso não tenha grupo
+      
+      if (!grouped[groupName]) {
+        grouped[groupName] = [];
+      }
+      
+      grouped[groupName].push(test);
+    });
+    
+    return grouped;
   };
 
   // Se ainda estiver carregando, mostra um indicador
@@ -198,36 +207,65 @@ export default function Dashboard() {
                                   <FlaskConical className="h-5 w-5 mr-2 text-indigo-600" />
                                   Testes Solicitados:
                                 </h4>
-                                <ul className="space-y-3">
-                                  {req.requisitionTests.map((test) => (
-                                    <li
-                                      key={test.id}
-                                      className="flex flex-col md:flex-row md:items-center justify-between bg-white p-3 rounded-lg border-l-4 border-indigo-400"
+                                
+                                {/* Accordion aninhado para os grupos */}
+                                <Accordion type="multiple" className="space-y-3">
+                                  {Object.entries(groupTestsByGrouping(req.requisitionTests)).map(([groupName, tests]) => (
+                                    <AccordionItem 
+                                      key={`${req.id}-${groupName}`} 
+                                      value={`${req.id}-${groupName}`}
+                                      className="border border-indigo-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
                                     >
-                                        <div className="flex items-center gap-3 ">
-                                          <div className="bg-indigo-100 p-2 rounded-full">
-                                            <Microscope className="h-4 w-4 text-indigo-600" />
+                                      <AccordionTrigger className="hover:no-underline p-3 bg-indigo-50">
+                                        <div className="flex items-center flex-wrap gap-2 w-full md:w-auto">
+                                          <div className="bg-indigo-200 p-2 rounded-full mr-3">
+                                            <Layers className="h-4 w-4 text-indigo-600" />
                                           </div>
-                                          <div>
-                                            <span className="font-medium text-gray-800">
-                                              {test.test.description}
-                                            </span>
-                                            <span className="text-sm text-indigo-500 ml-2">
-                                              ({test.test.abbreviation})
-                                            </span>
-                                          </div>
-                                      </div>
-                                      <div className="flex flex-col md:flex-row md:items-center gap-2 mt-2 md:mt-0 p-2">
-                                        <p className="text-blue-700 ">
-                                          Status:
-                                        </p>
-                                        <TestStatusBadge
-                                          status={test.testStatus}
-                                        />
-                                      </div>
-                                    </li>
+                                          <span className="font-medium text-indigo-700">
+                                            {groupName}
+                                          </span>
+                                          <span className="ml-2 text-xs bg-indigo-100 text-indigo-600 py-1 px-2 rounded-full w-full md:w-auto mt-1 sm:mt-0">
+                                          {tests.length} {tests.length === 1 ? "teste" : "testes"}
+                                          </span>
+                                        </div>
+                                        
+                                      </AccordionTrigger>
+                                      <AccordionContent className="p-2">
+                                        <ul className="space-y-2">
+                                          {tests.map((test) => (
+                                            <li
+                                              key={test.id}
+                                              className="flex flex-col md:flex-row md:items-center justify-between bg-white p-3 rounded-lg border-l-4 border-indigo-400"
+                                            >
+                                              <div className="flex items-center gap-3">
+                                                <div className="bg-indigo-100 p-2 rounded-full">
+                                                  <Microscope className="h-4 w-4 text-indigo-600" />
+                                                </div>
+                                                <div>
+                                                  <span className="font-medium text-gray-800">
+                                                    {test.test.description}
+                                                  </span>
+                                                  <span className="text-sm text-indigo-500 ml-2">
+                                                    ({test.test.abbreviation})
+                                                  </span>
+                                                </div>
+                                              </div>
+                                              <div className="flex flex-col md:flex-row md:items-center gap-2 mt-2 md:mt-0 p-2">
+                                                <p className="text-blue-700">
+                                                  Status:
+                                                </p>
+                                                <TestStatusBadge
+                                                  status={test.testStatus}
+                                                />
+                                              </div>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </AccordionContent>
+                                    </AccordionItem>
                                   ))}
-                                </ul>
+                                </Accordion>
+                                
                                 {req.requisitionTests.some(
                                   (test) =>
                                     test.testStatus === TestStatus.CON ||

@@ -10,7 +10,7 @@ export default function ImagingClinicCard() {
         </h1>
   
         <p className="text-white text-sm md:text-lg leading-relaxed bg-black bg-opacity-30 p-4 rounded-lg shadow-md">
-          A <span className="text-[#159EEC]">Clínica Escola de Saúde Imagem (CESIU)</span> da Unichristus é um complexo
+          A <span className="text-[#159EEC]">Clínica Escola de Saúde e Imagem (CESIU)</span> da Unichristus é um complexo
           acadêmico equipado para os alunos e professores das diversas áreas da
           saúde desenvolverem e executarem as atividades de prevenção da saúde
           além de procedimentos radiológicos em vários níveis de complexidade. O

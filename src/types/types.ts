@@ -1,4 +1,30 @@
 // types.ts
+
+export interface Test {
+  id: string;
+  description: string;
+  abbreviation: string;
+  grouping?: string; // Adicionando o campo grouping que pode ser opcional
+}
+
+export interface RequisitionTest {
+  id: string;
+  test: Test;
+  testStatus: string;
+  collectionDate?: string | null;
+}
+
+export interface Requisition {
+  id: string;
+  date: string;
+  doctorName: string;
+  requisitionTests: RequisitionTest[];
+}
+
+// Interface para agrupar os testes
+export interface GroupedTests {
+  [key: string]: RequisitionTest[];
+}
 interface RG {
     id: string;
     number: string;
@@ -19,30 +45,8 @@ interface RG {
     maritalStatus: string;
   }
   
-  interface Test {
-    id: string;
-    description: string;
-    abbreviation: string;
-    specimenCollected: string;
-    grouping: string;
-    price: number | null;
-  }
   
-  interface RequisitionTest {
-    id: string;
-    test: Test;
-    testStatus: string;
-    collectionLocation: string | null;
-    collectionDate: string | null;
-  }
   
-  interface Requisition {
-    id: string;
-    date: string;
-    doctorName: string;
-    notes: string;
-    requisitionTests: RequisitionTest[];
-  }
   
   interface PatientData {
     patient: Patient;

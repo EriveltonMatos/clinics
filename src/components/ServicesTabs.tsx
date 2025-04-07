@@ -8,6 +8,7 @@ import BloodTab from "./tabs-components/BloodTab";
 import TreatmentTab from "./tabs-components/TreatmentTab";
 import WomanTab from "./tabs-components/WomanTab";
 import AttentionTab from "./tabs-components/AttentionTabs";
+import Image from "next/image";
 
 export default function ServicesTabs() {
   return (
@@ -17,17 +18,26 @@ export default function ServicesTabs() {
     >
       <TabsList className="flex flex-col text-base md:w-[40rem] mx-auto xl:mx-0 gap-6 mt-2">
         <TabsTrigger value="image" className="gap-3">
-          <img src={ressonanciaIcon.src} alt="" className="md:w-10 md:h-10 w-7 h-7" /> Exames de Imagem
+          <Image
+            src={ressonanciaIcon.src}
+            alt=""
+            className="md:w-10 md:h-10 w-7 h-7"
+            width={1000}
+            height={1000}
+          />{" "}
+          Exames de Imagem
         </TabsTrigger>
         <TabsTrigger value="blood" className="gap-3">
-          <MdBloodtype className="md:w-10 md:h-10 w-7 h-7 text-red-600" /> Exames de Sangue
+          <MdBloodtype className="md:w-10 md:h-10 w-7 h-7 text-red-600" />{" "}
+          Exames de Sangue
         </TabsTrigger>
         <TabsTrigger value="treatment" className="gap-3">
           <FaHandHoldingMedical className="md:w-10 md:h-10 w-7 h-7 text-emerald-500" />
           Consultas Médicas
         </TabsTrigger>
         <TabsTrigger value="woman" className="gap-3">
-          <AiOutlineWoman className="md:w-10 md:h-10 w-7 h-7 text-pink-500" /> Saúde da Mulher
+          <AiOutlineWoman className="md:w-10 md:h-10 w-7 h-7 text-pink-500" />{" "}
+          Saúde da Mulher
         </TabsTrigger>
         <TabsTrigger value="attention" className="gap-3">
           <FaHospitalUser className="w-14 h-12 text-amber-300 ml-10" />

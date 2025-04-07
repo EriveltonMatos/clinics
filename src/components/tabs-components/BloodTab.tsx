@@ -6,7 +6,7 @@ import hormonal from "@/assets/exams/blood/hormonal.png";
 import glicemia from "@/assets/exams/blood/glicemia.jpg";
 import colesterol from "@/assets/exams/blood/colesterol.jpg";
 import InfoCardWithButton from "../InfoCardWithButton";
-import HealthPrimaryClinicCard from "../service-cards/double-services-cards/HealthPrimaryClinic";
+import HealthClinicCard from "../service-cards/HealthClinicCard";
 
 
 export default function BloodTab() {
@@ -22,7 +22,7 @@ export default function BloodTab() {
             diagnosticar e monitorar diversas condições de saúde, como anemias, infecções, inflamações e
             distúrbios do sangue."
         imageCard={hemograma.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -33,7 +33,7 @@ export default function BloodTab() {
             utilizado principalmente para diagnosticar e monitorar condições relacionadas ao controle de
             açúcar no corpo, como o diabetes e a hipoglicemia."
         imageCard={glicemia.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -45,7 +45,7 @@ export default function BloodTab() {
             cardiovasculares, como infarto e derrames, que podem estar associadas a níveis elevados de
             colesterol e outras gorduras no sangue."
         imageCard={colesterol.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -57,7 +57,7 @@ export default function BloodTab() {
             detectar possíveis desequilíbrios hormonais, que podem afetar várias funções do corpo, como o
             crescimento, o metabolismo, a reprodução e o humor."
         imageCard={hormonal.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -68,7 +68,7 @@ export default function BloodTab() {
             possíveis problemas no trato urinário, rins e outras condições de saúde. Esse exame é amplamente
             utilizado para diagnosticar infecções urinárias, doenças renais, diabetes, entre outras condições."
         imageCard={urina.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -79,7 +79,7 @@ export default function BloodTab() {
             antibióticos. O objetivo é identificar quais medicamentos são eficazes no combate a uma infecção
             específica causada por uma bactéria."
         imageCard={antibiograma.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
 
       <InfoCardWithButton
@@ -91,7 +91,7 @@ export default function BloodTab() {
             fundamental para diagnosticar infecções parasitárias, que podem causar sintomas como diarreia,
             dor abdominal, náuseas e perda de peso."
         imageCard={fezes.src}
-        additionalContent={<HealthPrimaryClinicCard />}
+        additionalContent={<HealthClinicCard />}
       />
     </div>
   </div>

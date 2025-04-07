@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface Link {
@@ -66,10 +67,12 @@ export default function SecondNavbar({ links, logoSrc }: SecondNavbarProps) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src={logoSrc}
             alt="U em cor branca"
             className="w-[5vh] hover:animate-jump"
+            width={1000}
+            height={1000}
           />
         </a>
       </div>

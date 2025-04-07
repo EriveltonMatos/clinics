@@ -17,6 +17,7 @@ import FooterSection from '@/components/home-sections/FooterSection';
 import MobileNav from '@/components/MobileNav';
 import NavbarReturn from "@/components/NavbarReturn";
 import { FaArrowLeft } from 'react-icons/fa';
+import Image from 'next/image';
 
 
 
@@ -64,10 +65,12 @@ const EventPage = () => {
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardContent className="p-0">
-              <img
+              <Image
                 src={eventData.image.carrossel1.src}
                 alt={eventData.title}
                 className="w-full h-[200px] sm:h-[300px] md:h-[400px] object-cover rounded-t-lg"
+                height={1000}
+                width={1000}
               />
               <div className="p-6">
                 <div className="flex flex-wrap gap-2 mb-4">

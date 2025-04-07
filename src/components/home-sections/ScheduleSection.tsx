@@ -4,6 +4,7 @@ import scheduleImage3 from "@/assets/schedule-image-3.jpg";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { ScrollFromLeft } from "../ScrollComponent";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ScheduleSection() {
   return (
@@ -46,10 +47,12 @@ export default function ScheduleSection() {
 
         <div className="absolute z-10 left-1 md:top-9 md:ml-6 top-1 shadow-xl transition-transform hover:rotate-3 hover:scale-110 duration-500 ease-in-out hidden md:block">
           <ScrollFromLeft>
-            <img
+            <Image
               src={scheduleImage.src}
               alt="Consulta"
               className="object-cover md:h-80 md:w-80 h-40 w-40 rounded-lg border border-[#00FFFF]"
+              height={1000}
+              width={1000}
             />
           </ScrollFromLeft>
         </div>
@@ -57,10 +60,12 @@ export default function ScheduleSection() {
         <div className="absolute z-10 md:left-96 md:top-9 md:ml-6 top-1 shadow-xl transition-transform hover:rotate-3 hover:scale-110 duration-500 ease-in-out hidden md:block">
         <ScrollFromLeft>
         
-            <img
+            <Image
               src={scheduleImage2.src}
               alt="Consulta"
               className="object-cover md:h-80 md:w-80 h-40 w-40 rounded-lg border border-[#00FFFF]"
+              height={1000}
+              width={1000}
             />
           </ScrollFromLeft>
           </div>
@@ -68,10 +73,12 @@ export default function ScheduleSection() {
         <div className="absolute z-10 md:left-44 left-28 md:bottom-9 bottom-1 md:mx-auto md:ml-6 shadow-xl transition-transform hover:rotate-3 hover:scale-110 duration-500 ease-in-out hidden md:block">
         <ScrollFromLeft>
 
-            <img
+            <Image
               src={scheduleImage3.src}
               alt="Consulta"
               className="object-cover md:h-80 md:w-80 h-40 w-40 rounded-lg border border-[#00FFFF]"
+              height={1000}
+              width={1000}
             />
           </ScrollFromLeft>
           </div>

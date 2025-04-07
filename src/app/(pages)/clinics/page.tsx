@@ -11,7 +11,7 @@ import { ScrollFromBottom } from "@/components/ScrollComponent";
 import NavBar from "@/components/Navbar";
 import ClinicComponent from "@/components/ClinicComponent";
 import FooterSection from "@/components/home-sections/FooterSection";
-import IconPhone from "@/components/IconPhone";
+import Image from "next/image";
 
 export default function Clinics() {
   return (
@@ -26,14 +26,15 @@ export default function Clinics() {
         />
       </div>
 
-      <div
-        className="relative w-full bg-blue-100 border-t-2 border-sky-50 mt-16 md:mt-0 animate-fade"
-        style={{
-          backgroundImage: `url(${unichristusAldeota.src})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+      <div className="relative w-full mt-16 md:mt-0 animate-fade">
+        <Image
+          src={unichristusAldeota.src}
+          alt="Unichristus Aldeota"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          className="z-0"
+        />
         <div className="absolute inset-0 bg-black bg-opacity-65"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-blue-900/70"></div>
 
@@ -267,16 +268,14 @@ export default function Clinics() {
             imageSrc={clinicaPsicologia.src}
             title="LEAC - Laboratório Escola de Análises Clínicas"
             description={[
-              "Com uma estrutura pedagógica inovadora, desde 2016, o LEAC atua como um importante suporte aos serviços de saúde da Clínica Escola de Saúde (CES), da Clínica Escola de Atenção Primária (CEAP) e da Clínica Escola de Odontologia (CEO). Através da realização de exames laboratoriais gratuitos, contribui para o diagnóstico de pacientes que buscam atendimento nessas unidades.",
+              "Com uma estrutura pedagógica inovadora, desde 2016, o LEAC atua como um importante suporte aos serviços de saúde da Clínica Escola de Saúde (CES) e da Clínica Escola de Odontologia (CEO). Através da realização de exames laboratoriais gratuitos, contribui para o diagnóstico de pacientes que buscam atendimento nessas unidades.",
             ]}
             address={[
-              "O agendamento para coleta deve ser feito diretamente em cada clínica onde ocorrem os atendimentos:",
-              "Clínica Escola de Atenção Primária (CEAP) / Telefone: 3214-8776 / Endereço: Rua Luís de Miranda, 536 - Benfica.",
+              "O agendamento para coleta deve ser feito diretamente na clínica onde ocorre os atendimentos:",
               "Clínica Escola de Saúde e Imagem Unichristus (CESIU) / Telefones: 3306-8932 / 3306-8933 / Endereço: Rua Vicente Linhares, 308 - Aldeota.",
             ]}
-            services={["Inclui os serviços das clínicas: (CEAP) e (CESIU)"]}
+            services={["Inclui os serviços da clínica (CESIU)"]}
             buttonLink={[
-              "https://www.google.com/maps/dir/?api=1&destination=R.+Lúis+de+Miranda,+536+-+Benfica,+Fortaleza+-+CE,+60015-330",
               "https://www.google.com/maps/dir/?api=1&destination=Av.+Des.+Moreira,+2120+-+Aldeota,+Fortaleza+-+CE,+60170-002",
             ]}
             reverse={true}
@@ -285,7 +284,6 @@ export default function Clinics() {
       </section>
       <div>
         <FooterSection />
-        <IconPhone />
       </div>
     </>
   );

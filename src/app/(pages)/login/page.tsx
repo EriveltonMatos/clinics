@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Lock, LogIn, User } from "lucide-react";
 import footerBackground from "@/assets/footer-background.jpg";
 import logoClinicaBranca from "@/assets/logo-branca.png";
+import Image from "next/image";
 
 export default function LoginPage() {
   const { login, user, loading, isAuthenticated } = useAuth();
@@ -52,10 +53,12 @@ export default function LoginPage() {
       <div className="w-full max-w-4xl flex rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-lg relative z-10 animate-fade">
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-900/80 to-blue-700/80 p-12 flex-col justify-between">
           <div className="flex flex-col gap-4">
-            <img
+            <Image
               src={logoClinicaBranca.src}
               className="w-full -mt-10"
               alt="Logo"
+              width={1000}
+              height={1000}
             />
             <h1 className="text-4xl font-bold text-white text-center -mt-2">
               Portal de Resultados

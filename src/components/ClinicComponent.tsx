@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ClinicComponentProps {
   imageSrc: string;
   title: string;
@@ -33,10 +35,12 @@ export default function ClinicComponent({
         }`}
       >
         <div className="lg:w-1/2 p-4">
-          <img
+          <Image
             src={imageSrc}
             alt={title}
             className="w-full h-full object-cover rounded-xl transition-transform transform hover:scale-105"
+            height={1000}
+            width={1000}
           />
         </div>
 
