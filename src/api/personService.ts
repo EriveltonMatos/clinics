@@ -155,13 +155,13 @@ export const createResumedPatient = async (patientData: {
  * @returns Promise que resolve para true se existe agendamento, false caso contrário
  */
 export const checkExistingAppointment = async (
-  patientId: string,
+  patient: string,
   specialtyId: string,
   date: string
 ): Promise<boolean> => {
   try {
     const queryParams = new URLSearchParams({
-      patientId,
+      patient,
       specialtyId,
       initialDate: date
     });
@@ -180,9 +180,19 @@ export const checkExistingAppointment = async (
       throw new Error(`Erro na requisição: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log("Resposta da verificação de agendamento:", data);
+    
+    // Verifica se a resposta contém elementos (agendamentos)
+    if (data && data.content && Array.isArray(data.content)) {
+      return data.content.length > 0;
+    }
+    
+    // Se não conseguir determinar, retorna false por segurança
+    return false;
   } catch (error) {
     console.error('Erro ao verificar agendamento existente:', error);
-    throw error;
+    // Em caso de erro, retornar false por segurança
+    return false;
   }
 };
