@@ -31,12 +31,14 @@ export const checkCpfExists = async (cpf: string): Promise<boolean> => {
 
 /**
  * Busca os dados detalhados de uma pessoa pelo CPF usando o endpoint de health-service
+ * e extrai o ID correto do patient
  * @param cpf - CPF da pessoa (apenas números, sem formatação)
- * @returns Promise com os dados detalhados da pessoa
+ * @returns Promise com os dados detalhados da pessoa e ID do patient
  */
 export const getDetailedPersonByCpf = async (cpf: string) => {
   try {
-    const response = await fetch(`${HEALTH_API_BASE_URL}/persons/cpf/${cpf}`, {
+    console.log(`Buscando dados detalhados para o CPF: ${cpf}`);
+    const response = await fetch(`${HEALTH_API_BASE_URL}/patient/cpf/${cpf}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -47,12 +49,23 @@ export const getDetailedPersonByCpf = async (cpf: string) => {
       throw new Error(`Erro na requisição: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('Resposta completa da API:', JSON.stringify(data, null, 2));
+    
+    // Log específico para identificar o ID do patient
+    if (data.patient && data.patient.id) {
+      console.log('ID do Patient encontrado:', data.patient.id);
+    } else {
+      console.warn('ID do Patient não encontrado na resposta!');
+    }
+    
+    return data;
   } catch (error) {
     console.error('Erro ao buscar dados detalhados da pessoa:', error);
     throw error;
   }
 };
+
 
 /**
  * Busca os dados de uma pessoa pelo CPF
@@ -148,48 +161,64 @@ export const createResumedPatient = async (patientData: {
 
 
 /**
- * Verifica se já existe agendamento para o paciente na especialidade e data especificadas
- * @param patientId - ID do paciente
+ * Verifica se já existe agendamento para o paciente na especialidade e data especificada ou futura
+ * @param patientId - ID do paciente (patient.id, não person.id)
  * @param specialtyId - ID da especialidade
- * @param date - Data do agendamento no formato YYYY-MM-DD
+ * @param date - Data inicial para verificar agendamentos no formato YYYY-MM-DD
  * @returns Promise que resolve para true se existe agendamento, false caso contrário
  */
 export const checkExistingAppointment = async (
-  patient: string,
-  specialtyId: string,
+  patientId: string,
+  specialtyType: string,
   date: string
 ): Promise<boolean> => {
   try {
+    console.log('Verificando agendamentos existentes com os parâmetros:');
+    console.log('- ID do Patient:', patientId);
+    console.log('- ID da Especialidade:', specialtyType);
+    console.log('- Data Inicial:', date);
+    
     const queryParams = new URLSearchParams({
-      patient,
-      specialtyId,
+      patient: patientId,
+      specialtyType: specialtyType,
       initialDate: date
     });
     
-    const response = await fetch(
-      `${HEALTH_API_BASE_URL}/appointment?${queryParams.toString()}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const url = `${HEALTH_API_BASE_URL}/appointment?${queryParams.toString()}`;
+    console.log('URL da requisição:', url);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     if (!response.ok) {
+      console.error(`Erro na requisição: ${response.status}`);
       throw new Error(`Erro na requisição: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("Resposta da verificação de agendamento:", data);
+    console.log("Resposta completa da verificação de agendamento:", JSON.stringify(data, null, 2));
     
     // Verifica se a resposta contém elementos (agendamentos)
-    if (data && data.content && Array.isArray(data.content)) {
-      return data.content.length > 0;
+    const hasAppointments = data && data.content && Array.isArray(data.content) && data.content.length > 0;
+    console.log("Existem agendamentos?", hasAppointments);
+    
+    if (hasAppointments) {
+      console.log("Detalhes dos agendamentos encontrados:");
+      data.content.forEach((appointment: any, index: number) => {
+        console.log(`Agendamento ${index + 1}:`, {
+          id: appointment.id,
+          date: appointment.date,
+          specialty: appointment.specialty?.description || 'N/A',
+          status: appointment.status
+        });
+      });
     }
     
-    // Se não conseguir determinar, retorna false por segurança
-    return false;
+    return hasAppointments;
   } catch (error) {
     console.error('Erro ao verificar agendamento existente:', error);
     // Em caso de erro, retornar false por segurança

@@ -14,7 +14,7 @@ export default function PhysiotherapyClinicCard() {
           acadêmico equipado para os alunos e professores da área de Odontologia
           desenvolverem e executarem as atividades de prevenção da saúde além de
           procedimentos odontológicos em vários níveis de complexidade.
-          O espaço conta com mais de 100 equipes odontológicas, permitindo, em média, o atendimento de 140 pacientes/dia e mais de 2.800/mês. O CEO é utilizado tanto nos cursos da graduação 
+          O espaço reúne uma estrutura odontológica completa e altamente especializada, permitindo, em média, o atendimento de 140 pacientes/dia e mais de 2.800/mês. O CEO é utilizado tanto nos cursos da graduação 
           como de pós-graduação e dispõe de atendimento clínico gratuito e aberto à comunidade.
         </p>
       </div>

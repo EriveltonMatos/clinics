@@ -13,8 +13,8 @@ export default function ImagingClinicCard() {
           A <span className="text-[#159EEC]">Clínica Escola de Saúde e Imagem (CESIU)</span> da Unichristus é um complexo
           acadêmico equipado para os alunos e professores das diversas áreas da
           saúde desenvolverem e executarem as atividades de prevenção da saúde
-          além de procedimentos radiológicos em vários níveis de complexidade. O
-          espaço conta com mais de 100 equipes radiológicas, permitindo, em média,
+          além de procedimentos radiológicos em vários níveis de complexidade. 
+          O espaço reúne uma estrutura odontológica completa e altamente especializada, permitindo, em média,
           o atendimento de 140 pacientes/dia e mais de 2.800/mês. A CESIU é
           utilizada tanto nos cursos da graduação, como de pós-graduação e dispõe
           de atendimento à comunidade.
