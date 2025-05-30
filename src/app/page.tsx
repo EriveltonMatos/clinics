@@ -38,7 +38,6 @@ export default function Home() {
         <NavBar />
         <SecondNavbar links={links} logoSrc={unichristusNavbar.src} />
         <MobileNav links={mobLinks} />
-        {/*<IconPhone />*/}
         <ButtonContact />
         <LandingPage />
         <AboutSection />

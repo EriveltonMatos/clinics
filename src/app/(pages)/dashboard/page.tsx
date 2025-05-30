@@ -23,9 +23,9 @@ import {
   FlaskConical,
   Microscope,
   Layers,
+  Clock,
 } from "lucide-react";
 import { RequisitionTest, Requisition, GroupedTests } from '@/types/types';
-
 
 export default function Dashboard() {
   const { user, logout, loading } = useAuth();
@@ -33,6 +33,16 @@ export default function Dashboard() {
   const router = useRouter();
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const API_LAB_REPORT_PATH = process.env.NEXT_PUBLIC_API_LAB_REPORT_PATH;
+
+  const calculateEstimatedDate = (requisitionDate: string, estimatedDays: number): string => {
+    const reqDate = new Date(requisitionDate);
+    const estimatedDate = new Date(reqDate.getTime() + (estimatedDays * 24 * 60 * 60 *1000)); 
+    return estimatedDate.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
 
   useEffect(() => {
     // Aguarda o carregamento do contexto de autenticação
@@ -65,7 +75,6 @@ export default function Dashboard() {
           console.error("Erro ao buscar exames:", error);
         }
       };
-  
       fetchRequisitions();
     }
   }, [user, loading, router]);
@@ -232,34 +241,44 @@ export default function Dashboard() {
                                       </AccordionTrigger>
                                       <AccordionContent className="p-2">
                                         <ul className="space-y-2">
-                                          {tests.map((test) => (
-                                            <li
-                                              key={test.id}
-                                              className="flex flex-col md:flex-row md:items-center justify-between bg-white p-3 rounded-lg border-l-4 border-indigo-400"
-                                            >
-                                              <div className="flex items-center gap-3">
-                                                <div className="bg-indigo-100 p-2 rounded-full">
-                                                  <Microscope className="h-4 w-4 text-indigo-600" />
-                                                </div>
-                                                <div>
-                                                  <span className="font-medium text-gray-800">
-                                                    {test.test.description}
-                                                  </span>
-                                                  <span className="text-sm text-indigo-500 ml-2">
-                                                    ({test.test.abbreviation})
-                                                  </span>
-                                                </div>
-                                              </div>
-                                              <div className="flex flex-col md:flex-row md:items-center gap-2 mt-2 md:mt-0 p-2">
-                                                <p className="text-blue-700">
-                                                  Status:
-                                                </p>
-                                                <TestStatusBadge
-                                                  status={test.testStatus}
-                                                />
-                                              </div>
-                                            </li>
-                                          ))}
+                                          {tests.map((test) => {
+                                            const estimatedDays = test.test.estimated || 0;
+                                            const estimatedDate = estimatedDays > 0 ? calculateEstimatedDate(req.date, estimatedDays) : null;
+                                            return (
+                                              <li
+                                                key={test.id}
+                                                className="flex flex-col md:flex-row md:items-center justify-between bg-white p-3 rounded-lg border-l-4 border-indigo-400">
+                                                  <div className="flex items-center gap-3">
+                                                    <div className="bg-indigo-100 p-2 rounded-full">
+                                                      <Microscope className="h-4 w-4 text-indigo-600"/>
+                                                    </div>
+                                                    <div>
+                                                      <span className="font-medium text-gray-800">
+                                                        {test.test.description}
+                                                      </span>
+                                                      <span className="text-sm text-indigo-500 ml-2">
+                                                        ({test.test.abbreviation})
+                                                      </span>
+                                                    </div>
+                                                  </div>
+                                                  <div className="flex flex-col gap-2 mt-2 md:mt-0 p-2">
+                                                    <div className="flex items-center gap-2">
+                                                      <p className="text-blue-700 text-sm">Status:</p>
+                                                      <TestStatusBadge status={test.testStatus} />
+                                                    </div>
+
+                                                    {estimatedDate && test.testStatus != TestStatus.CON && test.testStatus !== TestStatus.DEL && (
+                                                      <div className="flex items-center gap-2">
+                                                        <Clock className="h-4 w-4 text-blue-600" />
+                                                        <p className="text-sm text-blue-700">
+                                                          Previsão: {estimatedDate}
+                                                        </p>
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                </li>
+                                            );
+                                          })}
                                         </ul>
                                       </AccordionContent>
                                     </AccordionItem>

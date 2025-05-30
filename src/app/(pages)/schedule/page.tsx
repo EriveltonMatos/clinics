@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import footerBackground from "@/assets/footer-background.jpg";
+import logoUnichristus from "@/assets/u-unichristus-blue.png";
 import MobileNav from "@/components/MobileNav";
 import { FaArrowLeft, FaPaperPlane } from "react-icons/fa";
 import {
@@ -8,7 +9,6 @@ import {
   createResumedPatient,
   getPersonByCpf,
   getDetailedPersonByCpf,
-  getSpecialties,
   checkExistingAppointment,
   getCancellationReasons,
   cancelAppointment,
@@ -16,20 +16,41 @@ import {
   transferAppointment,
   checkAvailability,
   addToWaitingQueue,
-} from "@/api/personService";
+  getFacilitys,
+  scheduleAppointment,
+} from "@/api/appointmentService";
+import { Specialty, Facility, DetailedPerson, Message} from "@/types/types"; 
+import AppointmentCalendar from "@/components/schedule-components/AppointmentCalendar";
+import Image from "next/image";
 
+const animationStyles = `
+  @keyframes slideInFromRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideInFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  .message-bot { animation: slideInFromLeft 0.3s ease-out; }
+  .message-user { animation: slideInFromRight 0.3s ease-out; }
+`;
 
 export default function Schedule() {
   const [cpf, setCpf] = useState("");
   const [nome, setNome] = useState("");
   const [dataNas, setDataNas] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [especialidade, setEspecialidade] = useState("");
-  const [specialties, setSpecialties] = useState<Specialty[]>([]);
+  const [facilityId, setFacilityId] = useState(""); 
+  const [facilitys, setFacilitys] = useState<Facility[]>([]);
   const [currentStep, setCurrentStep] = useState("welcome");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loadingSpecialties, setLoadingSpecialties] = useState(false);
+  const [loadingFacilitys, setLoadingFacilitys] = useState(false); 
+  const [specialties, setSpecialties] = useState<Specialty[]>([]);
+  const [selectedSpecialtyTypeId, setSelectedSpecialtyTypeId] = useState<string>("");
   const [cadastroExistente, setCadastroExistente] = useState(false);
   const [detailedPersonData, setDetailedPersonData] = useState<DetailedPerson | null>(null);
   const [patientId, setPatientId] = useState<string>("");
@@ -46,92 +67,24 @@ export default function Schedule() {
   const [newAppointmentId, setNewAppointmentId] = useState<string>("");
   const [isRescheduling, setIsRescheduling] = useState<boolean>(false);
 
-  // Interface para representar o tipo de especialidade
-interface SpecialtyType {
-  id: string;
-  description: string;
-}
-
-// Interface para representar uma especialidade
-interface Specialty {
-  id: string;
-  description: string;
-  specialtyType: SpecialtyType;
-  minimumAge: number;
-  maximumAge: number;
-  hasWaitingList: boolean;
-  usesElectronicPrescription: boolean;
-  disabled: boolean;
-}
-
-// Interface para representar o formato do contato
-interface Contact {
-  id: string;
-  value: string;
-  contactType: {
-    id: string;
-    description: string;
-  };
-}
-
-// Interface para representar os dados detalhados da pessoa
-interface DetailedPerson {
-  person: {
-    id: string;
-    fullname: string;
-    cpf: string;
-    birthDate: string;
-  };
-  patient: {
-    id: string;
-    person: string;
-    preferredName: string | null;
-    usePreferredName: boolean;
-  };
-  contact: Contact[];
-}
-
-// Interface para mensagens do chat
-interface Message {
-  id: number;
-  text: string;
-  sender: "bot" | "user";
-  options?: { value: string; label: string }[];
-  input?: {
-    type: string;
-    placeholder: string;
-    maxLength?: number;
-    value: string;
-    onChange: (value: string) => void;
-    validator?: (value: string) => boolean;
-    errorMessage?: string;
-  };
-  timestamp: Date;
-}
-
-
-
-  // Efeito inicial para carregar especialidades e mensagens de boas-vindas
   useEffect(() => {
-    // Carregar especialidades
-    const fetchSpecialties = async () => {
+    const fetchFacilitys = async () => {
       try {
-        setLoadingSpecialties(true);
-        const data = await getSpecialties();
-        // Filtrando apenas especialidades não desativadas
-        const activeSpecialties = data.filter(
-          (specialty: Specialty) => !specialty.disabled
+        setLoadingFacilitys(true);
+        const data = await getFacilitys();
+        const activeFacilitys = data.filter(
+          (facility: Facility) => !facility.disabled
         );
-        setSpecialties(activeSpecialties);
+        setFacilitys(activeFacilitys);
       } catch (err) {
-        console.error("Erro ao carregar especialidades:", err);
-        addMessage("bot", "Não foi possível carregar nossas especialidades. Por favor, tente novamente mais tarde.");
+        console.error("Erro ao carregar clínicas:", err);
+        addMessage("bot", "Não foi possível carregar nossas clínicas. Por favor, tente novamente mais tarde.");
       } finally {
-        setLoadingSpecialties(false);
+        setLoadingFacilitys(false);
       }
     };
 
-    fetchSpecialties();
+    fetchFacilitys();
 
     const pedirCpf = () => {
       addMessage("bot", "Por favor, digite seu CPF (apenas números):", undefined, {
@@ -154,7 +107,6 @@ interface Message {
       });
     };
 
-    
     setTimeout(() => {
       addMessage("bot", "👋 Olá! Bem-vindo(a) ao sistema de agendamento das clínicas escola da Unichristus.");
     }, 500);
@@ -168,11 +120,12 @@ interface Message {
     }, 2500);
   }, []);
 
-  // Efeito para scroll automático quando novas mensagens são adicionadas
+  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Add message to chat
   const addMessage = (
     sender: "bot" | "user", 
     text: string, 
@@ -200,122 +153,109 @@ interface Message {
     ]);
   };
 
-// Função para formatar data (YYYY-MM-DD para DD/MM/YYYY)
-const formatDateForDisplay = (dateString: string) => {
-  if (!dateString) return "";
+  const formatDateForDisplay = (dateString: string) => {
+    if (!dateString) return "";
 
-  // Se a data já estiver no formato DD/MM/YYYY
-  if (dateString.includes("/")) return dateString;
+    if (dateString.includes("/")) return dateString;
 
-  // Converter de YYYY-MM-DD para DD/MM/YYYY para exibição
-  const parts = dateString.split("-");
-  if (parts.length === 3) {
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-  }
-
-  return dateString;
-};
-
-// Timestamp para as mensagens
-const formatTimestamp = (date: Date) => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-};
-
-// Função para processar o CPF
-const handleCpfSubmit = async (submittedCpf: string) => {
-  setError("");
-  
-  // Validação do CPF (11 dígitos)
-  const cpfRegex = /^\d{11}$/;
-  if (!cpfRegex.test(submittedCpf)) {
-    addMessage("bot", "Por favor, insira um CPF válido com 11 dígitos.");
-    return;
-  }
-  
-  addMessage("user", submittedCpf);
-  addMessage("bot", "Verificando seu CPF...");
-  setWaitingForResponse(true);
-  
-  try {
-    setCpf(submittedCpf);
-    setLoading(true);
-    // Chamada para o serviço para verificar se o CPF já está cadastrado
-    const exists = await checkCpfExists(submittedCpf);
-    setCadastroExistente(exists);
-    
-    if (exists) {
-      // Se o CPF existir, busca os dados detalhados da pessoa
-      try {
-        const detailedPersonData: DetailedPerson = await getDetailedPersonByCpf(submittedCpf);
-        
-        // Salvar os dados completos para uso posterior
-        setDetailedPersonData(detailedPersonData);
-        
-        // Salvar o ID do patient (não do person)
-        if (detailedPersonData.patient && detailedPersonData.patient.id) {
-          console.log("Armazenando ID do patient:", detailedPersonData.patient.id);
-          setPatientId(detailedPersonData.patient.id);
-        } else {
-          console.error("ID do patient não encontrado na resposta:", detailedPersonData);
-          addMessage("bot", "Não foi possível identificar seus dados de paciente. Por favor, tente novamente.");
-          return;
-        }
-        
-        // Extrair os dados da pessoa
-        setNome(detailedPersonData.person.fullname || "");
-        setDataNas(detailedPersonData.person.birthDate || "");
-        
-        // Extrair o número de telefone (se disponível)
-        if (detailedPersonData.contact && detailedPersonData.contact.length > 0) {
-          // Pega o primeiro telefone da lista de contatos
-          const phoneContact = detailedPersonData.contact.find(c => 
-            c.contactType.description.toLowerCase() === "telefone"
-          );
-          
-          setTelefone(phoneContact ? phoneContact.value : "");
-        }
-        
-        // Mostrar mensagem de boas-vindas personalizada
-        addMessage("bot", `✅ CPF encontrado! Bem-vindo(a), ${detailedPersonData.person.fullname}!`);
-        
-        // Ir direto para seleção de especialidade
-        setTimeout(() => {
-          promptForSpecialty();
-        }, 1000);
-        
-      } catch (personError) {
-        console.error("Erro ao buscar dados detalhados da pessoa:", personError);
-        
-        // Fallback para o método anterior se o novo endpoint falhar
-        try {
-          const personData = await getPersonByCpf(submittedCpf);
-          setNome(personData.name || "");
-          setDataNas(personData.birthDate || "");
-          setTelefone(personData.phoneNumber || "");
-          
-          addMessage("bot", "Não foi possível recuperar todos os seus dados. Por favor, entre em contato com o suporte.");
-          return;
-        } catch (fallbackError) {
-          console.error("Erro também no fallback:", fallbackError);
-          addMessage("bot", "Não foi possível recuperar seus dados. Por favor, tente novamente mais tarde.");
-          promptForPersonalData(true); // true indica que é um novo cadastro
-        }
-      }
-    } else {
-      // Se o CPF não existir, solicitar dados para novo cadastro
-      addMessage("bot", "CPF não encontrado. Vamos criar um novo cadastro para você!");
-      promptForPersonalData(true); // true indica que é um novo cadastro
+    const parts = dateString.split("-");
+    if (parts.length === 3) {
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
-  } catch (err) {
-    console.error("Erro ao verificar CPF:", err);
-    addMessage("bot", "Ocorreu um erro ao verificar o CPF. Por favor, tente novamente.");
-  } finally {
-    setLoading(false);
-    setWaitingForResponse(false);
-  }
-};
+    return dateString;
+  };
 
-  // Função para solicitar dados pessoais
+  // Handle CPF submission
+  const handleCpfSubmit = async (submittedCpf: string) => {
+    setError("");
+    
+    // Validate CPF (11 digits)
+    const cpfRegex = /^\d{11}$/;
+    if (!cpfRegex.test(submittedCpf)) {
+      addMessage("bot", "Por favor, insira um CPF válido com 11 dígitos.");
+      return;
+    }
+    
+    addMessage("user", submittedCpf);
+    addMessage("bot", "Verificando seu CPF...");
+    setWaitingForResponse(true);
+    
+    try {
+      setCpf(submittedCpf);
+      setLoading(true);
+      const exists = await checkCpfExists(submittedCpf);
+      setCadastroExistente(exists);
+      
+      if (exists) {
+        try {
+          const detailedPersonData: DetailedPerson = await getDetailedPersonByCpf(submittedCpf);
+          setDetailedPersonData(detailedPersonData);
+          
+          // Save patient ID (not person ID)
+          if (detailedPersonData.patient && detailedPersonData.patient.id) {
+            console.log("Armazenando ID do patient:", detailedPersonData.patient.id);
+            setPatientId(detailedPersonData.patient.id);
+          } else {
+            console.error("ID do patient não encontrado na resposta:", detailedPersonData);
+            addMessage("bot", "Não foi possível identificar seus dados de paciente. Por favor, tente novamente.");
+            return;
+          }
+          
+          // Extract person data
+          setNome(detailedPersonData.person.fullname || "");
+          setDataNas(detailedPersonData.person.birthDate || "");
+          
+          // Extract phone number (if available)
+          if (detailedPersonData.contact && detailedPersonData.contact.length > 0) {
+            // Get first phone from contact list
+            const phoneContact = detailedPersonData.contact.find(c => 
+              c.contactType.description.toLowerCase() === "telefone"
+            );
+            
+            setTelefone(phoneContact ? phoneContact.value : "");
+          }
+          
+          // Show personalized welcome message
+          addMessage("bot", `✅ CPF encontrado! Bem-vindo(a), ${detailedPersonData.person.fullname}!`);
+          
+          // Go directly to facility selection
+          setTimeout(() => {
+            promptForFacilitys();
+          }, 1000);
+          
+        } catch (personError) {
+          console.error("Erro ao buscar dados detalhados da pessoa:", personError);
+          
+          // Fallback to previous method if new endpoint fails
+          try {
+            const personData = await getPersonByCpf(submittedCpf);
+            setNome(personData.name || "");
+            setDataNas(personData.birthDate || "");
+            setTelefone(personData.phoneNumber || "");
+            
+            addMessage("bot", "Não foi possível recuperar todos os seus dados. Por favor, entre em contato com o suporte.");
+            return;
+          } catch (fallbackError) {
+            console.error("Erro também no fallback:", fallbackError);
+            addMessage("bot", "Não foi possível recuperar seus dados. Por favor, tente novamente mais tarde.");
+            promptForPersonalData(true); // true indicates new registration
+          }
+        }
+      } else {
+        // If CPF does not exist, request data for new registration
+        addMessage("bot", "CPF não encontrado. Vamos criar um novo cadastro para você!");
+        promptForPersonalData(true); // true indicates new registration
+      }
+    } catch (err) {
+      console.error("Erro ao verificar CPF:", err);
+      addMessage("bot", "Ocorreu um erro ao verificar o CPF. Por favor, tente novamente.");
+    } finally {
+      setLoading(false);
+      setWaitingForResponse(false);
+    }
+  };
+
+  // Request personal data
   const promptForPersonalData = (isNewRegistration = false) => {
     setCurrentStep("personalData");
     
@@ -323,7 +263,7 @@ const handleCpfSubmit = async (submittedCpf: string) => {
       addMessage("bot", "Para criarmos seu cadastro, preciso de algumas informações.");
     }
     
-    // Solicitar nome
+    // Request name
     setTimeout(() => {
       addMessage("bot", "Qual é o seu nome completo?", undefined, {
         type: "hidden",
@@ -336,7 +276,7 @@ const handleCpfSubmit = async (submittedCpf: string) => {
     }, 1000);
   };
 
-  // Função para processar o nome
+  // Process name submission
   const handleNameSubmit = (submittedName: string) => {
     if (!submittedName.trim()) {
       addMessage("bot", "Por favor, digite seu nome completo.");
@@ -397,14 +337,13 @@ const handleCpfSubmit = async (submittedCpf: string) => {
       });
     };
     
-    
-    // Solicitar data de nascimento
+    // Request birth date
     setTimeout(() => {
       pedirDataNascimento();
     }, 1000);
   };
 
-  // Função para processar a data de nascimento
+  // Process birth date submission
   const handleDateSubmit = (submittedDate: string) => {
     if (!submittedDate) {
       addMessage("bot", "Por favor, informe uma data de nascimento válida.");
@@ -414,7 +353,7 @@ const handleCpfSubmit = async (submittedCpf: string) => {
     addMessage("user", formatDateForDisplay(submittedDate));
     setDataNas(submittedDate);
     
-    // Solicitar telefone
+    // Request phone
     setTimeout(() => {
       addMessage("bot", "Qual é o seu número de telefone?", undefined, {
         type: "tel",
@@ -427,131 +366,130 @@ const handleCpfSubmit = async (submittedCpf: string) => {
     }, 1000);
   };
 
- // Função para processar o telefone e enviar os dados para a api
-const handlePhoneSubmit = async (submittedPhone: string) => {
-  if (!submittedPhone.trim()) {
-    addMessage("bot", "Por favor, digite um número de telefone válido.");
-    return;
-  }
-  
-  addMessage("user", submittedPhone);
-  setTelefone(submittedPhone);
-  setWaitingForResponse(true);
-  
-  // Se é um novo cadastro, criar o paciente
-  if (!cadastroExistente) {
-    try {
-      addMessage("bot", "Criando seu cadastro...");
-      setLoading(true);
-      
-      // Garantindo que a data está no formato YYYY-MM-DD
-      let formattedDate = dataNas;
-      if (dataNas.includes('/')) {
-        const parts = dataNas.split('/');
-        formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      }
+  // Process phone submission and send data to API
+  const handlePhoneSubmit = async (submittedPhone: string) => {
+    if (!submittedPhone.trim()) {
+      addMessage("bot", "Por favor, digite um número de telefone válido.");
+      return;
+    }
+    
+    addMessage("user", submittedPhone);
+    setTelefone(submittedPhone);
+    setWaitingForResponse(true);
+    
+    // If new registration, create patient
+    if (!cadastroExistente) {
+      try {
+        addMessage("bot", "Criando seu cadastro...");
+        setLoading(true);
+        
+        // Ensure date is in YYYY-MM-DD format
+        let formattedDate = dataNas;
+        if (dataNas.includes('/')) {
+          const parts = dataNas.split('/');
+          formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
 
-      const patientData = {
-        cpf: cpf,
-        fullname: nome,
-        birthdate: formattedDate,
-        contact: submittedPhone,
-      };
-      
-      // Chama a API para criar o paciente
-      const result = await createResumedPatient(patientData);
-      console.log("Resposta da API após criar paciente:", result);
-      
-      // Verifica estrutura da resposta e salva o ID do paciente
-      if (result) {
-        // Verificando diferentes possibilidades de onde o ID possa estar na resposta
-        if (result.patient && result.patient.id) {
-          setPatientId(result.patient.id);
-          console.log("ID do patient encontrado em result.patient.id:", result.patient.id);
-        } else if (result.id) {
-          setPatientId(result.id);
-          console.log("ID do patient encontrado diretamente:", result.id);
+        const patientData = {
+          cpf: cpf,
+          fullname: nome,
+          birthdate: formattedDate,
+          contact: submittedPhone,
+        };
+        
+        // Call API to create patient
+        const result = await createResumedPatient(patientData);
+        console.log("Resposta da API após criar paciente:", result);
+        
+        // Check response structure and save patient ID
+        if (result) {
+          // Check different possibilities where ID might be in the response
+          if (result.patient && result.patient.id) {
+            setPatientId(result.patient.id);
+            console.log("ID do patient encontrado em result.patient.id:", result.patient.id);
+          } else if (result.id) {
+            setPatientId(result.id);
+            console.log("ID do patient encontrado diretamente:", result.id);
+          } else {
+            // Log full structure for debugging
+            console.error("Estrutura da resposta não contém ID esperado:", JSON.stringify(result));
+            addMessage("bot", "Não foi possível identificar seus dados na resposta.");
+            return;
+          }
+          
+          addMessage("bot", "✅ Cadastro realizado com sucesso!");
         } else {
-          // Logando a estrutura completa para debugging
-          console.error("Estrutura da resposta não contém ID esperado:", JSON.stringify(result));
-          addMessage("bot", "Não foi possível identificar seus dados na resposta.");
+          addMessage("bot", "Resposta vazia da API ao criar paciente.");
           return;
         }
         
-        addMessage("bot", "✅ Cadastro realizado com sucesso!");
-      } else {
-        addMessage("bot", "Resposta vazia da API ao criar paciente.");
+      } catch (err: any) {
+        console.error("Erro ao criar cadastro:", err);
+        addMessage("bot", `Ocorreu um erro ao criar seu cadastro: ${err.message || "Erro desconhecido"}`);
+        return;
+      } finally {
+        setLoading(false);
+        setWaitingForResponse(false);
+      }
+    }
+    
+    // Data summary
+    setTimeout(() => {
+      addMessage("bot", `Perfeito! Confirmando seus dados:\n- Nome: ${nome}\n- Data de nascimento: ${formatDateForDisplay(dataNas)}\n- Telefone: ${submittedPhone}`);
+      promptForFacilitys();
+    }, 1000);
+  };
+
+  // Request facilities
+  const promptForFacilitys = () => {
+    setCurrentStep("facility"); // Changed from "specialty"
+    
+    setTimeout(() => {
+      if (loadingFacilitys) {
+        addMessage("bot", "Carregando nossas clínicas...");
         return;
       }
       
-    } catch (err: any) {
-      console.error("Erro ao criar cadastro:", err);
-      addMessage("bot", `Ocorreu um erro ao criar seu cadastro: ${err.message || "Erro desconhecido"}`);
-      return;
-    } finally {
-      setLoading(false);
-      setWaitingForResponse(false);
-    }
-  }
-  
-  // Resumo dos dados
-  setTimeout(() => {
-    addMessage("bot", `Perfeito! Confirmando seus dados:\n- Nome: ${nome}\n- Data de nascimento: ${formatDateForDisplay(dataNas)}\n- Telefone: ${submittedPhone}`);
-    promptForSpecialty();
-  }, 1000);
-};
-
- // Função para solicitar especialidade
-const promptForSpecialty = () => {
-  setCurrentStep("specialty");
-  
-  setTimeout(() => {
-    if (loadingSpecialties) {
-      addMessage("bot", "Carregando nossas especialidades...");
-      return;
-    }
-    
-    if (specialties.length === 0) {
-      addMessage("bot", "Desculpe, não conseguimos carregar as especialidades disponíveis.");
-      return;
-    }
-    
-    // Criando um Set para armazenar as descrições já vistas
-    const uniqueDescriptions = new Set();
-    
-    // Filtrando especialidades para remover duplicatas
-    const uniqueSpecialties = specialties.filter(specialty => {
-      const description = specialty.specialtyType.description;
-        if (uniqueDescriptions.has(description)) {
-        return false;
+      if (facilitys.length === 0) {
+        addMessage("bot", "Desculpe, não conseguimos carregar as clínicas disponíveis.");
+        return;
       }
-      uniqueDescriptions.add(description);
-      return true;
-    });
-    
-    addMessage("bot", "Agora, selecione a especialidade desejada que você deseja agendar a consulta:", 
-      uniqueSpecialties.map(specialty => ({
-        value: specialty.specialtyType.id,
-        label: `${specialty.specialtyType.description}`
-      }))
-    );
-  }, 1500);
-};
+      
+      const uniqueDescriptions = new Set();
+      
+      // Filter facilities to remove duplicates
+      const uniqueFacilitys = facilitys.filter(facility => {
+        const description = facility.name;
+          if (uniqueDescriptions.has(description)) {
+          return false;
+        }
+        uniqueDescriptions.add(description);
+        return true;
+      });
+      
+      addMessage("bot", "Agora, selecione a clínica escola para darmos prosseguimento ao agendamento:", 
+        uniqueFacilitys.map(facility => ({
+          value: facility.id,
+          label: `${facility.name}`
+        }))
+      );
+    }, 1500);
+  };
 
-// Função para processar a escolha da especialidade
-const handleSpecialtySelection = async (specialtyType: string) => {
-  setEspecialidade(specialtyType);
+const handleFacilitySelection = async (facility: string) => {
+  setFacilityId(facility);
   
-  // Encontrar a especialidade selecionada
-  const selectedSpecialty = specialties.find(s => s.specialtyType.id === specialtyType);
-  if (!selectedSpecialty) {
-    addMessage("bot", "Especialidade não encontrada. Por favor, tente novamente.");
+  // Find selected facility
+  const selectedFacility = facilitys.find(f => f.id === facility);
+  const selectedSpecialty = specialties.find(s => s.id === selectedSpecialtyTypeId);
+  if (!selectedFacility) {
+    addMessage("bot", "Clínica não encontrada. Por favor, tente novamente.");
     return;
   }
   
-  const specialtyName = selectedSpecialty.description;
-  addMessage("user", specialtyName);
-  addMessage("bot", `Verificando disponibilidade para ${specialtyName}...`);
+  const facilityName = selectedFacility.name;
+  addMessage("user", facilityName);
+  addMessage("bot", `Verificando disponibilidade para ${facilityName}...`);
   setWaitingForResponse(true);
 
   try {
@@ -563,45 +501,73 @@ const handleSpecialtySelection = async (specialtyType: string) => {
       return;
     }
 
-    // Obter a data atual no formato YYYY-MM-DD
+    // Get current date in YYYY-MM-DD format
     const today = new Date().toISOString().split('T')[0];
     console.log("Data atual para verificação:", today);
     console.log("Verificando agendamento para patient.id:", patientId);
 
-    // Verificar se já existe agendamento para esta especialidade
+    // Check if appointment already exists for this facility
     console.log("Iniciando verificação de agendamento existente...");
-    console.log(`Parâmetros: patientId=${patientId}, specialtyId=${specialtyType}, date=${today}`);
+    console.log(`Parâmetros: patientId=${patientId}, facilityId=${facility}, specialtyId=${selectedSpecialty} date=${today},`);
     
     const appointmentCheck = await checkExistingAppointment(
       patientId,
-      specialtyType,
-      today // Data atual
+      facility, 
+      today, // Example appointmentType (First appointment) // Example additional parameter (replace with actual value)
     );
     
     console.log("Resultado da verificação de agendamento:", appointmentCheck);
     
-    if (appointmentCheck.hasAppointment) {
-      setAppointmentData(appointmentCheck.appointmentData);
-      // Se existe agendamento
-      setTimeout(() => {
-        addMessage("bot", `Verificamos que você já possui um agendamento para ${specialtyName}. Gostaria de informações sobre este agendamento?`, [
-          { value: "sim", label: "Sim, quero informações" },
-          { value: "nao", label: "Não, quero agendar outra especialidade" }
-        ]);
-      }, 1000);
+    if (selectedFacility.specialty && selectedFacility.specialty.length > 0) {
+      const activeSpecialties = selectedFacility.specialty.filter(
+        specialty => !specialty.disabled
+      );
+      
+      setSpecialties(activeSpecialties);
+      
+      if (appointmentCheck.hasAppointment) {
+        setAppointmentData(appointmentCheck.appointmentData);
+        // If appointment exists
+        setTimeout(() => {
+          addMessage("bot", `Verificamos que você já possui um agendamento para ${facilityName}. Gostaria de informações sobre este agendamento?`, [
+            { value: "sim", label: "Sim, quero informações" },
+            { value: "nada", label: "Não, " }
+          ]);
+        }, 1000);
+      } else {
+        // Show specialty selection
+        setTimeout(() => {
+          addMessage("bot", `Selecione a especialidade para ${facilityName}:`, 
+            activeSpecialties.map(specialty => ({
+              value: specialty.specialtyType.id,
+              label: `${specialty.specialtyType.description}`
+            }))
+          );
+        }, 1000);
+      }
     } else {
-      // Se não existe agendamento
-      setTimeout(() => {
-        addMessage("bot", `Não encontramos agendamentos existentes para ${specialtyName}. Você pode prosseguir com um novo agendamento.`);
-        
-        // Aqui você poderia adicionar a lógica para prosseguir com o agendamento
-        // Por exemplo, perguntar sobre datas disponíveis ou outras informações necessárias
-        
-        addMessage("bot", "Deseja verificar a disponibilidade para agendamento?", [
-          { value: "sim", label: "Sim, quero agendar" },
-          { value: "não", label: "Não, quero escolher outra especialidade"}
-        ]);
-      }, 1000);
+      if (appointmentCheck.hasAppointment) {
+        setAppointmentData(appointmentCheck.appointmentData);
+        // If appointment exists
+        setTimeout(() => {
+          addMessage("bot", `Verificamos que você já possui um agendamento para ${facilityName}. Gostaria de informações sobre este agendamento?`, [
+            { value: "sim", label: "Sim, quero informações" },
+            { value: "nao", label: "Não, quero agendar outra clínica" }
+          ]);
+        }, 1000);
+      } else {
+        // No specialties available
+        setTimeout(() => {
+          addMessage("bot", `Não encontramos vagas disponíveis para ${facilityName}.`);
+          
+         setTimeout(() => {
+          addMessage("bot", "Deseja entrar na fila de espera?", [
+            { value: "sim", label: "Sim, quero entrar na fila de espera" },
+            { value: "não", label: "Não, quero escolher outra especialidade" }
+          ]);
+        }, 1500);
+        }, 1000);
+      }
     }
   } catch (err) {
     console.error("Erro ao verificar agendamento:", err);
@@ -610,6 +576,28 @@ const handleSpecialtySelection = async (specialtyType: string) => {
     setLoading(false);
     setWaitingForResponse(false);
   }
+};
+
+// Função para tratar a seleção de especialidade
+const handleSpecialtySelection = async (specialtyTypeId: string) => {
+  // Encontrar a especialidade selecionada
+  const selectedSpecialtyType = specialties.find(s => s.specialtyType.id === specialtyTypeId);
+  if (!selectedSpecialtyType) {
+    addMessage("bot", "Especialidade não encontrada. Por favor, tente novamente.");
+    return;
+  }
+  
+  // Armazenar o ID da especialidade selecionada
+  setSelectedSpecialtyTypeId(specialtyTypeId);
+  addMessage("user", selectedSpecialtyType.specialtyType.description);
+  addMessage("bot", `Você selecionou a especialidade: ${selectedSpecialtyType.specialtyType.description}`);
+  setTimeout(() => {
+    addMessage("bot", "Deseja verificar a disponibilidade para esta especialidade?", [
+      { value: "sim", label: "Sim, quero agendar" },
+      { value: "nao", label: "Não, quero escolher outra especialidade" }
+    ]);
+  }, 1000);
+  console.log("ID da especialidade selecionada:", specialtyTypeId);
 };
 
 // Função para lidar com a seleção de data
@@ -678,12 +666,114 @@ const handleShiftSelection = (shiftData: string) => {
     addMessage("bot", `Você selecionou a data ${formatDateForDisplay(selectedDate)} no turno da ${shiftLabel}.`);
     
     setTimeout(() => {
-      addMessage("bot", "Deseja confirmar a remarcação para esta data e turno?", [
+      addMessage("bot", "Deseja confirmar a remarcação para esta data e turno?", 
+      [
         { value: "confirm_reschedule", label: "Sim, confirmar remarcação" },
         { value: "cancel_reschedule", label: "Não, cancelar" }
       ]);
     }, 1000);
   }, 1000);
+};
+
+const handleNewAppointmentDateSelection = (selectedDate: string) => {
+  setSelectedDate(selectedDate);
+  setTimeout(() => {
+    addMessage("bot", `Você selecionou a data: ${formatDateForDisplay(selectedDate)}, Agora, escolha o turno.`);
+  }, 1500);
+};
+
+const handleNewAppointmentShiftSelection = (shiftData: string) => {
+  console.log("🎯 Dados recebidos do calendário:", shiftData);
+  
+  const parsedData = JSON.parse(shiftData);
+  const { shift, appointmentId, date } = parsedData;
+  
+  // Atualizar todos os estados
+  setSelectedDate(date);
+  setSelectedShift(shift);
+  setNewAppointmentId(appointmentId);
+  
+  let shiftLabel = "";
+  switch(shift) {
+    case "MOR":
+      shiftLabel = "Manhã";
+      break;
+    case "AFT":
+      shiftLabel = "Tarde";
+      break;
+    case "EVE":
+      shiftLabel = "Noite";
+      break;
+    default:
+      shiftLabel = shift;
+  }
+  
+  addMessage("user", shiftLabel);
+  
+  setTimeout(() => {
+    console.log("🎯 Data que será exibida:", date);
+    addMessage("bot", `Você selecionou a data ${formatDateForDisplay(date)} no turno da ${shiftLabel}.`);
+    
+    setTimeout(() => {
+      addMessage("bot", "Deseja confirmar o agendamento para esta data e turno?", [
+        { value: "confirm_appointment", label: "Sim, confirmar agendamento" },
+        { value: "cancel_appointment", label: "Não, cancelar" }
+      ]);
+    }, 1000);
+  }, 1000);
+};
+
+const handleConfirmAppointment = async () => {
+  addMessage("user", "Sim, confirmar agendamento");
+  addMessage("bot", "Processando seu agendamento...");
+  setWaitingForResponse(true);
+  
+  try {
+    const appointmentData = {
+      facilityId: facilityId,
+      specialtyId: selectedSpecialtyTypeId,
+      patientId: patientId,
+      date: selectedDate,
+      shift: selectedShift,
+      appointmentId: newAppointmentId,
+      appointmentType: "FIR" 
+    };
+    
+    console.log("Dados para agendamento:", appointmentData);
+    
+    const result = await scheduleAppointment(newAppointmentId, patientId);
+    
+    console.log("Resultado do agendamento:", result);
+
+    addMessage("bot", "✅ Seu agendamento foi realizado com sucesso!");
+        
+    setTimeout(() => {
+    const shiftLabel = 
+      selectedShift === "MOR" ? "Manhã" : 
+      selectedShift === "AFT" ? "Tarde" : 
+      selectedShift === "EVE" ? "Noite" : selectedShift;
+
+      addMessage("bot", `Você agendou uma consulta para ${formatDateForDisplay(selectedDate)} no turno da ${shiftLabel}`);
+      
+      setTimeout(() => {
+        addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊", 
+        );
+      }, 1500);
+    }, 1500);
+    
+  } catch (error) {
+    console.error("Erro ao confirmar agendamento:", error);
+    addMessage("bot", "Ocorreu um erro ao confirmar seu agendamento. Por favor, tente novamente mais tarde.");
+    
+    setTimeout(() => {
+      addMessage("bot", "Deseja tentar novamente?", [
+        { value: "sim_confirmar", label: "Sim, tentar novamente" },
+        { value: "nao_confirmar", label: "Não, cancelar agendamento" }
+      ]);
+    }, 1500);
+  } finally {
+    setWaitingForResponse(false);
+  }
 };
 
 // Função para confirmar a remarcação
@@ -698,7 +788,7 @@ const handleConfirmReschedule = async () => {
     addMessage("bot", "✅ Seu agendamento foi remarcado com sucesso!");
     
     setTimeout(() => {
-      addMessage("bot", "Deseja agendar uma nova consulta em outra especialidade?", [
+      addMessage("bot", "Deseja agendar uma nova consulta em outra clínica?", [
         { value: "sim", label: "Sim, quero agendar outra" },
         { value: "nao", label: "Não, obrigado" }
       ]);
@@ -730,19 +820,17 @@ const handleYesNoResponse = async (response: string, context: string) => {
         const appointment = appointmentData[0];
         // Formatando a data do agendamento (YYYY-MM-DD para DD/MM/YYYY)
         const appointmentDate = appointment.date ? formatDateForDisplay(appointment.date) : "Data não disponível";
-        const specialtyName = appointment.specialty?.description || "Especialidade não especificada";
+        const facilityName = appointment.facility?.name || "Clínica não especificada";
         const doctorName = appointment.professionalPerson.fullname || "Médico não encontrado";
-        const laboratoryName = appointment.facility.name || "Teste";
-        const laboratoryId = appointment.facility.id;
+        const specialtyName = appointment.specialty.specialtyType.description || "Especialidade não encontrada";
 
-        console.log("Testando o id do laboratório", laboratoryId)
         
         setTimeout(() => {
           addMessage("bot", `📋 Informações do seu agendamento:\n\n` +
-            `Especialidade: ${specialtyName}\n` +
+            `Clínica: ${facilityName}\n` +
             `Data: ${appointmentDate}\n` +
             `Médico: ${doctorName}\n` +
-            `Laboratório ${laboratoryName}`);
+            `Especialidade ${specialtyName}`);
           
           setTimeout(() => {
             addMessage("bot", "O que você deseja fazer com este agendamento?", [
@@ -753,7 +841,6 @@ const handleYesNoResponse = async (response: string, context: string) => {
           }, 1500);
         }, 1500);
       } else {
-        // Caso não encontre os dados do agendamento no estado
         addMessage("bot", "Desculpe, não consegui recuperar os detalhes do seu agendamento.");
         
         setTimeout(() => {
@@ -764,19 +851,16 @@ const handleYesNoResponse = async (response: string, context: string) => {
         }, 1000);
       }
     } else {
-      // Voltar para seleção de especialidade
       setTimeout(() => {
-        promptForSpecialty();
+        promptForFacilitys();
       }, 1000);
     }
   } else if (context === "another_appointment") {
     if (response === "sim") {
-      // Voltar para seleção de especialidade
       setTimeout(() => {
-        promptForSpecialty();
+        promptForFacilitys();
       }, 1000);
     } else {
-      // Encerrar conversa
       setTimeout(() => {
         addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊");
       }, 1000);
@@ -813,7 +897,6 @@ const handleYesNoResponse = async (response: string, context: string) => {
         addMessage("bot", "Não foi possível identificar o agendamento para cancelamento");
     } 
 } else if (response === "remarcar") {
-  // Lógica para remarcação
   if (appointmentData && appointmentData.length > 0) {
     setSelectedAppointmentId(appointmentData[0].id);
     setIsRescheduling(true);
@@ -822,39 +905,37 @@ const handleYesNoResponse = async (response: string, context: string) => {
     setWaitingForResponse(true);
     
     try {
-      // Buscar datas disponíveis para remarcação
       const datesData = await getAvailableDates();
       
-      // Filtrar apenas primeira consulta (FIR)
       const firstAppointments = datesData.filter((appointment: any) => 
         appointment.appointmentType === "FIR"
       );
+        
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
       
-      // Obter a data atual do agendamento
       const currentAppointmentDate = new Date(appointmentData[0].date);
-      
-      // Filtrar datas que são pelo menos um dia após a data atual do agendamento
+      currentAppointmentDate.setHours(0, 0, 0, 0);
+
       const validDates = firstAppointments.filter((appointment: any) => {
         const appointmentDate = new Date(appointment.date);
-        // Calcular a diferença em dias
-        const timeDiff = appointmentDate.getTime() - currentAppointmentDate.getTime();
-        const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-        return daysDiff >= 1;
-      });
-      
+        appointmentDate.setHours(0, 0, 0, 0);
+        return appointmentDate >= today &&
+        appointmentDate.getTime() !== currentAppointmentDate.getTime();
+      })
+
       setAvailableDates(validDates);
       
       if (validDates.length === 0) {
         addMessage("bot", "Não encontramos datas disponíveis para remarcação após a data do seu agendamento atual.");
         
         setTimeout(() => {
-          addMessage("bot", "Deseja agendar uma nova consulta em outra especialidade?", [
+          addMessage("bot", "Deseja agendar uma nova consulta em outra clínica?", [
             { value: "sim", label: "Sim, quero agendar outra" },
             { value: "nao", label: "Não, obrigado" }
           ]);
         }, 1500);
       } else {
-        // Agrupar datas disponíveis e seus turnos
         const dateMap = new Map();
         validDates.forEach((appointment: any) => {
           if (!dateMap.has(appointment.date)) {
@@ -863,15 +944,32 @@ const handleYesNoResponse = async (response: string, context: string) => {
           dateMap.get(appointment.date).push(appointment);
         });
         
-        // Converter datas para o formato de exibição
         const dateOptions = Array.from(dateMap.keys()).map(date => ({
           value: date,
           label: formatDateForDisplay(date)
         }));
         
-        setTimeout(() => {
-          addMessage("bot", "Selecione uma data para remarcação:", dateOptions);
-        }, 1000);
+         setTimeout(() => {
+                  addMessage("bot", "Selecione uma DATA e um TURNO disponíveis para o agendamento:");
+                  setMessages(prevMessages => [
+                ...prevMessages,
+                {
+                  id: Date.now() + Math.random(),
+                  text: "",
+                  sender: "bot",
+                  component: (
+                    <AppointmentCalendar
+                      availableDates={dateOptions.map(option => option.value)}
+                      availableSlots={validDates} 
+                      onSelectDate={handleNewAppointmentDateSelection}
+                      onSelectShift={handleNewAppointmentShiftSelection}
+                      className="mt-2"
+                    />
+                  ),
+                  timestamp: new Date()
+                }
+              ]);
+            }, 1000);
       }
     } catch (error) {
       console.error("Erro ao buscar datas disponíveis:", error);
@@ -890,21 +988,14 @@ const handleYesNoResponse = async (response: string, context: string) => {
     addMessage("bot", "Não foi possível identificar o agendamento para remarcação.");
   }
     } else {
-      addMessage("bot", "Entendido! Seu agendamento permanece como está.");
-      
       setTimeout(() => {
-        addMessage("bot", "Deseja agendar uma consulta em outra especialidade?", [
-          { value: "sim", label: "Sim, quero agendar outra" },
-          { value: "nao", label: "Não, obrigado" }
-        ]);
+        addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊");
       }, 1000);
     }
   }
 };
 
-// Adicione uma nova função para processar o motivo de cancelamento selecionado
 const handleCancellationReasonSelected = async (reasonId: string) => {
-  // Encontrar o motivo selecionado para exibir na mensagem
   const selectedReason = cancellationReasons.find(reason => reason.id === reasonId);
   if (!selectedReason) {
     addMessage("bot", "Motivo de cancelamento não encontrado. Tente novamente.");
@@ -927,12 +1018,10 @@ const handleCancellationReasonSelected = async (reasonId: string) => {
     
     addMessage("bot", "✅ Seu agendamento foi cancelado com sucesso!");
     
-    setTimeout(() => {
-      addMessage("bot", "Deseja agendar uma nova consulta?", [
-        { value: "sim", label: "Sim, quero agendar outra" },
-        { value: "nao", label: "Não, obrigado" }
-      ]);
-    }, 1500);
+     setTimeout(() => {
+        addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊", 
+        );
+      }, 1500);
   } catch (error) {
     console.error("Erro ao cancelar agendamento:", error);
     addMessage("bot", "Ocorreu um erro ao cancelar seu agendamento. Por favor, tente novamente mais tarde.");
@@ -976,62 +1065,86 @@ const handleSendMessage = () => {
     setUserInput("");
 };
 
- // Função para tratar cliques em opções
- const handleOptionClick = (value: string) => {
+const handleOptionClick = (value: string) => {
   const lastBotMessage = [...messages].reverse().find(msg => msg.sender === "bot");
-  
   if (lastBotMessage?.options?.some(opt => opt.value === value)) {
-    // Verifica se é uma especialidade
-    if (specialties.some(s => s.specialtyType.id === value)) {
-      handleSpecialtySelection(value);
+    if (facilitys.some(f => f.id === value)) {
+      handleFacilitySelection(value);
     } 
-      // Verifica se é resposta sim/não para agendamento existente
-      else if (value === "sim" || value === "nao") {
-        if (lastBotMessage.text.includes("já possui um agendamento")) {
-          const context = "existing_appointment";
-          handleYesNoResponse(value, context);
-        } 
-        else if (lastBotMessage.text.includes("Deseja verificar a disponibilidade")) {
-          // Chamada para verificação de disponibilidade
-          handleAgendamentoClick(value);
-        }
-        else if (lastBotMessage.text.includes("Deseja entrar na fila de espera?")) {
-          handleWaitingQueueResponse(value);
-        }
-        else {
-          const context = "another_appointment";
-          handleYesNoResponse(value, context);
-        }
+    else if (specialties.some(s => s.specialtyType.id === value)) {
+      handleSpecialtySelection(value);
+    }
+    else if (value === "sim" || value === "nao") {
+      if (lastBotMessage.text.includes("já possui um agendamento")) {
+        const context = "existing_appointment";
+        handleYesNoResponse(value, context);
+      } 
+      else if (lastBotMessage.text.includes("Deseja verificar a disponibilidade")) {
+        handleAgendamentoClick(value);
       }
-      else if (value === "prosseguir" || value === "voltar") {
-        // Lidar com a resposta para prosseguir com agendamento ou voltar
-        if (value === "prosseguir") {
-          addMessage("user", "Sim, quero prosseguir");
-          // Aqui você pode continuar com o fluxo de agendamento
-          addMessage("bot", "Ótimo! Vamos continuar com seu agendamento.");
-          // Implementar próxima etapa do agendamento...
+      else if (lastBotMessage.text.includes("Deseja entrar na fila de espera?")) {
+        handleWaitingQueueResponse(value);
+      }
+      else if (lastBotMessage.text.includes("tentar novamente")) {
+        if (value === "sim") {
+          handleAgendamentoClick("sim");
         } else {
-          addMessage("user", "Não, voltar para especialidades");
-          setTimeout(() => {
-            promptForSpecialty();
-          }, 1000);
+          promptForFacilitys();
         }
       }
-
-
+      else {
+        const context = "another_appointment";
+        handleYesNoResponse(value, context);
+      }
+    }
+    else if (value === "prosseguir" || value === "voltar") {
+      // Lidar com a resposta para prosseguir com agendamento ou voltar
+      if (value === "prosseguir") {
+        addMessage("user", "Sim, quero prosseguir");
+        // Aqui você pode continuar com o fluxo de agendamento
+        addMessage("bot", "Ótimo! Vamos continuar com seu agendamento.");
+        // Implementar próxima etapa do agendamento...
+      } else {
+        addMessage("user", "Não, voltar para especialidades");
+        setTimeout(() => {
+          promptForFacilitys();
+        }, 1000);
+      }
+    }
     else if (value === "cancelar" || value === "remarcar" || value === "nada") {
       handleYesNoResponse(value, "appointment_action");
     } 
     else if (cancellationReasons.some(reason => reason.id === value)) {
       handleCancellationReasonSelected(value);
     }
-    // Verifica se é uma data disponível para remarcação
-    else if (isRescheduling && availableDates.some((appointment: any) => appointment.date === value)) {
-      handleDateSelection(value);
+    // Verifica se é uma data disponível para agendamento novo
+    else if (availableDates.some((appointment: any) => appointment.date === value)) {
+      if (isRescheduling) {
+        handleDateSelection(value);
+      } else {
+        handleNewAppointmentDateSelection(value);
+      }
     }
     // Verifica se é uma seleção de turno (no formato JSON stringified)
-    else if (isRescheduling && value.includes("shift") && value.includes("appointmentId")) {
-      handleShiftSelection(value);
+    else if (value.includes("shift") && value.includes("appointmentId")) {
+      if (isRescheduling) {
+        handleShiftSelection(value);
+      } else {
+        handleNewAppointmentShiftSelection(value);
+      }
+    }
+    // Confirmar novo agendamento
+    else if (value === "confirm_appointment") {
+      handleConfirmAppointment();
+    }
+    // Cancelar novo agendamento
+    else if (value === "cancel_appointment") {
+      addMessage("user", "Não, cancelar");
+      addMessage("bot", "Agendamento cancelado.");
+      
+      setTimeout(() => {
+        addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊", );
+      }, 1000);
     }
     // Confirmar remarcação
     else if (value === "confirm_reschedule") {
@@ -1051,10 +1164,24 @@ const handleSendMessage = () => {
       
       setIsRescheduling(false);
     }
-    // Lidar com sim/não para tentar remarcar novamente
     else if (value === "sim_remarcar") {
       addMessage("user", "Sim, tentar novamente");
       handleYesNoResponse("remarcar", "appointment_action");
+    }
+    else if (value === "sim_confirmar") {
+      addMessage("user", "Sim, tentar novamente");
+      handleConfirmAppointment();
+    }
+    else if (value === "nao_confirmar") {
+      addMessage("user", "Não, cancelar agendamento");
+      addMessage("bot", "Agendamento cancelado.");
+      
+      setTimeout(() => {
+        addMessage("bot", "Deseja agendar uma consulta em outra especialidade?", [
+          { value: "sim", label: "Sim, quero agendar outra" },
+          { value: "nao", label: "Não, obrigado" }
+        ]);
+      }, 1000);
     }
     else if (value === "nao_remarcar") {
       addMessage("user", "Não, cancelar remarcação");
@@ -1074,17 +1201,18 @@ const handleSendMessage = () => {
 
 const handleAgendamentoClick = async (response: string) => {
   addMessage("user", response === "sim" ? "Sim, quero agendar" : "Não, quero escolher outra especialidade");
+  
   if (response === "sim") {
-    const selectedSpecialty = specialties.find(s => s.specialtyType.id === especialidade);
-    const specialtyName = selectedSpecialty ? selectedSpecialty.specialtyType.description : "especialidade selecionada";
-
+    const selectedFacility = facilitys.find(f => f.id === facilityId);
+    const facilityName = selectedFacility ? selectedFacility.name : "especialidade selecionada";
+    
     // Verificar disponibilidade de agendamentos
-    addMessage("bot", `Verificando disponibilidade para ${specialtyName}...`);
+    addMessage("bot", `Verificando disponibilidade para ${facilityName}...`);
     setWaitingForResponse(true);
     
     try {
       const today = new Date().toISOString().split('T')[0];
-      const availabilityData = await checkAvailability(especialidade, today);
+      const availabilityData = await checkAvailability(facilityId, selectedSpecialtyTypeId, "FIR", today);
       
       // Verificar se a resposta contém conteúdo na propriedade 'content'
       const hasAvailableSlots = availabilityData && 
@@ -1092,21 +1220,52 @@ const handleAgendamentoClick = async (response: string) => {
                                 (availabilityData.content && availabilityData.content.length > 0));
       
       if (hasAvailableSlots) {
-        // Existem horários disponíveis        
+        const slots = Array.isArray(availabilityData) ? availabilityData : availabilityData.content;
+        setAvailableDates(slots);
+
+        const dateMap = new Map();
+      slots.forEach((slot: any) => {
+        if(!dateMap.has(slot.date)) {
+          dateMap.set(slot.date, []);
+        }
+        dateMap.get(slot.date).push(slot);
+      });
+
+      const dateOptions = Array.from(dateMap.keys()).map(date => ({
+        value: date,
+        label: formatDateForDisplay(date)
+      }));
+        
         setTimeout(() => {
-          addMessage("bot", "É o primeiro atendimento ou retorno?", [
-            { value: "primeiro", label: "Primeiro atendimento" },
-            { value: "retorno", label: "Retorno" }
-          ]);
-        }, 1000);
+          addMessage("bot", "Selecione uma DATA e um TURNO disponíveis para o agendamento:");
+          
+          // Adicionar uma nova mensagem especial com o calendário embutido
+         setMessages(prevMessages => [
+        ...prevMessages,
+        {
+          id: Date.now() + Math.random(),
+          text: "",
+          sender: "bot",
+          component: (
+            <AppointmentCalendar
+              availableDates={dateOptions.map(option => option.value)}
+              availableSlots={slots} 
+              onSelectDate={handleNewAppointmentDateSelection}
+              onSelectShift={handleNewAppointmentShiftSelection}
+              className="mt-2"
+            />
+          ),
+          timestamp: new Date()
+        }
+      ]);
+    }, 1000);
       } else {
-        // Não existem horários disponíveis
         addMessage("bot", "❌ Infelizmente não encontramos vagas disponíveis para esta especialidade no momento.");
         
         setTimeout(() => {
           addMessage("bot", "Deseja entrar na fila de espera?", [
             { value: "sim", label: "Sim, quero entrar na fila de espera" },
-            { value: "nao", label: "Não, quero escolher outra especialidade" }
+            { value: "não", label: "Não, quero escolher outra especialidade" }
           ]);
         }, 1500);
       }
@@ -1124,14 +1283,12 @@ const handleAgendamentoClick = async (response: string) => {
       setWaitingForResponse(false);
     }
   } else {
-    // Voltar para seleção de especialidade
     setTimeout(() => {
-      promptForSpecialty();
+      promptForFacilitys();
     }, 1000);
   }
 };
 
-// Função para lidar com a entrada na fila de espera
 const handleWaitingQueueResponse = async (response: string) => {
   addMessage("user", response === "sim" ? "Sim, quero entrar na fila de espera" : "Não, quero escolher outra especialidade");
   
@@ -1140,85 +1297,36 @@ const handleWaitingQueueResponse = async (response: string) => {
     setWaitingForResponse(true);
     
     try {
-      // Verificar se temos os dados necessários
-      if (!patientId || !especialidade) {
+      if (!patientId || !facilitys) {
         throw new Error("Dados incompletos para entrada na fila de espera");
       }
       
-      // Encontrar a especialidade selecionada
-      const selectedSpecialty = specialties.find(s => s.specialtyType.id === especialidade);
+      const selectedFacility= facilitys.find(f => f.id === facilityId);
 
-      if (!selectedSpecialty) {
+      if (!selectedFacility) {
         throw new Error("Especialidade não encontrada");
       }
-      
-      // Verificar se existem agendamentos para capturar o facilityId
-      // Usando a data atual para a verificação
-      const today = new Date().toISOString().split('T')[0];
-      const appointmentCheck = await checkExistingAppointment(
-        patientId, 
-        especialidade, 
-        today
-      );
-      console.log("Resultado da verificação de agendamentos:", appointmentCheck);
-      
-      // Garantir que temos um facilityId
-      let facilityId = null;
-      
-      // Tentar extrair do primeiro agendamento, se existir
-      if (appointmentCheck.appointmentData && 
-          appointmentCheck.appointmentData.length > 0 && 
-          appointmentCheck.appointmentData[0].facility) {
-        facilityId = appointmentCheck.appointmentData[0].facility.id;
-        console.log(`Facility ID extraído do primeiro agendamento: ${facilityId}`);
-      } else if (appointmentCheck.facilityId) {
-        // Se não estiver no primeiro agendamento, tentar pegar da propriedade facilityId
-        facilityId = appointmentCheck.facilityId;
-        console.log(`Facility ID extraído da propriedade facilityId: ${facilityId}`);
-      } else {
-        console.warn("Não foi possível encontrar um facility ID nos agendamentos");
-        // Você pode definir um ID padrão aqui ou lançar um erro
-        // facilityId = "ID_PADRAO"; // Descomente e ajuste se necessário
-        throw new Error("Facility ID não encontrado, necessário para adicionar à fila");
-      }
-      
-      // Garantir que temos um facility ID válido antes de prosseguir
-      if (!facilityId) {
-        throw new Error("Facility ID inválido ou não encontrado");
-      }
-      
-      // Preparar dados para a fila de espera
+
       const queueData = {
-        specialty: {
-          id: selectedSpecialty?.id
+        facility: {
+          id: selectedFacility?.id
         },
         patient: {
           id: patientId
         },
-        facility: {
-          id: facilityId // Garantindo que o facility ID está incluído
-        },
-        queueReason: "FUL", // Motivo padrão: Full (lista cheia)
-        appointmentType: "FIR" // Tipo de agendamento: First (primeira consulta)
+        queueReason: "FUL", 
+        appointmentType: "FIR" 
       };
     
-      // Adicionar à fila de espera
       console.log("Dados completos para adicionar à fila:", queueData);
       const result = await addToWaitingQueue(queueData);
       console.log("Resposta da API ao adicionar à fila:", result);
-      
-      // Exibir mensagem de sucesso
       addMessage("bot", "✅ Você foi adicionado com sucesso à fila de espera!");
-      
       setTimeout(() => {
-        addMessage("bot", `Entraremos em contato assim que houver disponibilidade para a especialidade de ${selectedSpecialty.specialtyType.description}.`);
-        
-        setTimeout(() => {
-          addMessage("bot", "Deseja agendar uma consulta em outra especialidade?", [
-            { value: "sim", label: "Sim, quero agendar outra" },
-            { value: "nao", label: "Não, obrigado" }
-          ]);
-        }, 1500);
+        addMessage("bot", `Entraremos em contato assim que houver disponibilidade para a especialidade de ${selectedFacility.name}.`);
+         setTimeout(() => {
+          addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊", );
+        }, 1000);
       }, 1500);
       
     } catch (error) {
@@ -1237,10 +1345,14 @@ const handleWaitingQueueResponse = async (response: string) => {
   } else {
     // Voltar para seleção de especialidade
     setTimeout(() => {
-      promptForSpecialty();
+      promptForFacilitys();
     }, 1000);
   }
 };
+
+  const formatTimestamp = (date: Date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
   return (
     <>
@@ -1259,14 +1371,34 @@ const handleWaitingQueueResponse = async (response: string) => {
         <div className="relative md:w-[110rem] h-full flex items-center justify-center min-h-screen animate-fade">
           <div className="bg-white shadow-md rounded-lg max-w-md md:w-full h-[600px] flex flex-col md:mt-0 mt-12">
             {/* Header do chat */}
-            <div className="bg-[#075E54] text-white p-3 rounded-t-lg flex items-center justify-center">
-              <div>
-                <h1 className="font-bold">Atendimento Clínica</h1>
-                <p className="text-xs">Agendamento de Consultas</p>
+            <div className="bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white p-4 rounded-t-lg flex items-center justify-between shadow-lg">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <Image 
+                      src={logoUnichristus}
+                      alt="Logo Unichristus"
+                      className="w-6 h-7"
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                </div>
+                <div>
+                  <h1 className="font-bold text-lg">Clínicas Unichristus</h1>
+                  <p className="text-xs opacity-90 flex items-center">
+                    <span className="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
+                    Online - Agendamento 24h
+                  </p>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs opacity-75">Hoje</div>
+                <div className="text-sm font-medium">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
               </div>
             </div>
             
-            {/* Área de mensagens */}
             <div 
               className="flex-1 p-4 overflow-y-auto bg-[#E5DDD5]"
               style={{ 
@@ -1286,24 +1418,29 @@ const handleWaitingQueueResponse = async (response: string) => {
                         : "bg-[#DCF8C6] text-black"
                     }`}
                   >
-                    <p className="whitespace-pre-line">{message.text}</p>
-                    
-                    {/* Opções de resposta */}
+                    {message.text && <p className="whitespace-pre-line">{message.text}</p>}
+      
+                    {message.component && (
+                      <div className="mt-2">
+                        {message.component}
+                      </div>
+                    )}
+                                  
                     {message.options && (
-                      <div className="mt-2 flex flex-col gap-2">
+                      <div className="mt-3 flex flex-col gap-2">
                         {message.options.map((option) => (
                           <button
                             key={option.value}
                             onClick={() => handleOptionClick(option.value)}
-                            className="bg-[#075E54] text-white py-1 px-3 rounded-full text-sm hover:bg-[#128C7E] transition-colors"
+                            className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white py-2 px-4 rounded-full text-sm hover:from-[#128C7E] hover:to-[#25D366] transform
+                            transition-all duration-500 hover:scale-105 shadow-md flex items-center justify-center space-x-2"
                           >
-                            {option.label}
+                            <span>{option.label}</span>
                           </button>
                         ))}
                       </div>
                     )}
                       
-                    {/* Campo de input */}
                     {message.input && message.sender === "bot" && (
                       <div className="mt-2">
                         <input
@@ -1324,42 +1461,46 @@ const handleWaitingQueueResponse = async (response: string) => {
                 </div>
               ))}
               
-              {/* Indicador de digitação */}
               {waitingForResponse && (
                 <div className="flex justify-start mb-4">
-                  <div className="bg-white p-3 rounded-lg">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-75"></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-150"></div>
+                  <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-400">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-[#075E54] rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-[#128C7E] rounded-full animate-bounce delay-75"></div>
+                        <div className="w-2 h-2 bg-[#25D366] rounded-full animate-bounce delay-150"></div>
+                      </div>
+                      <span className="text-sm text-gray-600">Processando sua solicitação...</span>
                     </div>
                   </div>
                 </div>
               )}
-              
               <div ref={messagesEndRef} />
             </div>
-            
-            {/* Área de input */}
-            <div className="bg-[#F0F2F5] p-3 rounded-b-lg flex items-center">
+           <div className="bg-gradient-to-r from-[#F0F2F5] to-[#E8EAED] p-4 rounded-b-lg flex items-center space-x-3 shadow-inner">
+            <div className="flex-1 relative">
               <input
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                placeholder="Digite uma mensagem"
-                className="flex-1 py-2 px-3 rounded-full border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
+                placeholder="Digite sua mensagem aqui..."
+                className="w-full py-3 px-4 pr-12 rounded-full border-2 border-gray-300 focus:outline-none focus:border-[#075E54] focus:ring-2 focus:ring-[#075E54]/20 transition-all duration-300 shadow-sm"
               />
-              <button
-                onClick={handleSendMessage}
-                disabled={!userInput.trim() || waitingForResponse}
-                className="ml-2 bg-[#075E54] text-white p-2 rounded-full disabled:bg-gray-400"
-              >
-                <FaPaperPlane />
-              </button>
+              {userInput.trim() && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500">
+                  {userInput.length}
+                </div>
+              )}
             </div>
-            
-            {/* Aviso LGPD */}
+            <button
+              onClick={handleSendMessage}
+              disabled={!userInput.trim() || waitingForResponse}
+              className="bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white p-3 rounded-full disabled:from-gray-400 disabled:to-gray-500 transition-all duration-300 transform hover:scale-110 shadow-lg"
+            >
+              <FaPaperPlane className="text-sm" />
+            </button>
+          </div>
             <div className="p-2 bg-gray-100 text-xs text-center text-gray-500">
               Seus dados estão protegidos conforme a Lei Geral de Proteção de Dados (LGPD).
             </div>

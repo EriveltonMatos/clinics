@@ -1,63 +1,37 @@
-/**
- * Core domain types for the clinic scheduling system
- */
+import { ReactNode } from 'react';
 
-// Base interfaces
-
-
-// types.ts
-
-export interface Test {
-  id: string;
-  description: string;
-  abbreviation: string;
-  grouping?: string; // Adicionando o campo grouping que pode ser opcional
-}
-
-export interface RequisitionTest {
-  id: string;
-  test: Test;
-  testStatus: string;
-  collectionDate?: string | null;
-}
-
-export interface Requisition {
-  id: string;
-  date: string;
-  doctorName: string;
-  requisitionTests: RequisitionTest[];
-}
-
-// Interface para agrupar os testes
-export interface GroupedTests {
-  [key: string]: RequisitionTest[];
-}
-  
-  interface PatientData {
-    patient: Patient;
-    requisition: Requisition[];
-  }
+// ===== BASE ENTITIES =====
 export interface BaseEntity {
   id: string;
   disabled?: boolean;
 }
 
+export interface BaseDescriptionEntity extends BaseEntity {
+  description: string;
+}
+
+// ===== CORE ENTITIES =====
 export interface Person extends BaseEntity {
   fullname: string;
   cpf: string;
   birthDate: string;
 }
 
-// Specialty related interfaces
-export interface SpecialtyType extends BaseEntity {
-  description: string;
+export interface Patient extends BaseEntity {
+  person: string;
+  preferredName: string | null;
+  usePreferredName: boolean;
 }
 
-export interface Specialty extends BaseEntity {
-  id: string;
-  professional: any;
-  facility: any;
-  description: string;
+export interface ProfessionalPerson extends BaseEntity {
+  fullname: string;
+}
+
+// ===== SPECIALTY & FACILITY =====
+export interface SpecialtyType extends BaseDescriptionEntity {}
+
+export interface Specialty extends BaseDescriptionEntity {
+  name: any; // Considere tipar melhor que 'any'
   specialtyType: SpecialtyType;
   minimumAge: number;
   maximumAge: number;
@@ -65,39 +39,19 @@ export interface Specialty extends BaseEntity {
   usesElectronicPrescription: boolean;
 }
 
-// types.ts
-
-export interface Test {
-  id: string;
-  description: string;
-  abbreviation: string;
-  grouping?: string; // Adicionando o campo grouping que pode ser opcional
+export interface Facility extends BaseEntity {
+  name: string;
+  specialty: Specialty[];
 }
 
-export interface RequisitionTest {
-  id: string;
-  test: Test;
-  testStatus: string;
-  collectionDate?: string | null;
-}
-
-// Contact interfaces
+// ===== CONTACT =====
 export type ContactType = 'EMAIL' | 'TELEFONE' | 'CELULAR' | 'WHATSAPP';
 
-export interface ContactTypeEntity extends BaseEntity {
-  description: string;
-}
+export interface ContactTypeEntity extends BaseDescriptionEntity {}
 
 export interface Contact extends BaseEntity {
   value: string;
   contactType: ContactTypeEntity;
-}
-
-// Patient related interfaces
-export interface Patient extends BaseEntity {
-  person: string;
-  preferredName: string | null;
-  usePreferredName: boolean;
 }
 
 export interface DetailedPerson {
@@ -106,24 +60,15 @@ export interface DetailedPerson {
   contact: Contact[];
 }
 
-// Appointment related interfaces
-export interface Facility extends BaseEntity {
-  name: string;
-  code: string;
-}
+// ===== APPOINTMENTS =====
+export type ShiftType = 'MOR' | 'AFT' | 'EVE';
+export type AppointmentType = 'FIR' | 'RET';
 
-export interface ProfessionalPerson extends BaseEntity {
-  fullname: string;
-}
+export interface AppointmentSpecialty extends BaseDescriptionEntity {}
 
-export interface AppointmentSpecialty extends BaseEntity {
-  description: string;
-}
-
-export interface AppointmentData {
-  id: string;
+export interface AppointmentData extends BaseEntity {
   date: string;
-  shift: 'MOR' | 'AFT' | 'EVE';
+  shift: ShiftType;
   doctorName?: string;
   specialty?: AppointmentSpecialty;
   facility: Facility;
@@ -132,14 +77,14 @@ export interface AppointmentData {
 
 export interface AvailableAppointment {
   date: string;
-  shift: 'MOR' | 'AFT' | 'EVE';
+  shift: ShiftType;
   appointmentId: string;
-  appointmentType: 'FIR' | 'RET';
+  appointmentType: AppointmentType;
 }
 
-export interface CancellationReason extends BaseEntity {
-  description: string;
-}
+// Removida interface Appointment duplicada - use AppointmentData ou AvailableAppointment
+
+export interface CancellationReason extends BaseDescriptionEntity {}
 
 export interface CancellationData {
   cancellationReason: {
@@ -148,7 +93,30 @@ export interface CancellationData {
   patientNotes?: string;
 }
 
-// Chat related interfaces
+// ===== TESTS & REQUISITIONS =====
+export interface Test extends BaseDescriptionEntity {
+  abbreviation: string;
+  grouping?: string;
+  estimated?: number; // dias estimados
+}
+
+export interface RequisitionTest extends BaseEntity {
+  test: Test;
+  testStatus: string;
+  collectionDate?: string | null;
+}
+
+export interface Requisition extends BaseEntity {
+  date: string;
+  doctorName: string;
+  requisitionTests: RequisitionTest[];
+}
+
+export interface GroupedTests {
+  [key: string]: RequisitionTest[];
+}
+
+// ===== CHAT =====
 export interface ChatOption {
   value: string;
   label: string;
@@ -170,10 +138,11 @@ export interface Message {
   sender: "bot" | "user";
   options?: ChatOption[];
   input?: ChatInputField;
+  component?: ReactNode;
   timestamp: Date;
 }
 
-// API Response types
+// ===== API RESPONSES =====
 export interface ExistingAppointmentResponse {
   hasAppointment: boolean;
   appointmentData?: AppointmentData[];

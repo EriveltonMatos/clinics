@@ -165,7 +165,7 @@ export default function Clinics() {
               "Consulta de Enfermagem DM / HAS / Tb / Hanseníase",
             ]}
             buttonLink={[
-              "https://www.google.com/maps/dir/?api=1&destination=Av.+Des.+Moreira,+2120+-+Aldeota,+Fortaleza+-+CE,+60170-002",
+              "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
             ]}
             reverse={true}
           />

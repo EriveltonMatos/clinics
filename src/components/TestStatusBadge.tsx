@@ -1,4 +1,3 @@
-// components/TestStatusBadge.tsx
 export enum TestStatus {
   REQ = "REQ", // REQUESTED
   SCH = "SCH", // SCHEDULED
@@ -21,25 +20,25 @@ export const TestStatusBadge: React.FC<TestStatusBadgeProps> = ({ status }) => {
   ): { label: string; color: string } => {
     switch (status) {
       case TestStatus.REQ:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.SCH:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.PEN:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.COL:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.DEL:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.LOS:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.REC:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.TYP:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
       case TestStatus.CON:
         return { label: "Concluído", color: "bg-emerald-100 text-emerald-800" };
       default:
-        return { label: "Pendente", color: "bg-yellow-100 text-yellow-800" };
+        return { label: "Em andamento", color: "bg-yellow-100 text-yellow-800" };
     }
   };
 

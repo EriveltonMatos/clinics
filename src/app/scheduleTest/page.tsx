@@ -12,7 +12,7 @@ import {
   getDetailedPersonByCpf,
   getSpecialties,
   checkExistingAppointment,
-} from "@/api/personService";
+} from "@/api/appointmentService";
 
 // Interface para representar o tipo de especialidade
 interface SpecialtyType {
