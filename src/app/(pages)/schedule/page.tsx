@@ -929,12 +929,9 @@ const handleYesNoResponse = async (response: string, context: string) => {
       if (validDates.length === 0) {
         addMessage("bot", "Não encontramos datas disponíveis para remarcação após a data do seu agendamento atual.");
         
-        setTimeout(() => {
-          addMessage("bot", "Deseja agendar uma nova consulta em outra clínica?", [
-            { value: "sim", label: "Sim, quero agendar outra" },
-            { value: "nao", label: "Não, obrigado" }
-          ]);
-        }, 1500);
+       setTimeout(() => {
+        addMessage("bot", "Obrigado por utilizar nosso sistema de agendamento! Tenha um ótimo dia! 😊");
+      }, 1000);
       } else {
         const dateMap = new Map();
         validDates.forEach((appointment: any) => {
@@ -1371,7 +1368,7 @@ const handleWaitingQueueResponse = async (response: string) => {
         <div className="relative md:w-[110rem] h-full flex items-center justify-center min-h-screen animate-fade">
           <div className="bg-white shadow-md rounded-lg max-w-md md:w-full h-[600px] flex flex-col md:mt-0 mt-12">
             {/* Header do chat */}
-            <div className="bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white p-4 rounded-t-lg flex items-center justify-between shadow-lg">
+            <div className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white p-4 rounded-t-lg flex items-center justify-between shadow-lg">
               <div className="flex items-center space-x-3">
                 <div className="relative">
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
@@ -1394,7 +1391,7 @@ const handleWaitingQueueResponse = async (response: string) => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xs opacity-75">Hoje</div>
+                <div className="text-xs opacity-75">{new Date().toLocaleDateString('pt-BR')}</div>
                 <div className="text-sm font-medium">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
               </div>
             </div>
