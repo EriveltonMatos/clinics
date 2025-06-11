@@ -1,8 +1,7 @@
-import IconPhone from "@/components/IconPhone";
 import unichristusNavbar from "../assets/u-unichristus.png";
-import MobileNav from "@/components/MobileNav";
-import NavBar from "@/components/Navbar";
-import SecondNavbar from "@/components/SecondNavbar";
+import MobileNav from "@/components/navbar-components/MobileNav";
+import NavBar from "@/components/navbar-components/Navbar";
+import SecondNavbar from "@/components/navbar-components/SecondNavbar";
 import { FaHome, FaInfoCircle, FaCalendarCheck, FaVial, FaMapMarkerAlt, FaHospital } from "react-icons/fa";
 import LandingPage from "@/components/home-sections/LandingPage";
 import AboutSection from "@/components/home-sections/AboutSection";

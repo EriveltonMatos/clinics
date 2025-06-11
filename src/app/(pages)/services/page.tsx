@@ -1,6 +1,6 @@
 import servicesBackground from "@/assets/services-background.png";
-import NavbarReturn from "@/components/NavbarReturn";
-import MobileNav from "@/components/MobileNav";
+import NavbarReturn from "@/components/navbar-components/NavbarReturn";
+import MobileNav from "@/components/navbar-components/MobileNav";
 import { FaArrowLeft } from "react-icons/fa";
 import NavBar from "@/components/Navbar";
 import FooterSection from "@/components/home-sections/FooterSection";

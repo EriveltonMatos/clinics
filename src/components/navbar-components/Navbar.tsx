@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
-import logoClinica from "../assets/logo-clinica.png";
+import logoClinica from "@/assets/logo-clinica.png";
 import { useState } from "react";
 import { FaPhoneVolume } from "react-icons/fa";
-import ContactDialog from "./ContactDialog";
-import ContactDialogWhatsapp from "./ContactDialogWhatsapp";
+import ContactDialog from "../ContactDialog";
+import ContactDialogWhatsapp from "../ContactDialogWhatsapp";
 import { MdOutlineEmail, MdWhatsapp } from "react-icons/md";
 
 export default function Navbar() {

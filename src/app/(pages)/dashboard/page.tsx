@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/api/AuthContext";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/Navbar";
+import NavBar from "@/components/navbar-components/Navbar";
 import TestStatusBadge, { TestStatus } from "@/components/TestStatusBadge";
-import MobileNav from "@/components/MobileNav";
+import MobileNav from "@/components/navbar-components/MobileNav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FaArrowLeft, FaSignOutAlt } from "react-icons/fa";
 import { ScrollArea } from "@radix-ui/react-scroll-area";

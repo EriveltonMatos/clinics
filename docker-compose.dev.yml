@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  clinicas-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      # Add your development environment variables here
+      # - NEXT_PUBLIC_API_BASE_URL=your_dev_api_url
+      # - NEXT_PUBLIC_API_CORE_URL=your_dev_core_api_url
+    restart: unless-stopped
+    command: npm run dev

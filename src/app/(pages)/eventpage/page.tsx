@@ -14,8 +14,8 @@ import {
 import NavBar from '@/components/Navbar';
 import carrossel1 from "@/assets/carrossel1.png";
 import FooterSection from '@/components/home-sections/FooterSection';
-import MobileNav from '@/components/MobileNav';
-import NavbarReturn from "@/components/NavbarReturn";
+import MobileNav from '@/components/navbar-components/MobileNav';
+import NavbarReturn from "@/components/navbar-components/NavbarReturn";
 import { FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
 

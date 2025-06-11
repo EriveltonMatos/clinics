@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, Lock } from 'lucide-react';
 
 // Types for our component props
 interface CalendarProps {
@@ -29,6 +29,7 @@ export default function AppointmentCalendar({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [shiftsForSelectedDate, setShiftsForSelectedDate] = useState<AppointmentSlot[]>([]);
   const [isLocked, setIsLocked] = useState(false);
+  const [selectedShift, setSelectedShift] = useState<string | null>(null);
 
   // Create a lookup object for quick checking if a date is available
   const availableDatesMap = availableDates.reduce((acc, date) => {
@@ -62,6 +63,8 @@ export default function AppointmentCalendar({
 
   // Navigate to previous month (if available)
   const goToPreviousMonth = () => {
+    if (isLocked) return; // Bloqueia navegação quando locked
+    
     const currentIndex = availableMonths.findIndex(
       date => date.getMonth() === currentMonth.getMonth() && date.getFullYear() === currentMonth.getFullYear()
     );
@@ -73,6 +76,8 @@ export default function AppointmentCalendar({
 
   // Navigate to next month (if available)
   const goToNextMonth = () => {
+    if (isLocked) return; // Bloqueia navegação quando locked
+    
     const currentIndex = availableMonths.findIndex(
       date => date.getMonth() === currentMonth.getMonth() && date.getFullYear() === currentMonth.getFullYear()
     );
@@ -102,7 +107,8 @@ export default function AppointmentCalendar({
   };
 
   const handleDateSelection = (dateString: string) => {
-    if (isLocked) return;
+    if (isLocked) return; // Impede seleção de nova data quando locked
+    
     setSelectedDate(dateString);
     
     const shifts = availableSlots.filter(slot => slot.date === dateString);
@@ -112,6 +118,12 @@ export default function AppointmentCalendar({
   };
 
   const handleShiftSelection = (shift: string, appointmentId: string) => {
+    if (isLocked) return; // Impede seleção de novo turno quando locked
+    
+    // Bloqueia o calendário após seleção do turno
+    setIsLocked(true);
+    setSelectedShift(shift);
+    
     if (onSelectShift) {
       const shiftData = JSON.stringify({
         shift,
@@ -156,15 +168,31 @@ export default function AppointmentCalendar({
       const isAvailable = availableDatesMap[dateString];
       const isSelected = selectedDate === dateString;
       
+      // Define classes baseado no estado
+      let cellClasses = `flex items-center justify-center h-8 w-8 rounded-full mx-auto `;
+      
+      if (isSelected && isLocked) {
+        // Data selecionada e calendário bloqueado
+        cellClasses += 'bg-green-500 text-white ring-2 ring-green-300';
+      } else if (isSelected) {
+        // Data selecionada mas ainda não bloqueado
+        cellClasses += 'bg-blue-500 text-white';
+      } else if (isAvailable && !isLocked) {
+        // Data disponível e calendário não bloqueado
+        cellClasses += 'bg-green-100 hover:bg-green-200 text-green-800 cursor-pointer';
+      } else if (isAvailable && isLocked) {
+        // Data disponível mas calendário bloqueado
+        cellClasses += 'bg-gray-200 text-gray-400';
+      } else {
+        // Data não disponível
+        cellClasses += 'text-gray-300 bg-gray-100';
+      }
+      
       days.push(
         <div 
           key={dateString}
-          className={`flex items-center justify-center h-8 w-8 rounded-full mx-auto
-            ${isSelected ? 'bg-blue-500 text-white' : 
-              isAvailable 
-                ? 'bg-green-100 hover:bg-green-200 text-green-800 cursor-pointer' 
-                : 'text-gray-300 bg-gray-100'}`}
-          onClick={() => isAvailable && handleDateSelection(dateString)}
+          className={cellClasses}
+          onClick={() => isAvailable && !isLocked && handleDateSelection(dateString)}
         >
           {day}
         </div>
@@ -182,11 +210,12 @@ export default function AppointmentCalendar({
   const currentIndex = availableMonths.findIndex(
     date => date.getMonth() === currentMonth.getMonth() && date.getFullYear() === currentMonth.getFullYear()
   );
-  const canGoPrevious = currentIndex > 0;
-  const canGoNext = currentIndex < availableMonths.length - 1;
+  const canGoPrevious = currentIndex > 0 && !isLocked;
+  const canGoNext = currentIndex < availableMonths.length - 1 && !isLocked;
 
   return (
     <div className={`bg-white rounded-lg shadow p-4 ${className}`}>
+      {/* Header com indicador de bloqueio */}
       <div className="flex justify-between items-center mb-4">
         <button 
           onClick={goToPreviousMonth} 
@@ -196,9 +225,16 @@ export default function AppointmentCalendar({
           <ChevronLeft size={20} />
         </button>
         
-        <h2 className="font-semibold text-gray-800">
-          {monthName} {currentYear}
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="font-semibold text-gray-800">
+            {monthName} {currentYear}
+          </h2>
+          {isLocked && (
+            <div className="flex items-center text-green-600" title="Agendamento confirmado">
+              <Lock size={16} />
+            </div>
+          )}
+        </div>
         
         <button 
           onClick={goToNextMonth} 
@@ -221,9 +257,18 @@ export default function AppointmentCalendar({
         {buildCalendar()}
       </div>
       
-      <div className="mt-4 flex items-center text-xs text-gray-500">
-        <div className="w-3 h-3 rounded-full bg-green-100 mr-1"></div>
-        <span>Datas disponíveis</span>
+      {/* Legenda */}
+      <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-gray-500">
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-green-100 mr-1"></div>
+          <span>Datas disponíveis</span>
+        </div>
+        {isLocked && (
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+            <span className="text-green-600 font-medium">Agendamento confirmado</span>
+          </div>
+        )}
       </div>
       
       {selectedDate && (
@@ -237,18 +282,38 @@ export default function AppointmentCalendar({
           
           {shiftsForSelectedDate.length > 0 ? (
             <div className="grid grid-cols-3 gap-2">
-              {shiftsForSelectedDate.map((slot, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleShiftSelection(slot.shift, slot.appointmentId)}
-                  className="bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-3 rounded-md text-sm font-medium"
-                >
-                  {getShiftLabel(slot.shift)}
-                </button>
-              ))}
+              {shiftsForSelectedDate.map((slot, index) => {
+                const isSelectedShift = selectedShift === slot.shift;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleShiftSelection(slot.shift, slot.appointmentId)}
+                    disabled={isLocked}
+                    className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                      isSelectedShift && isLocked
+                        ? 'bg-green-500 text-white ring-2 ring-green-300'
+                        : isLocked
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'bg-blue-50 hover:bg-blue-100 text-blue-700 cursor-pointer'
+                    }`}
+                  >
+                    {getShiftLabel(slot.shift)}
+                  </button>
+                );
+              })}
             </div>
           ) : (
             <p className="text-gray-500 text-sm">Nenhum turno disponível para esta data.</p>
+          )}
+          
+          {/* Mensagem de confirmação quando bloqueado */}
+          {isLocked && selectedShift && (
+            <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-md">
+              <p className="text-green-700 text-sm font-medium">
+                ✓ Agendamento confirmado para {formatDateForDisplay(selectedDate)} no turno da {getShiftLabel(selectedShift).toLowerCase()}
+              </p>
+                           
+            </div>
           )}
         </div>
       )}

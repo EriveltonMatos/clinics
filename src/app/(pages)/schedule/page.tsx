@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import footerBackground from "@/assets/footer-background.jpg";
+import parqueBackground from "@/assets/footer-background.jpg";
 import logoUnichristus from "@/assets/u-unichristus-blue.png";
-import MobileNav from "@/components/MobileNav";
-import { FaArrowLeft, FaPaperPlane } from "react-icons/fa";
+import MobileNav from "@/components/navbar-components/MobileNav";
+import { FaArrowLeft, FaPaperPlane, FaQuestionCircle } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
 import {
   checkCpfExists,
   createResumedPatient,
@@ -22,21 +23,7 @@ import {
 import { Specialty, Facility, DetailedPerson, Message} from "@/types/types"; 
 import AppointmentCalendar from "@/components/schedule-components/AppointmentCalendar";
 import Image from "next/image";
-
-const animationStyles = `
-  @keyframes slideInFromRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  
-  @keyframes slideInFromLeft {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  
-  .message-bot { animation: slideInFromLeft 0.3s ease-out; }
-  .message-user { animation: slideInFromRight 0.3s ease-out; }
-`;
+import TutorialModal from "@/components/schedule-components/TutorialModal";
 
 export default function Schedule() {
   const [cpf, setCpf] = useState("");
@@ -66,6 +53,11 @@ export default function Schedule() {
   const [selectedShift, setSelectedShift] = useState<string>("");
   const [newAppointmentId, setNewAppointmentId] = useState<string>("");
   const [isRescheduling, setIsRescheduling] = useState<boolean>(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+  };
 
   useEffect(() => {
     const fetchFacilitys = async () => {
@@ -677,9 +669,6 @@ const handleShiftSelection = (shiftData: string) => {
 
 const handleNewAppointmentDateSelection = (selectedDate: string) => {
   setSelectedDate(selectedDate);
-  setTimeout(() => {
-    addMessage("bot", `Você selecionou a data: ${formatDateForDisplay(selectedDate)}, Agora, escolha o turno.`);
-  }, 1500);
 };
 
 const handleNewAppointmentShiftSelection = (shiftData: string) => {
@@ -1357,149 +1346,161 @@ const handleWaitingQueueResponse = async (response: string) => {
         links={[{ href: "/", label: "Voltar ao site", icon: <FaArrowLeft /> }]}
       />
       <div
-        className="relative flex items-center justify-center p-3 min-h-screen"
+        className="relative flex items-center justify-center p-2 sm:p-3 min-h-screen"
         style={{
-          backgroundImage: `url(${footerBackground.src})`,
+          backgroundImage: `url(${parqueBackground.src})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-black opacity-70"></div>
-        <div className="relative md:w-[110rem] h-full flex items-center justify-center min-h-screen animate-fade">
-          <div className="bg-white shadow-md rounded-lg max-w-md md:w-full h-[600px] flex flex-col md:mt-0 mt-12">
-            {/* Header do chat */}
-            <div className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white p-4 rounded-t-lg flex items-center justify-between shadow-lg">
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <Image 
-                      src={logoUnichristus}
-                      alt="Logo Unichristus"
-                      className="w-6 h-7"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-                </div>
-                <div>
-                  <h1 className="font-bold text-lg">Clínicas Unichristus</h1>
-                  <p className="text-xs opacity-90 flex items-center">
-                    <span className="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
-                    Online - Agendamento 24h
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs opacity-75">{new Date().toLocaleDateString('pt-BR')}</div>
-                <div className="text-sm font-medium">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-              </div>
-            </div>
+        <div className="relative w-full max-w-6xl h-full flex items-center justify-center min-h-screen animate-fade">
+          <div className="w-full flex flex-col md:flex-row gap-3 sm:gap-6 md:gap-8 items-stretch justify-center min-h-[600px] sm:min-h-[700px]">
+
+            {/* Tutorial Modal Desktop */}
+              <TutorialModal 
+                showTutorial={showTutorial}
+                onClose={handleCloseTutorial}
+                logoUnichristus={logoUnichristus}
+              />
             
-            <div 
-              className="flex-1 p-4 overflow-y-auto bg-[#E5DDD5]"
-              style={{ 
-                backgroundImage: "url('https://web.whatsapp.com/img/bg-chat-tile-light_04fcacde539c58cca6745483d4858c52.png')",
-                backgroundRepeat: "repeat" 
-              }}
-            >
-              {messages.map((message) => (
-                <div 
-                  key={message.id} 
-                  className={`mb-4 flex ${message.sender === "bot" ? "justify-start" : "justify-end"}`}
-                >
-                  <div 
-                    className={`p-3 rounded-lg max-w-[80%] relative ${
-                      message.sender === "bot" 
-                        ? "bg-white text-black" 
-                        : "bg-[#DCF8C6] text-black"
-                    }`}
-                  >
-                    {message.text && <p className="whitespace-pre-line">{message.text}</p>}
-      
-                    {message.component && (
-                      <div className="mt-2">
-                        {message.component}
-                      </div>
-                    )}
-                                  
-                    {message.options && (
-                      <div className="mt-3 flex flex-col gap-2">
-                        {message.options.map((option) => (
-                          <button
-                            key={option.value}
-                            onClick={() => handleOptionClick(option.value)}
-                            className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white py-2 px-4 rounded-full text-sm hover:from-[#128C7E] hover:to-[#25D366] transform
-                            transition-all duration-500 hover:scale-105 shadow-md flex items-center justify-center space-x-2"
-                          >
-                            <span>{option.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                      
-                    {message.input && message.sender === "bot" && (
-                      <div className="mt-2">
-                        <input
-                          type={message.input.type}
-                          placeholder={message.input.placeholder}
-                          value={message.input.value}
-                          onChange={(e) => message.input?.onChange(e.target.value)}
-                          maxLength={message.input.maxLength}
-                          className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-300"
-                        />
-                      </div>
-                    )}
-                    
-                    <span className="text-[10px] text-gray-500 absolute bottom-1 right-2">
-                      {formatTimestamp(message.timestamp)}
-                    </span>
+            <div className="w-full md:w-1/2 bg-white shadow-2xl rounded-lg max-w-md  md:max-w-none h-[65vh] sm:h-[600px] md:h-[700px] flex flex-col md:mt-0 mt-6 sm:mt-12">
+              <div className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white p-2 sm:p-4 rounded-t-lg flex items-center justify-between shadow-lg">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="relative">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center">
+                      <Image 
+                        src={logoUnichristus}
+                        alt="Logo Unichristus"
+                        className="w-5 h-6 sm:w-6 sm:h-7"
+                        width={24}
+                        height={28}
+                      />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                  </div>
+                  <div>
+                    <h1 className="font-bold text-sm sm:text-lg">Clínicas Unichristus</h1>
+                    <p className="text-xs opacity-90 flex items-center">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
+                      Online - Agendamento 24h
+                    </p>
                   </div>
                 </div>
-              ))}
+                <div className="text-right hidden sm:block md:ml-48">
+                  <div className="text-xs opacity-75">{new Date().toLocaleDateString('pt-BR')}</div>
+                  <div className="text-sm font-medium">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                </div>
+                <div className="cursor-pointer" onClick={() => setShowTutorial(true)}>
+                  <FaQuestionCircle className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+              </div>
               
-              {waitingForResponse && (
-                <div className="flex justify-start mb-4">
-                  <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-400">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-[#075E54] rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-[#128C7E] rounded-full animate-bounce delay-75"></div>
-                        <div className="w-2 h-2 bg-[#25D366] rounded-full animate-bounce delay-150"></div>
-                      </div>
-                      <span className="text-sm text-gray-600">Processando sua solicitação...</span>
+              <div 
+                className="flex-1 p-2 sm:p-4 overflow-y-auto bg-[#E5DDD5]"
+                style={{ 
+                  backgroundImage: "url('https://web.whatsapp.com/img/bg-chat-tile-light_04fcacde539c58cca6745483d4858c52.png')",
+                  backgroundRepeat: "repeat" 
+                }}
+              >
+                {messages.map((message) => (
+                  <div 
+                    key={message.id} 
+                    className={`mb-2 sm:mb-4 flex ${message.sender === "bot" ? "justify-start" : "justify-end"}`}
+                  >
+                    <div 
+                      className={`p-2 sm:p-3 rounded-lg max-w-[85%] sm:max-w-[80%] relative ${
+                        message.sender === "bot" 
+                          ? "bg-white text-black shadow-md" 
+                          : "bg-[#DCF8C6] text-black shadow-md"
+                      }`}
+                    >
+                      {message.text && <p className="whitespace-pre-line text-sm sm:text-base">{message.text}</p>}
+        
+                      {message.component && (
+                        <div className="mt-2">
+                          {message.component}
+                        </div>
+                      )}
+                                    
+                      {message.options && (
+                        <div className="mt-2 sm:mt-3 flex flex-col gap-1.5 sm:gap-2">
+                          {message.options.map((option) => (
+                            <button
+                              key={option.value}
+                              onClick={() => handleOptionClick(option.value)}
+                              className="bg-gradient-to-r from-[#075E54] to-[#057064] text-white py-1.5 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-sm hover:from-[#128C7E] hover:to-[#25D366] transform
+                              transition-all duration-500 hover:scale-105 shadow-md flex items-center justify-center space-x-2"
+                            >
+                              <span>{option.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                        
+                      {message.input && message.sender === "bot" && (
+                        <div className="mt-2">
+                          <input
+                            type={message.input.type}
+                            placeholder={message.input.placeholder}
+                            value={message.input.value}
+                            onChange={(e) => message.input?.onChange(e.target.value)}
+                            maxLength={message.input.maxLength}
+                            className="w-full p-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                          />
+                        </div>
+                      )}
+                      
+                      <span className="text-[9px] sm:text-[10px] text-gray-500 absolute bottom-1 right-2">
+                        {formatTimestamp(message.timestamp)}
+                      </span>
                     </div>
                   </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
+                ))}
+                
+                {waitingForResponse && (
+                  <div className="flex justify-start mb-2 sm:mb-4">
+                    <div className="bg-white p-3 sm:p-4 rounded-lg shadow-md border-l-4 border-blue-400">
+                      <div className="flex items-center space-x-3">
+                        <div className="flex space-x-1">
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#075E54] rounded-full animate-bounce"></div>
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#128C7E] rounded-full animate-bounce delay-75"></div>
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#25D366] rounded-full animate-bounce delay-150"></div>
+                        </div>
+                        <span className="text-xs sm:text-sm text-gray-600">Processando sua solicitação...</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+             <div className="bg-gradient-to-r from-[#F0F2F5] to-[#E8EAED] p-2 sm:p-4 rounded-b-lg flex items-center space-x-2 sm:space-x-3 shadow-inner">
+              <div className="flex-1 relative">
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                  placeholder="Digite sua mensagem aqui..."
+                  className="w-full py-2 px-3 pr-10 sm:py-3 sm:px-4 sm:pr-12 rounded-full border-2 border-gray-300 focus:outline-none focus:border-[#075E54] focus:ring-2 focus:ring-[#075E54]/20 transition-all duration-300 shadow-sm text-sm sm:text-base"
+                />
+                {userInput.trim() && (
+                  <div className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500">
+                    {userInput.length}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={handleSendMessage}
+                disabled={!userInput.trim() || waitingForResponse}
+                className="bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white p-2 sm:p-3 rounded-full disabled:from-gray-400 disabled:to-gray-500 transition-all duration-300 transform hover:scale-110 shadow-lg"
+              >
+                <FaPaperPlane className="text-xs sm:text-sm" />
+              </button>
             </div>
-           <div className="bg-gradient-to-r from-[#F0F2F5] to-[#E8EAED] p-4 rounded-b-lg flex items-center space-x-3 shadow-inner">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                placeholder="Digite sua mensagem aqui..."
-                className="w-full py-3 px-4 pr-12 rounded-full border-2 border-gray-300 focus:outline-none focus:border-[#075E54] focus:ring-2 focus:ring-[#075E54]/20 transition-all duration-300 shadow-sm"
-              />
-              {userInput.trim() && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500">
-                  {userInput.length}
-                </div>
-              )}
-            </div>
-            <button
-              onClick={handleSendMessage}
-              disabled={!userInput.trim() || waitingForResponse}
-              className="bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white p-3 rounded-full disabled:from-gray-400 disabled:to-gray-500 transition-all duration-300 transform hover:scale-110 shadow-lg"
-            >
-              <FaPaperPlane className="text-sm" />
-            </button>
-          </div>
-            <div className="p-2 bg-gray-100 text-xs text-center text-gray-500">
-              Seus dados estão protegidos conforme a Lei Geral de Proteção de Dados (LGPD).
+              <div className="p-1.5 sm:p-2 bg-gray-100 text-xs text-center text-gray-500 rounded-b-lg">
+                Seus dados estão protegidos conforme a Lei Geral de Proteção de Dados (LGPD).
+              </div>
             </div>
           </div>
         </div>

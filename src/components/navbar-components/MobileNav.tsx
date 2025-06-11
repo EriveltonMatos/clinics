@@ -1,5 +1,5 @@
 "use client";
-import logoClinica from "../assets/logo-clinica.png";
+import logoClinica from "@/assets/logo-clinica.png";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CiMenuFries } from "react-icons/ci";
 import { Link as ScrollLink } from "react-scroll";
