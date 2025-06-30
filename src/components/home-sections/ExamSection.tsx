@@ -16,7 +16,7 @@ import Image from "next/image";
 export default function ExamSection() {
   const labExams = ["Ressonância", "Tomografia", "Ultrassom", "Raio-X"];
 
-  const imageExams = ["Sanguíneos", "Biópsias"];
+  const imageExams = ["Análises Clínicas", "Biópsias"];
 
   return (
     <section id="exam" className="bg-sky-50 md:h-screen">
@@ -26,8 +26,8 @@ export default function ExamSection() {
             <ScrollFromRight>
               <div className="w-32 md:w-[20vh] h-2 bg-[#1F2B6C] mb-8 mx-auto md:mx-0"></div>
               <div>
-                <h2 className="text-[#1F2B6C] tracking-widest md:leading-none md:text-[9vh]  font-bold mb-8 md:mb-[6vh] max-lg:text-center text-4xl">
-                  CONSULTAR <span className="text-[#159EEC]">EXAMES</span>
+                <h2 className="text-[#1F2B6C] tracking-wider md:leading-none md:text-[9vh]  font-bold mb-8 md:mb-[6vh] max-lg:text-center text-4xl">
+                  RESULTADO DE <span className="text-[#159EEC]">EXAME</span>
                 </h2>
               </div>
             </ScrollFromRight>
@@ -77,12 +77,12 @@ export default function ExamSection() {
                   </div>
 
                   <div className="relative  rounded-tl-3xl rounded-tr-3xl ">
-                    <div className="border border-[#FF0000] rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-3xl rgb-button2">
-                      <Link href="/maintenance">
-                        <button className="rgb-button2 text-white font-bold py-4 px-8 rounded-3xl shadow-lg border border-white transform transition-transform duration-300 hover:scale-110 flex items-center gap-1">
+                    <div className=" border border-[#FF0000] rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-3xl rgb-button2">
+                      <Link href="/login">
+                        <button className=" rgb-button2 text-white font-bold py-4 px-8 rounded-3xl shadow-lg border border-white transform transition-transform duration-300 hover:scale-110 flex items-center gap-1">
                           <MdBloodtype className="text-lg md:text-[4vh]" />
-                          <span className="text-ls md:text-[2vh] text-base">
-                            Exames Laboratóriais
+                          <span className=" text-ls md:text-[2vh] text-base">
+                            Exames Laboratoriais
                           </span>
                         </button>
                       </Link>

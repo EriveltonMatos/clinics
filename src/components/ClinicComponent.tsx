@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FaLocationDot } from "react-icons/fa6";
 
 interface ClinicComponentProps {
   imageSrc: string;
@@ -6,9 +7,10 @@ interface ClinicComponentProps {
   description: string[];
   address: string[];
   services: string[];
-  buttonLink?: string[]; // Agora é um array de links
+  buttonText?: string[];
+  buttonLink?: string[];
   reverse?: boolean;
-  imageBackground: string; // Propriedade para a imagem de fundo
+  imageBackground: string;
 }
 
 export default function ClinicComponent({
@@ -17,6 +19,7 @@ export default function ClinicComponent({
   description,
   address,
   services,
+  buttonText = [],
   buttonLink = [],
   reverse = false,
   imageBackground,
@@ -26,7 +29,7 @@ export default function ClinicComponent({
       <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
       <div
         className="absolute inset-0 bg-cover bg-center rounded-lg"
-        style={{ backgroundImage: `url(${imageBackground})`, opacity: 0.15 }} 
+        style={{ backgroundImage: `url(${imageBackground})`, opacity: 0.15 }}
       />
 
       <div
@@ -69,7 +72,6 @@ export default function ClinicComponent({
                 </p>
               ))}
             </div>
-
           </div>
           <div className="bg-gradient-to-r from-blue-800/70 to-indigo-800/70 rounded-lg p-4 backdrop-blur-sm border border-blue-700/20">
             <h3 className="text-xl md:text-2xl font-semibold text-white mb-4 flex items-center">
@@ -113,15 +115,26 @@ export default function ClinicComponent({
             </div>
           </div>
 
-         <div className="flex flex-wrap gap-4 mt-6">
-            {buttonLink.map((link, index) => (
-              <a key={index} href={link} target="_blank" rel="noopener noreferrer">
-                <button className="rgb-button text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition-transform duration-300 hover:scale-110">
-                  {index === 0 ? "Como Chegar" : "Segundo Endereço"}
-                </button>
-              </a>
-            ))}
-          </div>
+          {buttonLink.length > 0 && (
+            <div className="flex flex-wrap gap-4 mt-6">
+              {buttonLink.map((link, index) => (
+                <a
+                  key={index}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <button className="rgb-button text-white font-bold py-4 px-8 rounded-3xl shadow-lg transform transition-all duration-300 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300/50">
+                    <span className="flex items-center gap-2">
+                      {buttonText[index]}
+                      <FaLocationDot className="w-6 h-6 rounded-full border-black bg-sky-500 p-1" />
+                    </span>
+                  </button>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

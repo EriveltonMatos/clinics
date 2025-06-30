@@ -1,8 +1,9 @@
+
 "use client"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import carrossel1 from "@/assets/carrossel1.png";
+import carrossel1 from "@/assets/carrosel1.png"; // Importando a imagem do carrossel
 import Image from "next/image";
 //import { Link } from "react-router-dom";
 
@@ -41,7 +42,7 @@ export default function LandingPage() {
             <Image
               src={slide.image.src}
               alt={slide.alt}
-              className="w-full h-full object-center object-cover saturate-[1.5]"
+              className="w-full h-full object-center object-cover "
               height={5000}
               width={5000}
             />

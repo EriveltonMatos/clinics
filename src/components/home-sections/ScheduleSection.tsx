@@ -31,7 +31,7 @@ export default function ScheduleSection() {
           <div className="flex justify-center md:justify-normal space-x-20 text-lg max-xl:text-xs ">
             <div className="flex gap-8">
               <Link
-                href="/schedule"
+                href="/maintenance"
                 className="relative px-6 py-2 font-bold bg-blue-800 text-white border border-white group rounded-2xl overflow-hidden hover:border-[#159EEC] transition-all duration-300 flex items-center gap-2"
               >
                 <span className="relative z-10 group-hover:text-[#159EEC] transition-colors duration-300">

@@ -1,65 +1,136 @@
 import about1 from "@/assets/about/about1.jpg";
 import about2 from "@/assets/about/about2.jpg";
 import about3 from "@/assets/about/about3.jpg";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import {
+  FaLongArrowAltRight,
+  FaStethoscope,
+  FaTooth,
+  FaRunning,
+  FaBrain,
+  FaXRay,
+  FaFlask,
+} from "react-icons/fa";
 import unichristus from "@/assets/unichristus.jpg";
 
 import { ScrollFromBottom, ScrollFromLeft } from "../ScrollComponent";
 import Link from "next/link";
 import Image from "next/image";
+import { JSX } from "react";
+
+interface Clinic {
+  name: string;
+  icon: JSX.Element;
+}
+
+const clinics: Clinic[] = [
+  {
+    name: "Clínica Escola de Medicina",
+    icon: <FaStethoscope className="w-6 h-6" />,
+  },
+  {
+    name: "Clínica de Odontologia",
+    icon: <FaTooth className="w-6 h-6" />,
+  },
+  {
+    name: "Clínica de Fisioterapia",
+    icon: <FaRunning className="w-6 h-6" />,
+  },
+  {
+    name: "Clínica de Psicologia",
+    icon: <FaBrain className="w-6 h-6" />,
+  },
+  {
+    name: "Centro de Imagem e Diagnóstico",
+    icon: <FaXRay className="w-6 h-6" />,
+  },
+  {
+    name: "Laboratório de Análises Clínicas",
+    icon: <FaFlask className="w-6 h-6" />,
+  },
+];
 
 export default function AboutSection() {
   return (
-    <section id="about" className="md:min-h-screen gap-2 ">
+    <section id="about" className="md:min-h-screen ">
       <div
-        className="relative py-12 bg-blue-100 border-t-2 border-sky-50 md:min-h-screen md:h-auto h-[50rem]"
+        className="relative py-16 bg-gradient-to-r from-blue-50 to-cyan-50 border-t border-blue-900/90 md:min-h-screen md:h-auto h-auto shadow-[0_20px_50px_rgba(8,_112,_184,_0.15)]"
         style={{
           backgroundImage: `url(${unichristus.src})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          filter: "contrast(1.1) saturate(1.1)",
         }}
       >
-        <div className="absolute inset-0 bg-blue-950/90 opacity-90 brightness-50 mx-auto"></div>
-        <div className="relative mx-auto md:py-10 w-3/4 sm:w-3/4">
-          <div className="flex flex-col justify-center items-center ">
+        <div className="absolute inset-0  bg-[#011736]/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+
+        <div className="relative mx-auto md:py-10 w-3/4 sm:w-3/4 drop-shadow-2xl">
+          <div className="flex flex-col justify-center items-center">
             <div className="sm:w-2/2 md:w-3/4 text-center">
               <div>
                 <ScrollFromBottom>
-                  <h2 className="text-white md:tracking-widest tracking-widest font-bold text-4xl md:text-[6.7vh] md:mb-[3.5vh] w-full text-center Fraunces leading-none mb-6">
-                    CLÍNICAS ESCOLA UNICHRISTUS
+                  <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                    CLÍNICAS ESCOLA
+                    <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-100 bg-clip-text text-transparent">
+                      UNICHRISTUS
+                    </span>
                   </h2>
                 </ScrollFromBottom>
               </div>
               <div>
                 <ScrollFromBottom>
-                  <h1 className="text-[#00E0FF] text-base font-sans font-bold tracking-wider mb-8 md:text-[3vh] md:mb-[3.5vh]  pb-2 inline-block relative">
-                    Onde o cuidado com sua saúde encontra excelência e
-                    dedicação.
+                  <h1 className="text-[#00E0FF] text-base font-sans font-bold tracking-wider mb-8 md:text-[2vh] md:mb-[3.5vh] pb-2 inline-block relative">
+                    Excelência em ensino, cuidado e compromisso com a saúde da
+                    comunidade.
                     <svg
-                  className="absolute -bottom-1 left-0 w-full h-2 text-[#159EEC]/60"
-                  viewBox="0 0 100 10"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 5 Q 25 10, 50 5 Q 75 0, 100 5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeWidth="2"
-                  />
-                </svg>
+                      className="absolute -bottom-1 left-0 w-full h-2 text-[#159EEC]/60"
+                      viewBox="0 0 100 10"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M0 5 Q 25 10, 50 5 Q 75 0, 100 5"
+                        stroke="currentColor"
+                        fill="none"
+                        strokeWidth="2"
+                      />
+                    </svg>
                   </h1>
                 </ScrollFromBottom>
               </div>
               <div>
                 <ScrollFromBottom>
-                  <h1 className="text-white md:text-[2vh] mb-8 md:mb-[5vh] text-sm leading-relaxed md:w-full bg-black/20 p-4 rounded-lg">
-                    As Clínicas Unichristus representam a excelência em
-                    atendimento médico em Fortaleza, oferecendo uma ampla gama
-                    de serviços de saúde de alta qualidade. Nossa rede de
-                    clínicas é um centro de referência que combina atendimento
-                    humanizado, tecnologia de ponta e expertise profissional.
+                  <h1 className="text-white md:text-[1.5vh] mb-8 md:mb-[5vh] text-sm leading-relaxed md:w-full bg-black/20 p-4 rounded-lg">
+                    As Clínicas Escola Unichristus representam um modelo de
+                    integração entre formação acadêmica, atenção à saúde e
+                    responsabilidade social. Em Fortaleza, somos referência em
+                    atendimento humanizado e tecnicamente qualificado, com
+                    infraestrutura moderna e profissionais experientes
+                    orientando o exercício prático de estudantes em formação.
                   </h1>
                 </ScrollFromBottom>
+              </div>
+            </div>
+
+            <div className="w-auto mb-10 md:mb-[5vh]">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
+                {clinics.map((clinic, index) => (
+                  <ScrollFromLeft key={index}>
+                    <div
+                      className="flex items-center justify-center group bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-cyan-500/20 
+                                  hover:bg-white/15 hover:border-cyan-500/40 transition-all duration-300
+                                  hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300 ">
+                          {clinic.icon}
+                        </div>
+                        <h4 className="text-white font-semibold text-sm md:text-sm leading-tight">
+                          {clinic.name}
+                        </h4>
+                      </div>
+                    </div>
+                  </ScrollFromLeft>
+                ))}
               </div>
             </div>
 
@@ -67,13 +138,13 @@ export default function AboutSection() {
               <div className="mb-10 md:mb-[5vh]">
                 <Link
                   href="/clinics"
-                  className="group relative inline-flex items-center gap-3 rounded-2xl bg-blue-950 md:px-8 px-4 py-[1.5vh] md:text-[2vh] text-sm font-bold 
+                  className="group relative inline-flex items-center gap-3 rounded-2xl bg-blue-950 md:px-8 px-4 py-[1.5vh] md:text-[1.7vh] text-sm font-bold 
                             ring-2 ring-cyan-500 transition-all duration-300
                             hover:shadow-[0_0_10px_rgba(34,211,238,0.2),inset_0_0_8px_rgba(34,211,238,0.2)]
                           hover:bg-cyan-500/5"
                 >
                   <span className="relative text-cyan-500 transition-all duration-300 group-hover:text-white">
-                    Conheça todas as clínicas
+                    Conheça nossas unidades especializadas
                   </span>
                   <FaLongArrowAltRight
                     className="relative h-6 w-6 text-cyan-500 transition-all duration-300 
@@ -85,8 +156,9 @@ export default function AboutSection() {
                 </Link>
               </div>
             </ScrollFromLeft>
+
             <div className="relative w-1/2 flex justify-center items-center space-x-4">
-            <Image
+              <Image
                 src={about1}
                 alt="Imagem Sobre Nós"
                 width={400}

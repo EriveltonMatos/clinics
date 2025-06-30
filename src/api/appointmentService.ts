@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { spec } from 'node:test/reporters';
 
 const CORE_API_BASE_URL = process.env.NEXT_PUBLIC_API_CORE_URL;
-const HEALTH_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const HEALTH_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_TEST_URL;
 
 const coreApiClient = axios.create({
   baseURL: CORE_API_BASE_URL,

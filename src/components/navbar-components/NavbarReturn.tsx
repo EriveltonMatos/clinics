@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import unichristusNavbar from "../assets/u-unichristus.png";
+import unichristusNavbar from "@/assets/u-unichristus.png";
 import Link from "next/link";
 import Image from "next/image";
 

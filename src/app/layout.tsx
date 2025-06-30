@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/api/AuthContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 
 export const metadata: Metadata = {
@@ -19,7 +20,14 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
       </AuthProvider>
       </body>
     </html>

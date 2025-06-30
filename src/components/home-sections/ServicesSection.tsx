@@ -1,4 +1,4 @@
-"use client"
+{/*"use client"
 import ressonancia from "@/assets/exams/resonance/ressonancia.jpeg";
 import hemograma from "@/assets/exams/blood/hemograma.jpg";
 import colesterol from "@/assets/exams/blood/colesterol.jpg";
@@ -89,7 +89,7 @@ export default function ServicesSection() {
                   description="O hemograma é um exame de sangue que fornece informações sobre os principais componentes do sangue, como glóbulos vermelhos, glóbulos brancos e plaquetas. 
                   Ele é útil para diagnosticar e monitorar diversas condições médicas."
                   imageCard={hemograma.src}
-                  additionalContent={<ImagingClinicCard />}
+                  additionalContent={<HealthClinicCard />}
                 />
               </ScrollFromLeft>
 
@@ -205,3 +205,4 @@ export default function ServicesSection() {
     </section>
   );
 }
+*/}

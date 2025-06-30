@@ -3,17 +3,18 @@ import { Carousel, CarouselResponsiveOption } from "primereact/carousel";
 import clinicaOdonto from "@/assets/unidades/clinica-odonto.jpg";
 import clinicaSaude from "@/assets/unidades/ces.jpeg";
 import clinicaPsicologia from "@/assets/unidades/clinica-psicologia.jpg";
-import clinicaFisioterapia from "@/assets/unidades/clinica-fisio.jpg";
+import clinicaFisioterapia from "@/assets/unidades/clinica-fisio.jpeg";
 import clinicaFisioteraria2 from "@/assets/unidades/clinica-fisio.png";
 import unitsBackground from "@/assets/units-background.png";
 import clinicaCesiu from "@/assets/unidades/cesiu.jpeg";
+import clinicaLeac from "@/assets/unidades/leac.jpg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { ScrollFromBottom } from "../ScrollComponent";
 import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
 
 export default function UnitsSection() {
-  const images = [
+  const cards = [
     {
       src: clinicaOdonto.src,
       alt: "Clínica Escola de Odontologia",
@@ -38,13 +39,13 @@ export default function UnitsSection() {
     {
       src: clinicaFisioterapia.src,
       alt: "Clínica Escola de Fisioterapia - Campus Parque Ecológico",
-      description: "Rua Vereador Paulo Mamede - Cocó, Fortaleza - CE,60192-350",
-      url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede+-+Cocó,+Fortaleza+-+CE,+60192-350",
+      description: "Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE,60192-350",
+      url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede,130+-+Cocó,+Fortaleza+-+CE,+60192-350",
     },
     {
       src: clinicaFisioteraria2.src,
-      alt: "Clínica Escola de Fisioterapia - Campus Campus Parquelândia",
-      description: "Rua uruguai, 11 - Bela vista - CEP: 60442-590",
+      alt: "Clínica Escola de Fisioterapia - Campus Parquelândia",
+      description: "Rua Uruguai, 11 - Bela vista - CEP: 60442-590",
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Uruguai,11+-+Bela+Vista,+Fortaleza+-+CE,+60442-590",
     },
     {
@@ -54,7 +55,17 @@ export default function UnitsSection() {
         "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
       url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
     },
+    {
+      src: clinicaLeac.src,
+      alt: "Laboratório Escola de Análises Clínicas - LEAC",
+      description:
+        "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
+      url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
+    },
   ];
+  
+  const images = [...cards];
+
 
   const responsiveOptions: CarouselResponsiveOption[] = [
     {
@@ -151,7 +162,7 @@ export default function UnitsSection() {
                 <Carousel
                   value={images}
                   numVisible={3}
-                  numScroll={3}
+                  numScroll={1}
                   responsiveOptions={responsiveOptions}
                   circular
                   autoplayInterval={5000}

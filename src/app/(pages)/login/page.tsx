@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Lock, LogIn, User } from "lucide-react";
 import footerBackground from "@/assets/footer-background.jpg";
-import logoClinicaBranca from "@/assets/logo-branca.png";
+import logoClinicaBranca from "@/assets/logo-unichristus.png";
 import Image from "next/image";
 
 export default function LoginPage() {
@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  // Efeito para redirecionar usuário já autenticado
   useEffect(() => {
     if (!loading && isAuthenticated) {
       router.push("/dashboard");
@@ -28,13 +27,11 @@ export default function LoginPage() {
     
     try {
       await login(cpf, password);
-      // Após login bem-sucedido, o useEffect acima vai redirecionar
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao fazer login");
     }
   };
 
-  // Se já estiver autenticado, não mostra nada enquanto redireciona
   if (isAuthenticated) {
     return null;
   }

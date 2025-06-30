@@ -2,7 +2,7 @@ import servicesBackground from "@/assets/services-background.png";
 import NavbarReturn from "@/components/navbar-components/NavbarReturn";
 import MobileNav from "@/components/navbar-components/MobileNav";
 import { FaArrowLeft } from "react-icons/fa";
-import NavBar from "@/components/Navbar";
+import NavBar from "@/components/navbar-components/Navbar";
 import FooterSection from "@/components/home-sections/FooterSection";
 import ServicesTabs from "@/components/ServicesTabs";
 import Image from "next/image";

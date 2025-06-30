@@ -71,7 +71,7 @@ export default function MobileNav({ links }: MobileNavProps) {
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md"
             >
               <MdLocationOn className="text-xl" />
-              Conheça Nossas Unidades
+              Conheça nossas unidades especializadas
             </Link>
             <a
               href="https://unichristus.naja.app/portal/login"
@@ -91,14 +91,14 @@ export default function MobileNav({ links }: MobileNavProps) {
               <FaFlask className="text-xl" />
               Exames Laboratoriais
             </Link>
-            <Link
+            {/*<Link
               href="/services"
               className="w-full flex items-center justify-center gap-2 text-base font-medium text-white bg-cyan-600 hover:bg-cyan-700 
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md border border-cyan-500"
             >
               <MdMedicalServices className="text-xl" />
               Conheça Todos os Serviços
-            </Link>
+            </Link> */}
           </div>
         </SheetContent>
       </Sheet>

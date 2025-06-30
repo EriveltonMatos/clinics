@@ -16,10 +16,6 @@ interface ContactDialogWhatsappProps {
 export default function ContactDialogWhatsapp({
   contacts = [
     { clinica: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
-    { clinica: "Clínica Escola de Saúde e Imagem (CESIU)", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
-    { clinica: "Clínica Escola de Odontologia", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
-    { clinica: "Clínica Escola de Fisioterapia", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
-    { clinica: "Clínica Escola de Saúde (CES)", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
   ],
   visible,
   onHide

@@ -61,7 +61,7 @@ export default function SecondNavbar({ links, logoSrc }: SecondNavbarProps) {
         isScrolled ? "top-0 shadow-md" : "top-[4rem]"
       } bg-[#142960] w-full flex justify-end items-center h-16 fixed z-30 transition-all duration-300 ease-in-out bg-opacity-90 max-lg:hidden`}
     >
-      <div className="mr-auto mx-72">
+      <div className="mr-auto mx-24">
         <a
           href="https://www.unichristus.edu.br/"
           target="_blank"

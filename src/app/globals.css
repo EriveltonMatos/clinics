@@ -43,16 +43,28 @@ body {
     animation: gradient 5s ease infinite;
 }
 
-.custom-carousel .p-carousel-indicators {
-  display: flex !important;
-  justify-content: center;
-  bottom: 10px; /* Ajuste conforme necessário */
-}
 
 .rgb-button2 {
   background: linear-gradient(45deg, #FF0000, #DB5B18, #FF0000);
   background-size: 600% 600%;
   animation: gradient 5s ease infinite;
+}
+
+/* Define cor escura para as setas */
+.p-carousel-prev, .p-carousel-next {
+  color: #111 !important; /* cor escura */
+}
+
+/* Indicadores normais */
+.p-carousel-indicators .p-carousel-indicator button {
+  background-color: #000 !important; 
+  opacity: 0.5; 
+}
+
+/* Indicador ativo (selecionado) */
+.p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background-color: #1F2B6C !important; 
+  opacity: 1;
 }
 
 @keyframes gradient {

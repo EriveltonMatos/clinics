@@ -8,7 +8,6 @@ interface ScrollAnimationProps {
   className?: string;
 }
 
-// Função 1: Animação de cima para baixo
 export const ScrollFromTop = ({
   children,
   className = "",
@@ -29,7 +28,6 @@ export const ScrollFromTop = ({
   );
 };
 
-// Função 2: Animação de baixo para cima
 export const ScrollFromBottom = ({
   children,
   className = "",
@@ -50,7 +48,6 @@ export const ScrollFromBottom = ({
   );
 };
 
-// Função 3: Animação da esquerda para a direita
 export const ScrollFromLeft = ({
   children,
   className = "",
@@ -71,7 +68,6 @@ export const ScrollFromLeft = ({
   );
 };
 
-// Função 4: Animação da direita para a esquerda
 export const ScrollFromRight = ({
   children,
   className = "",

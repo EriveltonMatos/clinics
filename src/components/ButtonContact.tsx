@@ -5,8 +5,8 @@ import { Toast } from 'primereact/toast';
 import { MenuItem } from 'primereact/menuitem';
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import { BsFillTelephoneFill } from "react-icons/bs";
-import ContactDialog from './ContactDialog';
-import ContactDialogWhatsapp from './ContactDialogWhatsapp';
+import ContactDialog from './contact-dialog-components/ContactDialog';
+import ContactDialogWhatsapp from './contact-dialog-components/ContactDialogWhatsapp';
 
 export default function ContactSpeedDial() {
     const toast = useRef<Toast>(null);
