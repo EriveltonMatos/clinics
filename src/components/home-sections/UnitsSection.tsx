@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import { Carousel, CarouselResponsiveOption } from "primereact/carousel";
 import clinicaOdonto from "@/assets/unidades/clinica-odonto.jpg";
 import clinicaSaude from "@/assets/unidades/ces.jpeg";
-import clinicaPsicologia from "@/assets/unidades/clinica-psicologia.jpg";
+import clinicaPsicologia from "@/assets/unidades/clinica-psicologia-unidade.jpg";
 import clinicaFisioterapia from "@/assets/unidades/clinica-fisio.jpeg";
 import clinicaFisioteraria2 from "@/assets/unidades/clinica-fisio.png";
 import unitsBackground from "@/assets/units-background.png";
@@ -39,7 +39,8 @@ export default function UnitsSection() {
     {
       src: clinicaFisioterapia.src,
       alt: "Clínica Escola de Fisioterapia - Campus Parque Ecológico",
-      description: "Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE,60192-350",
+      description:
+        "Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE,60192-350",
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede,130+-+Cocó,+Fortaleza+-+CE,+60192-350",
     },
     {
@@ -63,9 +64,8 @@ export default function UnitsSection() {
       url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
     },
   ];
-  
-  const images = [...cards];
 
+  const images = [...cards];
 
   const responsiveOptions: CarouselResponsiveOption[] = [
     {
@@ -124,9 +124,11 @@ export default function UnitsSection() {
             Como Chegar
           </a>
         </div>
-        <h4 className="md:text-[2.2vh]  text-[1.8vh] font-bold mt-6 text-[#1F2B6C] p-0.5">{image.alt}</h4>
+        <h4 className="md:text-[2.2vh]  text-[1.8vh] font-bold mt-6 text-[#1F2B6C] p-0.5">
+          {image.alt}
+        </h4>
         <p className="md:text-[1.5vh] text-[1.5vh] p-5 whitespace-pre-line text-gray-700 flex justify-center gap-1">
-        <FaLocationDot/>
+          <FaLocationDot />
           {image.description}
         </p>
       </div>
