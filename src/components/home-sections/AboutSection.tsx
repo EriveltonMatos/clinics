@@ -28,7 +28,7 @@ const clinics: Clinic[] = [
     icon: <FaStethoscope className="w-6 h-6" />,
   },
   {
-    name: "Clínica de Odontologia",
+    name: "Clínica Escola de Odontologia",
     icon: <FaTooth className="w-6 h-6" />,
   },
   {

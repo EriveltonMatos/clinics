@@ -90,7 +90,7 @@ export default function Clinics() {
             title="Clínica Escola de Odontologia"
             description={[
               "A Clínica Escola de Odontologia da Unichristus (CEO) é um complexo odontológico moderno na qual os alunos(as) de graduação e pós-graduação desenvolvem as mais atuais técnicas odontológicas orientados por profissionais experientes, com a missão de tratar o paciente de forma completa, trazendo bem-estar e transformando sorrisos.",
-              "São 100 estações odontológicas, onde são realizados, mensalmente, mais de 2800 atendimentos gratuitos e a valores acessíveis nas mais diversas especialidades.",
+              "São 117 estações odontológicas, onde são realizados, mensalmente, mais de 2800 atendimentos gratuitos e a valores acessíveis nas mais diversas especialidades.",
             ]}
             address={[
               "Nossa unidade central está localizada no endereço: Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE, 60192-350",
@@ -257,7 +257,7 @@ export default function Clinics() {
             ]}
             services={[
               "Atendimento em grupo",
-              "avaliação psicológica",
+              "Avaliação Psicológica",
               "Terapia de Casal",
               "Orientação Profissional",
               "Atendimento individual de crianças, adolescentes, adultos e idosos",
