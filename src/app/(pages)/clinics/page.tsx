@@ -279,15 +279,15 @@ export default function Clinics() {
             imageSrc={clinicaLeac.src}
             title="LEAC - Laboratório Escola de Análises Clínicas"
             description={[
-              "Com uma estrutura pedagógica inovadora, desde 2016, o LEAC atua como um importante suporte aos serviços de saúde da Clínica Escola de Saúde (CES) e da Clínica Escola de Odontologia (CEO). Através da realização de exames laboratoriais gratuitos, contribui para o diagnóstico de pacientes que buscam atendimento nessas unidades.",
+              "Desde 2016, o Laboratório Escola de Análises Clínicas (LEAC) atua como parceiro estratégico dos serviços de saúde da Clínica Escola de Saúde (CES) e da Clínica Escola de Odontologia (CEO). Com uma estrutura moderna e alinhada às melhores práticas de qualidade, oferece serviços laboratoriais que apoiam o diagnóstico e o cuidado com os pacientes, além de contribuir com a formação de profissionais altamente qualificados.",
             ]}
             address={[
               "O agendamento para coleta deve ser feito diretamente na clínica onde ocorre os atendimentos:",
               "Clínica Escola de Saúde e Imagem Unichristus (CESIU) / Telefones: 3306-8932 / 3306-8933 / Endereço: Rua Vicente Linhares, 308 - Aldeota.",
             ]}
             services={[
-              "Fisioterapia em Traumato-ortopedia",
-              "Fisioterapia Esportiva",
+              "Colesterol Total",
+              "Frações",
               "Triglicerídeos",
               "Hemoglobina Glicada (HbA1c)",
               "Creatinina",

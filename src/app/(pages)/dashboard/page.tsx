@@ -14,7 +14,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  BarChart3,
   Calendar,
   ClipboardList,
   ClipboardX,
@@ -23,10 +22,8 @@ import {
   Microscope,
   Layers,
   Clock,
-  TrendingUp,
   Activity,
   CheckCircle2,
-  User,
 } from "lucide-react";
 import { RequisitionTest, Requisition, GroupedTests } from '@/types/types';
 import { ModeToggle } from "@/components/ModeToggle";
@@ -47,6 +44,8 @@ export default function Dashboard() {
       year: 'numeric'
     });
   };
+
+  const userInitial = user?.fullname.charAt(0).toUpperCase();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -134,15 +133,12 @@ export default function Dashboard() {
     );
   }
 
-  const userInitial = user?.fullname.charAt(0).toUpperCase();
-
   return (
     <section className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 dark:from-slate-900 dark:to-slate-800">
       <NavBar />
       <MobileNav
         links={[{ href: "/", label: "Voltar ao site", icon: <FaArrowLeft /> }]}
       />
-      
       <div className="min-h-screen pt-20 pb-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-4">
@@ -342,10 +338,7 @@ export default function Dashboard() {
                                                     </div>
                                                     
                                                     <div className="flex flex-col gap-2 mt-2 md:mt-0 md:flex-row md:items-center md:justify-between w-full md:w-auto">
-                                                      <div className="flex items-center gap-2">
-                                                        <p className="text-blue-700 dark:text-blue-300 text-sm">Status:</p>
-                                                        <TestStatusBadge status={test.testStatus} />
-                                                      </div>
+                                                      
                                                       {estimatedDate && test.testStatus !== TestStatus.CON && test.testStatus !== TestStatus.DEL && (
                                                         <div className="flex items-center gap-2">
                                                           <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
@@ -354,6 +347,10 @@ export default function Dashboard() {
                                                           </p>
                                                         </div>
                                                       )}
+                                                      <div className="flex items-center gap-2">
+                                                        <p className="text-blue-700 dark:text-blue-300 text-sm">Status:</p>
+                                                        <TestStatusBadge status={test.testStatus} />
+                                                      </div>
                                                     </div>
                                                   </div>
                                                 );

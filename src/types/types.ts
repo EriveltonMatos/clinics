@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-
-// ===== BASE ENTITIES =====
 export interface BaseEntity {
   id: string;
   disabled?: boolean;
@@ -9,8 +7,6 @@ export interface BaseEntity {
 export interface BaseDescriptionEntity extends BaseEntity {
   description: string;
 }
-
-// ===== CORE ENTITIES =====
 export interface Person extends BaseEntity {
   fullname: string;
   cpf: string;
@@ -27,7 +23,6 @@ export interface ProfessionalPerson extends BaseEntity {
   fullname: string;
 }
 
-// ===== SPECIALTY & FACILITY =====
 export interface SpecialtyType extends BaseDescriptionEntity {}
 
 export interface Specialty extends BaseDescriptionEntity {
@@ -44,7 +39,6 @@ export interface Facility extends BaseEntity {
   specialty: Specialty[];
 }
 
-// ===== CONTACT =====
 export type ContactType = 'EMAIL' | 'TELEFONE' | 'CELULAR' | 'WHATSAPP';
 
 export interface ContactTypeEntity extends BaseDescriptionEntity {}
@@ -60,7 +54,6 @@ export interface DetailedPerson {
   contact: Contact[];
 }
 
-// ===== APPOINTMENTS =====
 export type ShiftType = 'MOR' | 'AFT' | 'EVE';
 export type AppointmentType = 'FIR' | 'RET';
 
@@ -82,8 +75,6 @@ export interface AvailableAppointment {
   appointmentType: AppointmentType;
 }
 
-// Removida interface Appointment duplicada - use AppointmentData ou AvailableAppointment
-
 export interface CancellationReason extends BaseDescriptionEntity {}
 
 export interface CancellationData {
@@ -92,8 +83,6 @@ export interface CancellationData {
   };
   patientNotes?: string;
 }
-
-// ===== TESTS & REQUISITIONS =====
 export interface Test extends BaseDescriptionEntity {
   abbreviation: string;
   grouping?: string;
@@ -115,8 +104,6 @@ export interface Requisition extends BaseEntity {
 export interface GroupedTests {
   [key: string]: RequisitionTest[];
 }
-
-// ===== CHAT =====
 export interface ChatOption {
   value: string;
   label: string;
@@ -141,8 +128,6 @@ export interface Message {
   component?: ReactNode;
   timestamp: Date;
 }
-
-// ===== API RESPONSES =====
 export interface ExistingAppointmentResponse {
   hasAppointment: boolean;
   appointmentData?: AppointmentData[];
