@@ -25,7 +25,7 @@ COPY . .
 
 ENV NODE_ENV=production
 
-COPY .env.prodution .env.production
+COPY .env.production .env.production
 RUN npm run build
 
 FROM base AS runner
