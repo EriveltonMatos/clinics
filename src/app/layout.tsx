@@ -4,6 +4,8 @@ import { AuthProvider } from "@/api/AuthContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ressonancia from "../assets/ressonancia.jpg";
 
+const imageUrl = `${ressonancia.src}?v=${Date.now()}`;
+
 export const metadata: Metadata = {
   title: "Clínicas Unichristus",
   description: "Portal de clínicas escola Unichristus",
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "Clínicas Unichristus",
     images: [
       {
-        url: ressonancia.src, 
+        url: imageUrl, 
         width: 1000,
         height: 630,
         alt: "Clínicas Unichristus",
