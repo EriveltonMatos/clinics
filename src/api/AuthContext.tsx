@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const encodedPassword = btoa(password);
 
       const response = await fetch(
-        `${API_URL}/patient/requisitions?cpf=${cpf}&password=${password}`, // Enviar a senha sem codificação para a API
+        `${API_URL}/patient/requisitions?cpf=${cpf}&password=${password}`, 
         {
           method: 'GET',
           headers: {

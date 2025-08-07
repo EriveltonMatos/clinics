@@ -78,7 +78,7 @@ export default function ExamSection() {
 
                   <div className="relative  rounded-tl-3xl rounded-tr-3xl ">
                     <div className=" border border-[#FF0000] rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-3xl rgb-button2">
-                      <Link href="/login">
+                      <Link href="/maintenance">
                         <button className=" rgb-button2 text-white font-bold py-4 px-8 rounded-3xl shadow-lg border border-white transform transition-transform duration-300 hover:scale-110 flex items-center gap-1">
                           <MdBloodtype className="text-lg md:text-[4vh]" />
                           <span className=" text-ls md:text-[2vh] text-base">
