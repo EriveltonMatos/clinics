@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 
 export const metadata: Metadata = {
-  title: "Clinicas Unichristus",
+  title: "Clínicas Unichristus",
   description: "Portal de clínicas escola Unichristus",
 };
 
