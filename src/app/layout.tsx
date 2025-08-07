@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: "Clínicas Unichristus",
     images: [
       {
-        url: "https://clinicas.unichristus.edu.br/public/og-image.jpg",
+        url: "https://clinicas.unichristus.edu.br/og-image.jpg",
         width: 1000,
         height: 630,
         alt: "Clínicas Unichristus",
