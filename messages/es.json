@@ -1,0 +1,310 @@
+{
+  "Navbar": {
+    "about": "Sobre Nosotros",
+    "exam": "Resultado de Examen",
+    "unit": "Unidades"
+  },
+
+  "About": {
+    "title": "CLÍNICAS ESCUELA",
+    "subtitle": "UNICHRISTUS",
+    "description": "Excelencia en enseñanza, atención y compromiso con la salud de la comunidad.",
+    "about": "Las Clínicas Escuela Unichristus representan un modelo de integración entre formación académica, atención sanitaria y responsabilidad social. En Fortaleza, somos referencia en atención humanizada y técnicamente cualificada, con infraestructura moderna y profesionales experimentados orientando el ejercicio práctico de estudiantes en formación.",
+    "units": {
+      "medicine": "Clínica Escuela de Medicina",
+      "dentistry": "Clínica Escuela de Odontología",
+      "physiotherapy": "Clínica de Fisioterapia",
+      "psychology": "Clínica de Psicología",
+      "imaging": "Centro de Imagen y Diagnóstico",
+      "lab": "Laboratorio de Análisis Clínicos"
+    },
+    "cta": "Conozca nuestras unidades especializadas"
+  },
+
+  "ExamResults": {
+    "title": "RESULTADO DE",
+    "subtitle": "EXAMEN",
+    "description": "Las Clínicas Unichristus ofrecen diversos exámenes de laboratorio e imagen para usted y su familia. Contamos con un equipo de profesionales altamente cualificados y listos para atenderle.",
+    "imageExams": {
+      "title": "Exámenes de Imagen",
+      "items": {
+        "mri": "Resonancia",
+        "ct": "Tomografía",
+        "ultrasound": "Ecografía",
+        "xray": "Rayos X"
+      }
+    },
+    "labExams": {
+      "title": "Exámenes de Laboratorio",
+      "items": {
+        "clinicalAnalysis": "Análisis Clínicos",
+        "biopsies": "Biopsias"
+      }
+    }
+  },
+
+  "Units": {
+    "title": "Nuestras",
+    "subtitle": "Unidades",
+    "directions": "Cómo Llegar",
+    "cards": {
+      "dentistry": {
+        "name": "Clínica Escuela de Odontología",
+        "address": "Calle Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE, 60192-350"
+      },
+      "health": {
+        "name": "Clínica Escuela de Salud",
+        "address": "Calle Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
+      },
+      "psychology": {
+        "name": "Servicio Escuela de Psicología Aplicada (SEPA)",
+        "address": "Av. Des. Moreira, 2120 - Aldeota, Fortaleza - CE, 60170-002"
+      },
+      "physiotherapyEcological": {
+        "name": "Clínica Escuela de Fisioterapia - Campus Parque Ecológico",
+        "address": "Calle Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE,60192-350"
+      },
+      "physiotherapyParquelandia": {
+        "name": "Clínica Escuela de Fisioterapia - Campus Parquelândia",
+        "address": "Calle Uruguay, 11 - Bela Vista - CEP: 60442-590"
+      },
+      "imaging": {
+        "name": "Clínica Escuela de Salud e Imagen (CESIU)",
+        "address": "Calle Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
+      },
+      "laboratory": {
+        "name": "Laboratorio Escuela de Análisis Clínicos - LEAC",
+        "address": "Calle Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
+      }
+    }
+  },
+
+  "Footer": {
+    "description": "Unichristus © 2025. Todos los derechos reservados.",
+    "about": "Desarrollado por LIT – Laboratorio de Innovaciones Tecnológicas"
+  },
+
+  "ContactDialog": {
+    "phoneHeader": "Contactos de las Clínicas",
+    "emailHeader": "E-mails de las Clínicas",
+    "whatsappHeader": "WhatsApp de las Clínicas",
+    "phoneLabel": "Teléfono:",
+    "phone": "Teléfono",
+    "emailLabel": "E-mail:",
+    "phoneDescription": "Información de Contacto de las clínicas:",
+    "whatsappDescription": "Elija una de nuestras clínicas para iniciar una atención vía WhatsApp:",
+    "emailDescription": "Información de E-mail de las clínicas:",
+    "clinics": {
+      "cesiu": "Clínica Escuela de Salud e Imagen (CESIU)",
+      "sepa": "Servicio Escuela de Psicología Aplicada (SEPA)",
+      "dentistry": "Clínica Escuela de Odontología",
+      "healthClinic": "Clínica Escuela de Salud (CES)",
+      "physiotherapyEcological": "Clínica Escuela de Fisioterapia - Campus Parque Ecológico",
+      "physiotherapyParquelandia": "Clínica Escuela de Fisioterapia - Campus Parquelândia"
+    }
+  },
+
+  "MobileNav": {
+    "units": "Conozca nuestras unidades especializadas",
+    "imageExam": "Exámenes de Imagen",
+    "labExams": "Exámenes de Laboratorio"
+  },
+
+  "Clinics": {
+    "title": "EXCELENCIA EN",
+    "titleHighlight": "SALUD",
+    "subtitle": "CERCA DE",
+    "subtitleHighlight": "USTED",
+    "description": "Clínicas modernas y equipadas, con profesionales dedicados al cuidado completo de su salud y de su familia.",
+    "badgeText": "CLÍNICAS ESCUELAS UNICHRISTUS",
+    "units": {
+      "title": "Nuestras",
+      "titleHighlight": "Unidades"
+    },
+    "dentistry": {
+      "title": "Clínica Escuela de Odontología",
+      "description": [
+        "La Clínica Escuela de Odontología de Unichristus (CEO) es un complejo odontológico moderno en el cual los alumnos(as) de pregrado y posgrado desarrollan las más actuales técnicas odontológicas orientados por profesionales experimentados, con la misión de tratar al paciente de forma completa, brindando bienestar y transformando sonrisas.",
+        "Son 117 estaciones odontológicas, donde se realizan, mensualmente, más de 2800 atenciones gratuitas y a valores accesibles en las más diversas especialidades."
+      ],
+      "address": [
+        "Nuestra unidad central está ubicada en la dirección: Calle Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE, 60192-350"
+      ],
+      "services": [
+        "Triaje Odontológico",
+        "Promoción de la Salud",
+        "Odontología Restauradora",
+        "Periodoncia",
+        "Endodoncia",
+        "Prótesis Dental",
+        "Prótesis Maxilofacial",
+        "Cirugía",
+        "Radiología",
+        "Tratamiento de Pacientes con Necesidades Especiales",
+        "Implantología",
+        "Ortodoncia",
+        "Estética",
+        "Salud Colectiva",
+        "Dolor y Disfunciones de la ATM",
+        "Odontología Hospitalaria",
+        "Estomatología",
+        "Odontopediatría",
+        "Ortopedia Funcional de los Maxilares",
+        "Patología Bucal",
+        "Odontogeriatría",
+        "Salud y Educación Sexual",
+        "Armonización Orofacial"
+      ],
+      "buttonText": ["Cómo llegar"]
+    },
+    "health": {
+      "title": "Clínica Escuela de Salud",
+      "description": [
+        "En la Clínica Escuela de Salud de Unichristus (CES), los estudiantes(as) de los cursos de Enfermería, Medicina, Nutrición y Psicología realizan atenciones supervisadas por profesores(as) especialistas, reconocidos por su excelencia académica y profesional. El enfoque está en el cuidado integral, con énfasis en la humanización, acogida y bienestar del paciente.",
+        "La CES ofrece consultas en 13 especialidades médicas, proporcionando a la comunidad servicios de salud con calidad, ética y compromiso social.",
+        "Se destacan entre sus acciones dos programas de gran relevancia comunitaria:",
+        "• Servicio de Atención Especializada (SAE) en ITS/SIDA, desarrollado en alianza con el Sistema Único de Salud (SUS), con oferta de seguimiento integral y gratuito a personas que viven con infecciones de transmisión sexual.",
+        "• Programa de Prevención del Cáncer Ginecológico, dirigido a la detección precoz, rastreo y monitoreo de mujeres con mayor riesgo para neoplasias del tracto genital inferior."
+      ],
+      "address": [
+        "Nuestra unidad central está ubicada en la dirección: Calle Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
+      ],
+      "services": [
+        "Pediatría",
+        "Ginecología",
+        "Cardiología",
+        "Medicina Interna",
+        "Dermatología",
+        "Endocrinología",
+        "Gastroenterología",
+        "Geriatría",
+        "Infectología",
+        "Nefrología",
+        "Neurología",
+        "Neumología",
+        "Psiquiatría",
+        "Reumatología",
+        "Atención Psicológica y Psicopedagógica",
+        "Consulta de Enfermería al Niño",
+        "Consulta de Enfermería al Adulto Mayor",
+        "Consulta de Enfermería Salud del Hombre",
+        "Consulta de Enfermería Salud Mental",
+        "Consulta de Enfermería VPH",
+        "Consulta de Enfermería en Ginecología",
+        "Consulta de Enfermería DM / HTA / Tb / Lepra"
+      ],
+      "buttonText": ["Cómo llegar"]
+    },
+    "physiotherapy": {
+      "title": "Clínica Escuela de Fisioterapia",
+      "description": [
+        "La Clínica Escuela de Fisioterapia de Unichristus es un espacio de cuidado a la salud y excelencia académica, dirigido a la promoción y rehabilitación funcional de pacientes de la comunidad. Con estructura moderna, equipos actualizados y atención humanizada, ofrecemos servicios fisioterapéuticos gratuitos en diversas especialidades.",
+        "Las atenciones son realizadas por estudiantes del curso de Fisioterapia, bajo supervisión directa de profesores(as) con amplia experiencia clínica y académica, garantizando calidad, seguridad y compromiso con el bienestar de nuestros pacientes.",
+        "Nuestro compromiso es doble: contribuir con la formación práctica de nuestros alumnos(as) y ofrecer a la población una atención fisioterapéutica ética, accesible y basada en evidencias."
+      ],
+      "address": [
+        "Tenemos dos unidades de la Clínica Escuela de Fisioterapia Unichristus",
+        "Campus Parque Ecológico (Calle Vereador Paulo Mamede, 130 - Papicu - CEP: 60190-050)",
+        "Campus Parquelândia (Calle Uruguay, 11 - Bela Vista - CEP: 60442-590)"
+      ],
+      "services": [
+        "Fisioterapia en Traumato-ortopedia",
+        "Fisioterapia Deportiva",
+        "Fisioterapia Neurofuncional",
+        "Fisioterapia Pediátrica",
+        "Fisioterapia Acuática",
+        "Fisioterapia en Reumatología",
+        "Fisioterapia en la Salud de la Mujer",
+        "Fisioterapia en Oncología",
+        "Fisioterapia Respiratoria",
+        "Fisioterapia Cardiovascular",
+        "Fisioterapia en Gerontología",
+        "Fisioterapia Dermatofuncional"
+      ],
+      "buttonText": ["Campus Parque Ecológico", "Campus Parquelândia"]
+    },
+    "imaging": {
+      "title": "Clínica-Escuela de Salud e Imagen Unichristus (CESIU)",
+      "description": [
+        "La Clínica-Escuela de Salud e Imagen Unichristus (CESIU) es un espacio que une enseñanza en el área de la salud, atención de excelencia y calidad en diagnóstico por imagen.",
+        "Nuestro espacio fue totalmente desarrollado para que los alumnos(as) de los cursos del área de la salud de Unichristus puedan acompañar, en tiempo real, los procedimientos de atención, aprendiendo con profesionales especialistas y teniendo como foco el cuidado con el paciente.",
+        "Además, el ambiente cuenta con equipos de última generación para realización de exámenes de resonancia magnética, tomografía computarizada, ecografía y rayos X, con el objetivo de proporcionar la mejor calidad en imagen y diagnósticos confiables.",
+        "La CESIU está estratégicamente ubicada en el corazón de la ciudad, con fácil acceso y un ambiente moderno, proyectado para proporcionar la mejor experiencia para usted. Aquí, su salud está en las mejores manos."
+      ],
+      "address": [
+        "Nuestra unidad central está ubicada en la dirección: Calle Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
+      ],
+      "services": [
+        "Resonancia magnética",
+        "Tomografía computarizada",
+        "Ecografía",
+        "Rayos X"
+      ],
+      "buttonText": ["Cómo llegar"]
+    },
+    "psychology": {
+      "title": "Servicio Escuela de Psicología Aplicada (SEPA)",
+      "description": [
+        "El Servicio-Escuela de Psicología Aplicada (SEPA) es un espacio de enseñanza y práctica en el cual los(as) estudiantes del curso de Psicología de Unichristus desarrollan habilidades en escucha, acogida, práctica clínica y trabajo en equipo, siempre bajo la supervisión de profesores(as) de referencia en diversas áreas de actuación.",
+        "Con compromiso con la responsabilidad social, el SEPA ofrece atenciones psicológicas gratuitas a la comunidad, beneficiando niños, adolescentes y adultos, y promoviendo la calidad de vida y la salud mental de los(as) usuarios(as).",
+        "Las modalidades de atención incluyen psicoterapia individual, grupos terapéuticos, evaluación psicológica, evaluación neuropsicológica, orientación profesional y guardia psicológica. Además de los consultorios para las atenciones clínicas, el SEPA cuenta con una testoteca debidamente estructurada y actualizada, que ofrece un acervo diversificado de instrumentos psicológicos autorizados por el Consejo Federal de Psicología (CFP) utilizada, aún, en las prácticas de evaluación junto a la comunidad."
+      ],
+      "address": [
+        "El SEPA funciona de lunes a viernes en las siguientes direcciones y horarios:",
+        "Campus A: Av. Desembargador Moreira, 2120 – Dionísio Torres (08h a 12h y de 14h a 18h)- SEPA",
+        "Campus B: Calle Vicente Linhares, 308 – Aldeota (17h a 20h)- CESIU"
+      ],
+      "services": [
+        "Atención en grupo",
+        "Evaluación Psicológica",
+        "Terapia de Pareja",
+        "Orientación Profesional",
+        "Atención individual de niños, adolescentes, adultos y adultos mayores",
+        "Evaluación Neuropsicológica",
+        "Guardia Psicológica"
+      ],
+      "buttonText": ["Campus A", "Campus B"]
+    },
+    "laboratory": {
+      "title": "LEAC - Laboratorio Escuela de Análisis Clínicos",
+      "description": [
+        "Desde 2016, el Laboratorio Escuela de Análisis Clínicos (LEAC) actúa como socio estratégico de los servicios de salud de la Clínica Escuela de Salud (CES) y de la Clínica Escuela de Odontología (CEO). Con una estructura moderna y alineada a las mejores prácticas de calidad, ofrece servicios de laboratorio que apoyan el diagnóstico y el cuidado con los pacientes, además de contribuir con la formación de profesionales altamente cualificados."
+      ],
+      "address": [
+        "El agendamiento para colecta debe ser realizado directamente en la clínica donde ocurren las atenciones:",
+        "Clínica Escuela de Salud e Imagen Unichristus (CESIU) / Teléfonos: 3306-8932 / 3306-8933 / Dirección: Calle Vicente Linhares, 308 - Aldeota."
+      ],
+      "services": [
+        "Colesterol Total",
+        "Fracciones",
+        "Triglicéridos",
+        "Hemoglobina Glicosilada (HbA1c)",
+        "Creatinina",
+        "Bilirrubina Total y Fracciones",
+        "Ácido Úrico",
+        "Albúmina",
+        "Calcio",
+        "CPK (Creatina Fosfoquinasa)",
+        "Hierro Sérico",
+        "PCR (Proteína C Reactiva)",
+        "Urea",
+        "Glucemia",
+        "TGO (AST) y TGP (ALT)",
+        "T3 Total",
+        "T4 Libre",
+        "TSH",
+        "VDRL",
+        "Hemograma",
+        "TAP y TTPA",
+        "VHS (Velocidad de Hemosedimentación)",
+        "Análisis de Orina (EAS)",
+        "Bacterioscopia de Orina",
+        "Parasitológico de Heces",
+        "Examen Directo para Hongos",
+        "Cultivo para Hongos",
+        "Urocultivo"
+      ],
+      "buttonText": ["Cómo llegar"]
+    }
+  }
+}

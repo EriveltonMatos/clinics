@@ -12,55 +12,52 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { ScrollFromBottom } from "../ScrollComponent";
 import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
 export default function UnitsSection() {
+  const t = useTranslations('Units');
+
   const cards = [
     {
       src: clinicaOdonto.src,
-      alt: "Clínica Escola de Odontologia",
-      description:
-        "Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE, 60192-350",
+      alt: t('cards.dentistry.name'),
+      description: t('cards.dentistry.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede,+130+-+Cocó,+Fortaleza+-+CE,+60192-350",
     },
     {
       src: clinicaSaude.src,
-      alt: "Clínica Escola de Saúde",
-      description:
-        "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
+      alt: t('cards.health.name'),
+      description: t('cards.health.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60125-058",
     },
     {
       src: clinicaPsicologia.src,
-      alt: "Serviço Escola de Psicologia Aplicada (SEPA)",
-      description:
-        "Av. Des. Moreira, 2120 - Aldeota, Fortaleza - CE, 60170-002",
+      alt: t('cards.psychology.name'),
+      description: t('cards.psychology.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=Av.+Des.+Moreira,+2120+-+Aldeota,+Fortaleza+-+CE,+60170-002",
     },
     {
       src: clinicaFisioterapia.src,
-      alt: "Clínica Escola de Fisioterapia - Campus Parque Ecológico",
-      description:
-        "Rua Vereador Paulo Mamede, 130 - Cocó, Fortaleza - CE,60192-350",
+      alt: t('cards.physiotherapyEcological.name'),
+      description: t('cards.physiotherapyEcological.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede,130+-+Cocó,+Fortaleza+-+CE,+60192-350",
     },
     {
       src: clinicaFisioteraria2.src,
-      alt: "Clínica Escola de Fisioterapia - Campus Parquelândia",
-      description: "Rua Uruguai, 11 - Bela vista - CEP: 60442-590",
+      alt: t('cards.physiotherapyParquelandia.name'),
+      description: t('cards.physiotherapyParquelandia.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=Rua+Uruguai,11+-+Bela+Vista,+Fortaleza+-+CE,+60442-590",
     },
     {
       src: clinicaCesiu.src,
-      alt: "Clínica Escola de Saúde e Imagem (CESIU)",
-      description:
-        "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
+      alt: t('cards.imaging.name'),
+      description: t('cards.imaging.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
     },
     {
       src: clinicaLeac.src,
-      alt: "Laboratório Escola de Análises Clínicas - LEAC",
-      description:
-        "R. Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270",
+      alt: t('cards.laboratory.name'),
+      description: t('cards.laboratory.address'),
       url: "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
     },
   ];
@@ -121,7 +118,7 @@ export default function UnitsSection() {
             className="mx-auto p-2 px-4 text-[2vh] flex justify-center items-center gap-2 rounded-lg bg-[#1F2B6C] hover:bg-blue-900 text-white transition-all duration-300 shadow-lg mt-2"
           >
             <FaMapMarkerAlt className="rounded-full bg-neutral-400 shadow-lg flex justify-center items-center p-2 text-[4vh]" />
-            Como Chegar
+            {t('directions')}
           </a>
         </div>
         <h4 className="md:text-[2.2vh]  text-[1.8vh] font-bold mt-6 text-[#1F2B6C] p-0.5">
@@ -150,7 +147,7 @@ export default function UnitsSection() {
             <div>
               <ScrollFromBottom>
                 <h1 className="relative text-[#1F2B6C] w-full text-5xl md:text-[6vh] font-bold md:-mb-[5vh] -mt-5 md:mt-[1vh] mb-5 text-center">
-                  Nossas <span className="text-[#159EEC]">Unidades</span>
+                  {t('title')} <span className="text-[#159EEC]">{t('subtitle')}</span>
                   <div className="flex justify-center mt-[2vh] space-x-4">
                     <div className="w-[1.5vh] h-[1.5vh] bg-[#2A5ECB] rounded-full hover:scale-150 transition-all"></div>
                     <div className="w-[1.5vh] h-[1.5vh] bg-[#2A5ECB] rounded-full hover:scale-150 transition-all"></div>

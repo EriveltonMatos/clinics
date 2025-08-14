@@ -6,11 +6,14 @@ import { FaPhoneVolume } from "react-icons/fa";
 import ContactDialog from "../contact-dialog-components/ContactDialog";
 import ContactDialogWhatsapp from "../contact-dialog-components/ContactDialogWhatsapp";
 import { MdOutlineEmail, MdWhatsapp } from "react-icons/md";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
   const [visibleContacts, setVisibleContacts] = useState(false);
   const [visibleEmails, setVisibleEmails] = useState(false);
   const [visibleWhatsapp, setVisibleWhatsapp] = useState(false);
+  const t = useTranslations("ContactDialog");
+  
 
   return (
     <div>
@@ -34,7 +37,7 @@ export default function Navbar() {
               <FaPhoneVolume className="text-white text-xl group-hover:animate-wiggle-more" />
               <div className="flex flex-col">
                 <span className="text-white text-sm max-xl:text-xs">
-                  Contatos
+                  {t("phone")}
                 </span>
               </div>
             </div>

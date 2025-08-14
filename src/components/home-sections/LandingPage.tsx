@@ -3,20 +3,32 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import carrossel1 from "@/assets/carrosel1.png"; // Importando a imagem do carrossel
+import carrossel1 from "@/assets/carrosel1.png";
+import carrossel2 from "@/assets/carrosel2.png";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 //import { Link } from "react-router-dom";
 
-const slidesData = [
-  {
-    id: 1,
-    image: carrossel1,
-    alt: "Logo da clínica",
-    url: "/",
-  },
-];
+// Função para obter as imagens baseadas no locale
+const getLocalizedSlides = (locale: string) => {
+  // Para inglês, usar carrossel1 (ou você pode adicionar carrossel2-en.jpg)
+  // Para português e espanhol, usar carrossel2
+  const carrossel2Image = locale === 'pt' ? carrossel1 : carrossel2;
+  
+  return [
+    {
+      id: 1,
+      image: carrossel2Image,
+      alt: locale === 'pt' ? "Clinic Logo" : "Logo da clínica",
+      url: "/",
+    },
+  ];
+};
 
 export default function LandingPage() {
+    const locale = useLocale();
+    const slidesData = getLocalizedSlides(locale);
+
   return (
     // O swiper vai ficar aqui caso peçam carrosséis na página inicial.
     <Swiper

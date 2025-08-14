@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/api/AuthContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { routing } from "@/i18n/routing";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Clínicas Unichristus",
   description: "Portal de clínicas escola Unichristus",
   openGraph: {
     title: "Clínicas Unichristus",
-    description: "Conheça o portal das clínicas escola da Unichristus. Atendimento, agendamento e muito mais.",
-    url: "https://clinicas.unichristus.edu.br", 
+    description:
+      "Conheça o portal das clínicas escola da Unichristus. Atendimento, agendamento e muito mais.",
+    url: "https://clinicas.unichristus.edu.br",
     siteName: "Clínicas Unichristus",
     images: [
       {
@@ -24,16 +28,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   return (
-    <html lang="pt-BR">
-      <body
-        className={`antialiased`}
-      >
+    <html lang={locale}>
+      <body className={`antialiased`}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"
@@ -41,9 +49,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-        {children}
-        </ThemeProvider>
-      </AuthProvider>
+            <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

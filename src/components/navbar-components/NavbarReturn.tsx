@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import unichristusNavbar from "@/assets/u-unichristus.png";
 import Link from "next/link";
 import Image from "next/image";
+import LanguageSwitcher from "../LocaleSwitcher";
 
 export default function SecondNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,7 +46,7 @@ export default function SecondNavbar() {
         </a>
       </div>
       <div className="flex justify-center items-center space-x-20 text-lg max-xl:text-xs mr-20">
-        <div className="flex gap-8">
+        <div className="flex gap-8 justify-center items-center">
           <Link
             href="/"
             className="relative px-6 py-2 font-bold text-white border border-white/30 group rounded-lg overflow-hidden hover:border-[#159EEC] transition-all duration-300 flex items-center gap-2"
@@ -73,6 +74,7 @@ export default function SecondNavbar() {
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
           </Link>
+          <LanguageSwitcher />
         </div>
       </div>
     </nav>

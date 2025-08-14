@@ -16,40 +16,43 @@ import { ScrollFromBottom, ScrollFromLeft } from "../ScrollComponent";
 import Link from "next/link";
 import Image from "next/image";
 import { JSX } from "react";
+import { useTranslations } from "next-intl";
 
 interface Clinic {
   name: string;
   icon: JSX.Element;
 }
 
-const clinics: Clinic[] = [
-  {
-    name: "Clínica Escola de Medicina",
-    icon: <FaStethoscope className="w-6 h-6" />,
-  },
-  {
-    name: "Clínica Escola de Odontologia",
-    icon: <FaTooth className="w-6 h-6" />,
-  },
-  {
-    name: "Clínica de Fisioterapia",
-    icon: <FaRunning className="w-6 h-6" />,
-  },
-  {
-    name: "Clínica de Psicologia",
-    icon: <FaBrain className="w-6 h-6" />,
-  },
-  {
-    name: "Centro de Imagem e Diagnóstico",
-    icon: <FaXRay className="w-6 h-6" />,
-  },
-  {
-    name: "Laboratório de Análises Clínicas",
-    icon: <FaFlask className="w-6 h-6" />,
-  },
-];
-
 export default function AboutSection() {
+  const t = useTranslations("About");
+
+  const clinics: Clinic[] = [
+    {
+      name: t('units.medicine'),
+      icon: <FaStethoscope className="w-6 h-6" />,
+    },
+    {
+      name: t('units.dentistry'),
+      icon: <FaTooth className="w-6 h-6" />,
+    },
+    {
+      name: t('units.physiotherapy'),
+      icon: <FaRunning className="w-6 h-6" />,
+    },
+    {
+      name: t('units.psychology'),
+      icon: <FaBrain className="w-6 h-6" />,
+    },
+    {
+      name: t('units.imaging'),
+      icon: <FaXRay className="w-6 h-6" />,
+    },
+    {
+      name: t('units.lab'),
+      icon: <FaFlask className="w-6 h-6" />,
+    },
+  ];
+
   return (
     <section id="about" className="md:min-h-screen ">
       <div
@@ -70,7 +73,7 @@ export default function AboutSection() {
               <div>
                 <ScrollFromBottom>
                   <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                    CLÍNICAS ESCOLA
+                    {t("title")}
                     <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-100 bg-clip-text text-transparent">
                       UNICHRISTUS
                     </span>
@@ -80,8 +83,7 @@ export default function AboutSection() {
               <div>
                 <ScrollFromBottom>
                   <h1 className="text-[#00E0FF] text-base font-sans font-bold tracking-wider mb-8 md:text-[2vh] md:mb-[3.5vh] pb-2 inline-block relative">
-                    Excelência em ensino, cuidado e compromisso com a saúde da
-                    comunidade.
+                    {t("description")}
                     <svg
                       className="absolute -bottom-1 left-0 w-full h-2 text-[#159EEC]/60"
                       viewBox="0 0 100 10"
@@ -100,12 +102,7 @@ export default function AboutSection() {
               <div>
                 <ScrollFromBottom>
                   <h1 className="text-white md:text-[1.5vh] mb-8 md:mb-[5vh] text-sm leading-relaxed md:w-full bg-black/20 p-4 rounded-lg">
-                    As Clínicas Escola Unichristus representam um modelo de
-                    integração entre formação acadêmica, atenção à saúde e
-                    responsabilidade social. Em Fortaleza, somos referência em
-                    atendimento humanizado e tecnicamente qualificado, com
-                    infraestrutura moderna e profissionais experientes
-                    orientando o exercício prático de estudantes em formação.
+                    {t("about")}
                   </h1>
                 </ScrollFromBottom>
               </div>
@@ -144,7 +141,7 @@ export default function AboutSection() {
                           hover:bg-cyan-500/5"
                 >
                   <span className="relative text-cyan-500 transition-all duration-300 group-hover:text-white">
-                    Conheça nossas unidades especializadas
+                    {t("cta")}
                   </span>
                   <FaLongArrowAltRight
                     className="relative h-6 w-6 text-cyan-500 transition-all duration-300 

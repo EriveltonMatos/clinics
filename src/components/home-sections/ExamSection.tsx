@@ -12,14 +12,33 @@ import {
 } from "../ScrollComponent";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function ExamSection() {
-  const labExams = ["Ressonância", "Tomografia", "Ultrassom", "Raio-X"];
 
-  const imageExams = ["Análises Clínicas", "Biópsias"];
+  const t = useTranslations("ExamResults");
+  
+  const labExams = [t('imageExams.items.mri'), t('imageExams.items.ct'), t('imageExams.items.ultrasound'), t('imageExams.items.xray')];
 
+  const imageExams = [t('labExams.items.clinicalAnalysis'), t('labExams.items.biopsies')];  
+  
   return (
-    <section id="exam" className="bg-sky-50 md:h-screen">
+    <section id="exam" className=" md:h-screen">
+     <div className="min-h-screen w-full bg-white relative text-gray-800">
+  {/* Concentric Squares - Light Pattern */}
+  <div
+    className="absolute inset-0 z-0 pointer-events-none"
+    style={{
+      backgroundImage: `
+        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px),
+        repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px)
+      `
+    }}
+  />
+  {/* Your Content/Components */}
+
       <div className=" mx-auto max-lg:text-center md:h-screen -mt-2">
         <div className="flex justify-center items-center md:p-40 max-lg:flex-col p-0 md:h-screen">
           <div className="w-3/4 md:w-1/2 ml-20 max-lg:ml-0 mt-10 ">
@@ -27,17 +46,14 @@ export default function ExamSection() {
               <div className="w-32 md:w-[20vh] h-2 bg-[#1F2B6C] mb-8 mx-auto md:mx-0"></div>
               <div>
                 <h2 className="text-[#1F2B6C] tracking-wider md:leading-none md:text-[9vh]  font-bold mb-8 md:mb-[6vh] max-lg:text-center text-4xl">
-                  RESULTADO DE <span className="text-[#159EEC]">EXAME</span>
+                  {t("title")} <span className="text-[#159EEC]"> {t("subtitle")} </span>
                 </h2>
               </div>
             </ScrollFromRight>
             <div className="md:mr-20">
               <ScrollFromBottom>
                 <h1 className="text-[#212124] mb-12 md:mb-[7vh] text-sm md:text-left text-justify md:text-[2.5vh] leading-tight">
-                  A Unichristus Clínicas oferece diversos exames laboratoriais e
-                  de imagem para você e sua família. Contamos com uma equipe de
-                  profissionais altamente qualificados e prontos para atender
-                  você.
+                  {t("description")}
                 </h1>
               </ScrollFromBottom>
             </div>
@@ -53,7 +69,7 @@ export default function ExamSection() {
                         <button className="rgb-button md:w-full w-64 text-white font-bold py-4 px-8 rounded-3xl shadow-lg border border-white transform transition-transform duration-300 hover:scale-110 flex items-center gap-2">
                           <FaXRay className="md:text-[4vh] text-lg" />
                           <span className="text- md:text-[2vh]">
-                            Exames de Imagem
+                            {t("imageExams.title")}
                           </span>
                         </button>
                         <div className="rgb-button p-4 shadow-lg rounded-bl-3xl rounded-br-3xl">
@@ -82,7 +98,7 @@ export default function ExamSection() {
                         <button className=" rgb-button2 text-white font-bold py-4 px-8 rounded-3xl shadow-lg border border-white transform transition-transform duration-300 hover:scale-110 flex items-center gap-1">
                           <MdBloodtype className="text-lg md:text-[4vh]" />
                           <span className=" text-ls md:text-[2vh] text-base">
-                            Exames Laboratoriais
+                            {t("labExams.title")}
                           </span>
                         </button>
                       </Link>
@@ -142,6 +158,7 @@ export default function ExamSection() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

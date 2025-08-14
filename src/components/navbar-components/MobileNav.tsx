@@ -5,9 +5,11 @@ import { CiMenuFries } from "react-icons/ci";
 import { Link as ScrollLink } from "react-scroll";
 import { JSX } from "react";
 import Image from "next/image";
-import { MdLocationOn, MdMedicalServices } from "react-icons/md";
+import { MdLocationOn } from "react-icons/md";
 import { FaFlask, FaXRay } from "react-icons/fa";
 import Link from "next/link";
+import LanguageSwitcher from "../LocaleSwitcher";
+import { useTranslations } from "next-intl";
 
 interface Link {
   href: string;
@@ -20,6 +22,7 @@ interface MobileNavProps {
 }
 
 export default function MobileNav({ links }: MobileNavProps) {
+  const t = useTranslations('MobileNav')
   return (
     <div className="max-lg:fixed top-0 right-0 w-full flex justify-end items-center z-50 p-3 h-16 bg-white shadow-lg lg:hidden">
       <Sheet>
@@ -48,6 +51,7 @@ export default function MobileNav({ links }: MobileNavProps) {
                 />
               </div>
             </ScrollLink>
+          <LanguageSwitcher />
           </div>
           <nav className="flex flex-col gap-3 w-full mt-2">
             {links.map((link, index) => (
@@ -71,7 +75,7 @@ export default function MobileNav({ links }: MobileNavProps) {
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md"
             >
               <MdLocationOn className="text-xl" />
-              Conheça nossas unidades especializadas
+              {t("units")}
             </Link>
             <a
               href="https://unichristus.naja.app/portal/login"
@@ -81,7 +85,7 @@ export default function MobileNav({ links }: MobileNavProps) {
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md border border-teal-600"
             >
               <FaXRay className="text-xl" />
-              Exames de Imagem
+              {t("imageExam")}
             </a>
             <Link
               href="/login"
@@ -89,16 +93,8 @@ export default function MobileNav({ links }: MobileNavProps) {
                transition-all duration-300 rounded-xl p-3 shadow-md"
             >
               <FaFlask className="text-xl" />
-              Exames Laboratoriais
+              {t("labExams")}
             </Link>
-            {/*<Link
-              href="/services"
-              className="w-full flex items-center justify-center gap-2 text-base font-medium text-white bg-cyan-600 hover:bg-cyan-700 
-               transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md border border-cyan-500"
-            >
-              <MdMedicalServices className="text-xl" />
-              Conheça Todos os Serviços
-            </Link> */}
           </div>
         </SheetContent>
       </Sheet>

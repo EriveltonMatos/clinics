@@ -20,7 +20,6 @@ import {
   FileText,
   FlaskConical,
   Microscope,
-  Layers,
   Clock,
   Activity,
   CheckCircle2,
@@ -43,6 +42,20 @@ export default function Dashboard() {
       month: '2-digit',
       year: 'numeric'
     });
+  };
+
+  // Função para verificar se todos os exames de uma requisição estão concluídos
+  const areAllTestsCompleted = (requisitionTests: RequisitionTest[]): boolean => {
+    return requisitionTests.every(test => 
+      test.testStatus === TestStatus.CON || test.testStatus === TestStatus.DEL
+    );
+  };
+
+  // Função para verificar se pelo menos um exame está concluído
+  const hasSomeCompletedTests = (requisitionTests: RequisitionTest[]): boolean => {
+    return requisitionTests.some(test => 
+      test.testStatus === TestStatus.CON || test.testStatus === TestStatus.DEL
+    );
   };
 
   const userInitial = user?.fullname.charAt(0).toUpperCase();
@@ -102,23 +115,6 @@ export default function Dashboard() {
       count += req.requisitionTests.length;
     });
     return count;
-  };
-
-  // Função para agrupar os testes por grouping
-  const groupTestsByGrouping = (tests: RequisitionTest[]): GroupedTests => {
-    const grouped: GroupedTests = {};
-    
-    tests.forEach((test) => {
-      const groupName = test.test.grouping || "Sem Grupo";
-      
-      if (!grouped[groupName]) {
-        grouped[groupName] = [];
-      }
-      
-      grouped[groupName].push(test);
-    });
-    
-    return grouped;
   };
 
   // Se ainda estiver carregando, mostra um indicador
@@ -264,7 +260,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             
-             <CardContent className="pt-6">
+            <CardContent className="pt-6">
               {requisitions.length > 0 ? (
                 <div className="space-y-4">
                   {requisitions.map((req) => (
@@ -293,91 +289,76 @@ export default function Dashboard() {
                               </div>
                             </AccordionTrigger>
                             
-                            <AccordionContent className="px-6 pt-6 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-700 ">
-                              <div className="space-y-3">
-                                
-                                {Object.entries(groupTestsByGrouping(req.requisitionTests)).map(([groupName, tests]) => (
-                                  <Card key={`${req.id}-${groupName}`} className="border border-indigo-200 dark:border-slate-600 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                                    <CardContent className="p-0">
-                                      <Accordion type="multiple">
-                                        <AccordionItem value={`${req.id}-${groupName}`} className="border-0">
-                                          <AccordionTrigger className="px-4 py-3 hover:no-underline bg-indigo-50 dark:bg-slate-700">
-                                            <div className="flex items-center flex-wrap gap-2 w-full md:w-auto">
-                                              <div className="bg-indigo-200 dark:bg-indigo-800 p-2 rounded-full mr-3">
-                                                <Layers className="h-4 w-4 text-indigo-600 dark:text-indigo-300" />
-                                              </div>
-                                              <span className="font-medium text-indigo-700 dark:text-indigo-200">
-                                                {groupName}
-                                              </span>
-                                              <span className="ml-2 text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 py-1 px-2 rounded-full w-full md:w-auto mt-1 sm:mt-0">
-                                                {tests.length} {tests.length === 1 ? "teste" : "testes"}
-                                              </span>
+                            <AccordionContent className="px-6 pt-6 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-slate-800 dark:to-slate-700">
+                              <div className="space-y-4">
+                                {/* Container com altura fixa e scroll para todos os testes */}
+                                <div className="max-h-80 overflow-y-auto border border-indigo-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+                                  <div className="space-y-3 p-4">
+                                    {req.requisitionTests.map((test) => {
+                                      const estimatedDays = test.test.estimated || 0;
+                                      const estimatedDate = estimatedDays > 0 ? calculateEstimatedDate(req.date, estimatedDays) : null;
+                                      
+                                      return (
+                                        <div key={test.id} className="flex flex-col md:flex-row md:items-center justify-between bg-gray-50 dark:bg-slate-700 p-3 rounded-lg border-l-4 border-indigo-400 dark:border-indigo-500">
+                                          <div className="flex items-center gap-3">
+                                            <div className="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-full">
+                                              <Microscope className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                                             </div>
-                                          </AccordionTrigger>
+                                            <div>
+                                              <span className="font-medium text-gray-800 dark:text-slate-200">
+                                                {test.test.description}
+                                              </span>
+                                              <span className="text-sm text-indigo-500 dark:text-indigo-400 ml-2">
+                                                ({test.test.abbreviation})
+                                              </span>
+                                              {/* Mostra o grupo como uma tag pequena */}
+                                              {test.test.grouping && (
+                                                <span className="text-xs bg-gray-200 dark:bg-slate-600 text-gray-600 dark:text-slate-300 py-1 px-2 rounded-full ml-2">
+                                                  {test.test.grouping}
+                                                </span>
+                                              )}
+                                            </div>
+                                          </div>
                                           
-                                          <AccordionContent className="p-2">
-                                            <div className="space-y-3">
-                                              {tests.map((test) => {
-                                                const estimatedDays = test.test.estimated || 0;
-                                                const estimatedDate = estimatedDays > 0 ? calculateEstimatedDate(req.date, estimatedDays) : null;
-                                                
-                                                return (
-                                                  <div key={test.id} className="flex flex-col md:flex-row md:items-center justify-between bg-white dark:bg-slate-800 p-3 rounded-lg border-l-4 border-indigo-400 dark:border-indigo-500">
-                                                    <div className="flex items-center gap-3">
-                                                      <div className="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-full">
-                                                        <Microscope className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                                                      </div>
-                                                      <div>
-                                                        <span className="font-medium text-gray-800 dark:text-slate-200">
-                                                          {test.test.description}
-                                                        </span>
-                                                        <span className="text-sm text-indigo-500 dark:text-indigo-400 ml-2">
-                                                          ({test.test.abbreviation})
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                    
-                                                    <div className="flex flex-col gap-2 mt-2 md:mt-0 md:flex-row md:items-center md:justify-between w-full md:w-auto">
-                                                      
-                                                      {estimatedDate && test.testStatus !== TestStatus.CON && test.testStatus !== TestStatus.DEL && (
-                                                        <div className="flex items-center gap-2">
-                                                          <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                                                          <p className="text-sm text-blue-700 dark:text-blue-300">
-                                                            Previsão: {estimatedDate}
-                                                          </p>
-                                                        </div>
-                                                      )}
-                                                      <div className="flex items-center gap-2">
-                                                        <p className="text-blue-700 dark:text-blue-300 text-sm">Status:</p>
-                                                        <TestStatusBadge status={test.testStatus} />
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                );
-                                              })}
+                                          <div className="flex flex-col gap-2 mt-2 md:mt-0 md:flex-row md:items-center md:justify-between w-full md:w-auto">
+                                            {estimatedDate && test.testStatus !== TestStatus.CON && test.testStatus !== TestStatus.DEL && (
+                                              <div className="flex items-center gap-2">
+                                                <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                                                <p className="text-sm text-blue-700 dark:text-blue-300">
+                                                  Previsão: {estimatedDate}
+                                                </p>
+                                              </div>
+                                            )}
+                                            <div className="flex items-center gap-2">
+                                              <p className="text-blue-700 dark:text-blue-300 text-sm">Status:</p>
+                                              <TestStatusBadge status={test.testStatus} />
                                             </div>
-                                          </AccordionContent>
-                                        </AccordionItem>
-                                      </Accordion>
-                                    </CardContent>
-                                  </Card>
-                                ))}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
                                 
-                                {req.requisitionTests.some(
-                                  (test) =>
-                                    test.testStatus === TestStatus.CON ||
-                                    test.testStatus === TestStatus.DEL
-                                ) && (
+                                {/* Botão fora do container com scroll */}
+                                {hasSomeCompletedTests(req.requisitionTests) && (
                                   <button
                                     onClick={() =>
                                       router.push(
                                         `${API_BASE_URL}${API_LAB_REPORT_PATH}/${req.id}`
                                       )
                                     }
-                                    className="w-full mt-6 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-600 dark:to-indigo-700 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 dark:hover:from-blue-700 dark:hover:to-indigo-800 transition-colors flex items-center justify-center font-medium shadow-md"
+                                    className={`w-full px-4 py-3 text-white rounded-lg transition-colors flex items-center justify-center font-medium shadow-md ${
+                                      areAllTestsCompleted(req.requisitionTests)
+                                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 dark:from-green-600 dark:to-emerald-700 hover:from-green-600 hover:to-emerald-700 dark:hover:from-green-700 dark:hover:to-emerald-800'
+                                        : 'bg-gradient-to-r from-orange-500 to-amber-600 dark:from-orange-600 dark:to-amber-700 hover:from-orange-600 hover:to-amber-700 dark:hover:from-orange-700 dark:hover:to-amber-800'
+                                    }`}
                                   >
                                     <FileText className="h-5 w-5 mr-2" />
-                                    Ver Laudo Completo
+                                    {areAllTestsCompleted(req.requisitionTests) 
+                                      ? 'Ver Laudo Completo' 
+                                      : 'Ver Laudo Parcial'
+                                    }
                                   </button>
                                 )}
                               </div>

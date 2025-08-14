@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import LanguageSwitcher from "../LocaleSwitcher";
 
 interface Link {
   href: string;
@@ -105,11 +106,14 @@ export default function SecondNavbar({ links, logoSrc }: SecondNavbarProps) {
                       ? "scale-x-100"
                       : "transform scale-x-0 group-hover:scale-x-100"
                   }`}
-                ></div>
+                >
+                  
+                </div>
               </a>
             );
           })}
         </div>
+        <LanguageSwitcher />
       </div>
     </nav>
   );

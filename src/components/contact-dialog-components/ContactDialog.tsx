@@ -1,13 +1,13 @@
 import { Dialog } from "primereact/dialog";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface PhoneContact {
-  clinic: string;
+  clinicKey: string;
   phone: string;
 }
 
 interface EmailContact {
-  clinic: string;
+  clinicKey: string;
   email: string;
 }
 
@@ -22,33 +22,36 @@ export default function ContactDialog({
   visible,
   onHide,
 }: ContactDialogProps) {
+  const t = useTranslations('ContactDialog');
+
   const phoneContacts: PhoneContact[] = [
-    { clinic: "Clinica Escola de Saúde e Imagem (CESIU)", phone: "3306-8933" },
-    { clinic: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "3468-2500" }, 
-    { clinic: "Clínica Escola de Odontologia", phone: "3265-8139" },
-    { clinic: "Clínica Escola de Saúde (CES)", phone: "3306-8232" },
-    { clinic: "Clínica Escola de Fisioterapia - Campus Parque Ecológico", phone: "3265-8123" },
-    { clinic: "Clínica Escola de Fisioterapia - Campus Parquelândia", phone: "3499-1349" },
+    { clinicKey: "cesiu", phone: "3306-8933" },
+    { clinicKey: "sepa", phone: "3468-2500" }, 
+    { clinicKey: "dentistry", phone: "3265-8139" },
+    { clinicKey: "healthClinic", phone: "3306-8232" },
+    { clinicKey: "physiotherapyEcological", phone: "3265-8123" },
+    { clinicKey: "physiotherapyParquelandia", phone: "3499-1349" },
   ];
 
   const emailContacts: EmailContact[] = [
     {
-      clinic: "Serviço Escola de Psicologia Aplicada (SEPA)",
+      clinicKey: "sepa",
       email: "secsepa@unichristus.edu.br",
     },
     {
-      clinic: "Clínica Escola de Fisioterapia - Campus Parque Ecológico",
+      clinicKey: "physiotherapyEcological",
       email: "clinicafisioterapia@unichristus.edu.br",
     },
     {
-      clinic: "Clínica Escola de Fisioterapia - Campus Parquelândia",
+      clinicKey: "physiotherapyParquelandia",
       email: "cef01.pql@unichristus.edu.br",
     },
   ];
 
   const isPhone = type === "phone";
-  const header = isPhone ? "Contatos das Clínicas" : "E-mails das Clínicas";
-  const contactLabel = isPhone ? "Telefone:" : "E-mail:";
+  const header = t(isPhone ? 'phoneHeader' : 'emailHeader');
+  const contactLabel = t(isPhone ? 'phoneLabel' : 'emailLabel');
+  const description = t(isPhone ? 'phoneDescription' : 'emailDescription');
   const gradientColors = isPhone
     ? "bg-gradient-to-r from-blue-950 to-blue-800"
     : "bg-gradient-to-r from-[#159EEC] to-blue-500";
@@ -68,7 +71,7 @@ export default function ContactDialog({
     >
       <div className="p-6">
         <p className="text-gray-600 mb-4">
-          Informações de {isPhone ? "Contato" : "E-mail"} das clínicas:
+          {description}
         </p>
         <div className="space-y-4">
           {data.map((item, index) => (
@@ -77,7 +80,9 @@ export default function ContactDialog({
               className="flex flex-col p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
             >
               <div>
-                <h3 className="font-semibold text-gray-800">{item.clinic}</h3>
+                <h3 className="font-semibold text-gray-800">
+                  {t(`clinics.${item.clinicKey}`)}
+                </h3>
                 <p className="text-gray-600 text-sm flex items-center gap-2">
                   <span className="font-medium">{contactLabel}</span>
                   <span>

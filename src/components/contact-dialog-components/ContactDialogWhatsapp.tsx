@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Dialog } from "primereact/dialog";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -14,17 +15,21 @@ interface ContactDialogWhatsappProps {
 }
 
 export default function ContactDialogWhatsapp({
-  contacts = [
-    { clinica: "Serviço Escola de Psicologia Aplicada (SEPA)", phone: "99401-5648", whatsappLink: "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica." },
-  ],
   visible,
-  onHide
+  onHide,
 }: ContactDialogWhatsappProps) {
-
+  const t = useTranslations("ContactDialog");
+  const contacts = [
+    {
+      clinica: t("clinics.sepa"),
+      phone: "99401-5648",
+      whatsappLink:
+        "https://wa.me/5585994015648?text=Oi%2C%20quero%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20cl%C3%ADnica.",
+    },
+  ];
   return (
-    
     <Dialog
-      header="Whatsapp das Clínicas"
+      header={t("whatsappHeader")}
       visible={visible}
       style={{ width: "90%", maxWidth: "550px" }}
       className="rounded-lg shadow-xl"
@@ -35,22 +40,26 @@ export default function ContactDialogWhatsapp({
     >
       <div className="p-6">
         <p className="text-gray-600 mb-4">
-          Escolha uma de nossas clínicas para iniciar um atendimento via WhatsApp:
+          {t("whatsappDescription")}
         </p>
         <div className="space-y-4">
           {contacts.map((contact, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
             >
               <div className="mb-2 md:mb-0">
-                <h3 className="font-semibold text-gray-800">{contact.clinica}</h3>
-                <p className="text-gray-500 text-sm">Telefone: {contact.phone}</p>
+                <h3 className="font-semibold text-gray-800">
+                  {contact.clinica}
+                </h3>
+                <p className="text-gray-500 text-sm">
+                  {t("phoneLabel")} {contact.phone}
+                </p>
               </div>
-              <a 
-                href={contact.whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={contact.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-colors font-medium"
               >
                 <FaWhatsapp />
