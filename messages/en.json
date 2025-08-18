@@ -301,5 +301,21 @@
       ],
       "buttonText": ["Get Directions"]
     }
+  },
+
+  "maintenance": {
+    "title": "Portal Under Maintenance",
+    "description": "We are making improvements to our system to provide an even better experience.",
+    "systemUpdates": {
+      "title": "System Updates",
+      "description": "We are implementing new features and improving portal security."
+    },
+    "nextSteps": {
+      "title": "Next Steps",
+      "description": "Come back soon to access your results with our new interface."
+    },
+    "backToSite": "Back to site",
+    "copyright": "© {year} Unichristus - All rights reserved"
   }
+
 }

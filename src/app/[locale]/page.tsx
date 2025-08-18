@@ -3,7 +3,6 @@ import MobileNav from "@/components/navbar-components/MobileNav";
 import NavBar from "@/components/navbar-components/Navbar";
 import SecondNavbar from "@/components/navbar-components/SecondNavbar";
 import { FaHome, FaInfoCircle, FaVial, FaMapMarkerAlt } from "react-icons/fa";
-import LandingPage from "@/components/home-sections/LandingPage"; // Desativado por enquanto
 import AboutSection from "@/components/home-sections/AboutSection";
 //import ScheduleSection from "@/components/home-sections/ScheduleSection"; // Vai ficar desativado por enquanto
 import ExamSection from "@/components/home-sections/ExamSection";
@@ -11,6 +10,7 @@ import UnitsSection from "@/components/home-sections/UnitsSection";
 import FooterSection from "@/components/home-sections/FooterSection";
 import ButtonContact from "@/components/ButtonContact";
 import { useTranslations } from "next-intl";
+import Banner from "@/components/home-sections/Banner";
 
 export default function Home() {
   const t = useTranslations('Navbar');
@@ -36,7 +36,7 @@ export default function Home() {
         <SecondNavbar links={links} logoSrc={unichristusNavbar.src} />
         <MobileNav links={mobLinks} />
         <ButtonContact />
-        <LandingPage /> 
+        <Banner /> 
         <AboutSection />
         {/*<ScheduleSection /> Vai ficar desativado por enquanto */}
         <ExamSection />

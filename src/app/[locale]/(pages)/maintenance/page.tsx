@@ -1,11 +1,13 @@
-"use client";
 import Link from "next/link";
 import { ArrowLeft, Settings, ArrowRight } from "lucide-react";
 import footerBackground from "@/assets/footer-background.jpg";
 import logoClinica from "@/assets/logo-clinica.png";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
 export default function Maintenance() {
+  const t = useTranslations('maintenance');
+
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 relative"
@@ -16,7 +18,6 @@ export default function Maintenance() {
       }}
     >
       <div className="absolute inset-0 bg-black/60" />
-
       <div className="w-full max-w-4xl flex flex-col rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-lg relative z-10 animate-fade">
         <div className="text-center pt-8 pb-4">
           <Image
@@ -27,12 +28,11 @@ export default function Maintenance() {
             width={1000}
           />
           <h1 className="text-4xl font-bold text-white mb-2">
-            Portal em Manutenção
+            {t('title')}
           </h1>
           <div className="w-24 h-1 bg-blue-400 mx-auto rounded-full mb-4"></div>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto px-4">
-            Estamos realizando melhorias em nosso sistema para oferecer uma
-            experiência ainda melhor.
+            {t('description')}
           </p>
         </div>
 
@@ -45,11 +45,10 @@ export default function Maintenance() {
               />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">
-              Atualizações do Sistema
+              {t('systemUpdates.title')}
             </h3>
             <p className="text-blue-100">
-              Estamos implementando novos recursos e melhorando a segurança do
-              portal.
+              {t('systemUpdates.description')}
             </p>
           </div>
 
@@ -58,11 +57,10 @@ export default function Maintenance() {
               <ArrowRight className="w-10 h-10 text-blue-300" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">
-              Próximos Passos
+              {t('nextSteps.title')}
             </h3>
             <p className="text-blue-100">
-              Volte em breve para acessar seus resultados com nossa nova
-              interface.
+              {t('nextSteps.description')}
             </p>
           </div>
         </div>
@@ -74,14 +72,13 @@ export default function Maintenance() {
               className="bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-5 h-5" />
-              Voltar ao site
+              {t('backToSite')}
             </Link>
           </div>
         </div>
 
         <div className="p-4 text-center text-blue-100/70 text-sm">
-          © {new Date().getFullYear()} Unichristus - Todos os direitos
-          reservados
+          {t('copyright', { year: new Date().getFullYear() })}
         </div>
       </div>
     </div>

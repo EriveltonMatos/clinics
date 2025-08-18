@@ -306,5 +306,21 @@
       ],
       "buttonText": ["Cómo llegar"]
     }
+  },
+
+  "maintenance": {
+    "title": "Portal en Mantenimiento",
+    "description": "Estamos realizando mejoras en nuestro sistema para ofrecer una experiencia aún mejor.",
+    "systemUpdates": {
+      "title": "Actualizaciones del Sistema",
+      "description": "Estamos implementando nuevas funcionalidades y mejorando la seguridad del portal."
+    },
+    "nextSteps": {
+      "title": "Próximos Pasos",
+      "description": "Regrese pronto para acceder a sus resultados con nuestra nueva interfaz."
+    },
+    "backToSite": "Volver al sitio",
+    "copyright": "© {year} Unichristus - Todos los derechos reservados"
   }
+
 }
