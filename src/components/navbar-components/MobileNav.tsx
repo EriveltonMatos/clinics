@@ -3,7 +3,7 @@ import logoClinica from "@/assets/logo-clinica.png";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CiMenuFries } from "react-icons/ci";
 import { Link as ScrollLink } from "react-scroll";
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import Image from "next/image";
 import { MdLocationOn } from "react-icons/md";
 import { FaFlask, FaXRay } from "react-icons/fa";
@@ -22,10 +22,16 @@ interface MobileNavProps {
 }
 
 export default function MobileNav({ links }: MobileNavProps) {
-  const t = useTranslations('MobileNav')
+  const t = useTranslations('MobileNav');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="max-lg:fixed top-0 right-0 w-full flex justify-end items-center z-50 p-3 h-16 bg-white shadow-lg lg:hidden">
-      <Sheet>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <Image
           src={logoClinica.src}
           alt="Logo da clínica"
@@ -51,13 +57,14 @@ export default function MobileNav({ links }: MobileNavProps) {
                 />
               </div>
             </ScrollLink>
-          <LanguageSwitcher />
+            <LanguageSwitcher />
           </div>
           <nav className="flex flex-col gap-3 w-full mt-2">
             {links.map((link, index) => (
               <a
                 key={index}
                 href={link.href}
+                onClick={handleLinkClick}
                 className="flex items-center gap-3 px-4 py-3 text-base font-semibold text-blue-700
                            bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300
                            hover:bg-blue-50 border border-blue-100"
@@ -71,6 +78,7 @@ export default function MobileNav({ links }: MobileNavProps) {
           <div className="flex gap-4 flex-col justify-center items-center w-full">
             <Link
               href="/clinics"
+              onClick={handleLinkClick}
               className="w-full flex items-center justify-center gap-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md"
             >
@@ -81,6 +89,7 @@ export default function MobileNav({ links }: MobileNavProps) {
               href="https://unichristus.naja.app/portal/login"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleLinkClick}
               className="w-full flex items-center justify-center gap-2 text-base font-medium text-white bg-teal-700 hover:bg-teal-800 
                transition-all duration-300 cursor-pointer rounded-xl p-3 shadow-md border border-teal-600"
             >
@@ -89,6 +98,7 @@ export default function MobileNav({ links }: MobileNavProps) {
             </a>
             <Link
               href="/maintenance"
+              onClick={handleLinkClick}
               className="rgb-button2 w-full flex items-center justify-center gap-2 text-base font-medium text-white 
                transition-all duration-300 rounded-xl p-3 shadow-md"
             >
