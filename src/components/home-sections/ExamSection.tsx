@@ -58,16 +58,17 @@ export default function ExamSection() {
 
                 {/* Enhanced Title */}
                 <div className="relative">
-                  <h2 className="text-[#1F2B6C] tracking-wide md:leading-none md:text-[9vh] font-black mb-8 md:mb-[6vh] max-lg:text-center text-4xl relative">
-                    <span className="relative inline-block">
+                  <h2 className="text-[#1F2B6C] md:leading-none md:text-[9vh] font-black mb-10 md:mb-[6vh] max-lg:text-center text-4xl relative">
+                    <span className="relative">
                       {t("title")}
-                      <div className="absolute -top-2 -right-2 text-yellow-400">
-                        <HiSparkles className="w-6 h-6 animate-spin-slow" />
-                      </div>
+                     
                     </span>
                     <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-t from-[#159EEC] via-blue-500 to-purple-600 relative">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-t from-[#159EEC] via-blue-500 to-purple-600 relative text-5xl md:text-[9vh]">
                       {t("subtitle")}
+                       <div className="absolute -top-1 -right-4 md:-top-[-6] text-yellow-400">
+                        <HiSparkles className="w-6 h-6 animate-spin-slow" />
+                      </div>
                       <div className="absolute inset-0 bg-gradient-to-r from-[#159EEC] to-purple-600 opacity-10 blur-xl -z-10"></div>
                     </span>
                   </h2>
@@ -158,7 +159,9 @@ export default function ExamSection() {
             </div>
 
             <div className="relative w-1/2 mb-28 md:mt-36 mt-8">
+            
               <div className="absolute inset-0 flex justify-center items-center z-0 md:ml-[5vh]">
+                
                 <Image
                   src={backgroundExam.src}
                   alt="Background Image"
@@ -181,6 +184,7 @@ export default function ExamSection() {
               </div>
 
               <div className="absolute inset-0 z-10 md:ml-[14vh]">
+
                 <ScrollFadeIn>
                   <Image
                     src={xRay.src}
