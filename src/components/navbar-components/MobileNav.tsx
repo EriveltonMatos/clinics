@@ -88,7 +88,7 @@ export default function MobileNav({ links }: MobileNavProps) {
               {t("imageExam")}
             </a>
             <Link
-              href="/login"
+              href="/maintenance"
               className="rgb-button2 w-full flex items-center justify-center gap-2 text-base font-medium text-white 
                transition-all duration-300 rounded-xl p-3 shadow-md"
             >
