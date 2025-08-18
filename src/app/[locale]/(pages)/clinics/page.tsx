@@ -13,10 +13,10 @@ import NavBar from "@/components/navbar-components/Navbar";
 import ClinicComponent from "@/components/ClinicComponent";
 import FooterSection from "@/components/home-sections/FooterSection";
 import Image from "next/image";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 export default function Clinics() {
-  const t = useTranslations('Clinics');
+  const t = useTranslations("Clinics");
 
   return (
     <>
@@ -46,15 +46,17 @@ export default function Clinics() {
           <div>
             <div className="inline-block mb-3 px-4 py-1 bg-blue-500/20 backdrop-blur-sm rounded-full border border-blue-400/30">
               <span className="text-blue-300 font-medium text-sm md:text-base tracking-wider">
-                {t('badgeText')}
+                {t("badgeText")}
               </span>
             </div>
             <h1 className="text-4xl md:text-[13vh] font-extrabold mb-6 text-white leading-tight">
-              {t('title')}{" "}
-              <span className="text-[#159EEC] inline-block">{t('titleHighlight')}</span>,{" "}
-              <br className="hidden md:block" /> {t('subtitle')}{" "}
+              {t("title")}{" "}
+              <span className="text-[#159EEC] inline-block">
+                {t("titleHighlight")}
+              </span>
+              , <br className="hidden md:block" /> {t("subtitle")}{" "}
               <span className="text-[#159EEC] inline-block relative">
-                {t('subtitleHighlight')}
+                {t("subtitleHighlight")}
                 <svg
                   className="absolute -bottom-2 left-0 w-full h-2 text-[#159EEC]/60"
                   viewBox="0 0 100 10"
@@ -70,14 +72,15 @@ export default function Clinics() {
               </span>
             </h1>
             <p className="md:text-3xl ml-4 md:ml-2 text-lg mt-4 ">
-              {t('description')}
+              {t("description")}
             </p>
           </div>
         </div>
       </div>
       <section className="py-12 bg-gradient-to-br from-blue-100 to-indigo-200">
         <h2 className="text-[#1F2B6C] text-4xl md:text-6xl font-bold md:mb-8 md:mt-10 mt-5 text-center">
-          {t('units.title')} <span className="text-[#159EEC]">{t('units.titleHighlight')}</span>
+          {t("units.title")}{" "}
+          <span className="text-[#159EEC]">{t("units.titleHighlight")}</span>
           <div className="flex justify-center mt-4 space-x-4">
             <div className="w-3 h-3 bg-[#3575FE] rounded-full hover:scale-150 transition-all"></div>
             <div className="w-3 h-3 bg-[#3575FE] rounded-full hover:scale-150 transition-all"></div>
@@ -86,97 +89,103 @@ export default function Clinics() {
         </h2>
         <ScrollFromBottom>
           <ClinicComponent
+            id="odontologia"
             imageBackground={clinicaOdonto.src}
             imageSrc={clinicaOdonto.src}
-            title={t('dentistry.title')}
-            description={t.raw('dentistry.description')}
-            address={t.raw('dentistry.address')}
-            services={t.raw('dentistry.services')}
+            title={t("dentistry.title")}
+            description={t.raw("dentistry.description")}
+            address={t.raw("dentistry.address")}
+            services={t.raw("dentistry.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede,+130+-+Cocó,+Fortaleza+-+CE,+60192-350",
             ]}
-            buttonText={t.raw('dentistry.buttonText')}
+            buttonText={t.raw("dentistry.buttonText")}
             reverse={false}
           />
         </ScrollFromBottom>
 
         <ScrollFromBottom>
           <ClinicComponent
+            id="medicina"
             imageBackground={clinicaSaude.src}
             imageSrc={clinicaSaude.src}
-            title={t('health.title')}
-            description={t.raw('health.description')}
-            address={t.raw('health.address')}
-            services={t.raw('health.services')}
+            title={t("health.title")}
+            description={t.raw("health.description")}
+            address={t.raw("health.address")}
+            services={t.raw("health.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
             ]}
-            buttonText={t.raw('health.buttonText')}
+            buttonText={t.raw("health.buttonText")}
             reverse={true}
           />
         </ScrollFromBottom>
         <ScrollFromBottom>
           <ClinicComponent
+            id="fisioterapia"
             imageBackground={clinicaFisioterapia.src}
             imageSrc={clinicaFisioterapia.src}
-            title={t('physiotherapy.title')}
-            description={t.raw('physiotherapy.description')}
-            address={t.raw('physiotherapy.address')}
-            services={t.raw('physiotherapy.services')}
+            title={t("physiotherapy.title")}
+            description={t.raw("physiotherapy.description")}
+            address={t.raw("physiotherapy.address")}
+            services={t.raw("physiotherapy.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=Rua+Vereador+Paulo+Mamede+-+Cocó,+Fortaleza+-+CE,+60192-350",
               "https://www.google.com/maps/dir/?api=1&destination=Rua+Uruguai,11+-+Bela+Vista,+Fortaleza+-+CE,+60442-590",
             ]}
-            buttonText={t.raw('physiotherapy.buttonText')}
+            buttonText={t.raw("physiotherapy.buttonText")}
             reverse={false}
           />
         </ScrollFromBottom>
 
         <ScrollFromBottom>
           <ClinicComponent
+            id="cesiu"
             imageBackground={clinicaCesiu.src}
             imageSrc={clinicaCesiu.src}
-            title={t('imaging.title')}
-            description={t.raw('imaging.description')}
-            address={t.raw('imaging.address')}
-            services={t.raw('imaging.services')}
+            title={t("imaging.title")}
+            description={t.raw("imaging.description")}
+            address={t.raw("imaging.address")}
+            services={t.raw("imaging.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
             ]}
-            buttonText={t.raw('imaging.buttonText')}
+            buttonText={t.raw("imaging.buttonText")}
             reverse={true}
           />
         </ScrollFromBottom>
 
         <ScrollFromBottom>
           <ClinicComponent
+            id="psicologia"
             imageBackground={clinicaPsicologia.src}
             imageSrc={clinicaPsicologia.src}
-            title={t('psychology.title')}
-            description={t.raw('psychology.description')}
-            address={t.raw('psychology.address')}
-            services={t.raw('psychology.services')}
+            title={t("psychology.title")}
+            description={t.raw("psychology.description")}
+            address={t.raw("psychology.address")}
+            services={t.raw("psychology.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=Av.+Des.+Moreira,+2120+-+Aldeota,+Fortaleza+-+CE,+60170-002",
               "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
             ]}
-            buttonText={t.raw('psychology.buttonText')}
+            buttonText={t.raw("psychology.buttonText")}
             reverse={false}
           />
         </ScrollFromBottom>
 
         <ScrollFromBottom>
           <ClinicComponent
+            id="leac"
             imageBackground={clinicaLeac.src}
             imageSrc={clinicaLeac.src}
-            title={t('laboratory.title')}
-            description={t.raw('laboratory.description')}
-            address={t.raw('laboratory.address')}
-            services={t.raw('laboratory.services')}
+            title={t("laboratory.title")}
+            description={t.raw("laboratory.description")}
+            address={t.raw("laboratory.address")}
+            services={t.raw("laboratory.services")}
             buttonLink={[
               "https://www.google.com/maps/dir/?api=1&destination=R.+Vicente+Linhares,+308+-+Aldeota,+Fortaleza+-+CE,+60135-270",
             ]}
-            buttonText={t.raw('laboratory.buttonText')}
+            buttonText={t.raw("laboratory.buttonText")}
             reverse={true}
           />
         </ScrollFromBottom>

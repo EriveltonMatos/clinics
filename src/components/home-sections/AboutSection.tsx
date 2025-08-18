@@ -21,6 +21,7 @@ import { useTranslations } from "next-intl";
 interface Clinic {
   name: string;
   icon: JSX.Element;
+  link: string;
 }
 
 export default function AboutSection() {
@@ -30,26 +31,32 @@ export default function AboutSection() {
     {
       name: t('units.medicine'),
       icon: <FaStethoscope className="w-6 h-6" />,
+      link: "/clinics#medicina",
     },
     {
       name: t('units.dentistry'),
       icon: <FaTooth className="w-6 h-6" />,
+      link: "/clinics#odontologia",
     },
     {
       name: t('units.physiotherapy'),
       icon: <FaRunning className="w-6 h-6" />,
+      link: "/clinics#fisioterapia", 
     },
     {
       name: t('units.psychology'),
       icon: <FaBrain className="w-6 h-6" />,
+      link: "/clinics#psicologia",
     },
     {
       name: t('units.imaging'),
       icon: <FaXRay className="w-6 h-6" />,
+      link: "/clinics#cesiu",
     },
     {
       name: t('units.lab'),
       icon: <FaFlask className="w-6 h-6" />,
+      link: "/clinics#leac",
     },
   ];
 
@@ -112,6 +119,7 @@ export default function AboutSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
                 {clinics.map((clinic, index) => (
                   <ScrollFromLeft key={index}>
+                    <Link href={clinic.link}>
                     <div
                       className="flex items-center justify-center group bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-cyan-500/20 
                                   hover:bg-white/15 hover:border-cyan-500/40 transition-all duration-300
@@ -124,8 +132,10 @@ export default function AboutSection() {
                         <h4 className="text-white font-semibold text-sm md:text-sm leading-tight">
                           {clinic.name}
                         </h4>
+                        
                       </div>
                     </div>
+                    </Link>
                   </ScrollFromLeft>
                 ))}
               </div>

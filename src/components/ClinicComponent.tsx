@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FaLocationDot } from "react-icons/fa6";
 
 interface ClinicComponentProps {
+  id: string;
   imageSrc: string;
   title: string;
   description: string[];
@@ -14,6 +15,7 @@ interface ClinicComponentProps {
 }
 
 export default function ClinicComponent({
+  id,
   imageSrc,
   title,
   description,
@@ -25,7 +27,7 @@ export default function ClinicComponent({
   imageBackground,
 }: ClinicComponentProps) {
   return (
-    <div className="container mx-auto mt-16 relative bg-gradient-to-r from-blue-800 to-sky-400 border border-blue-500 rounded-xl shadow-xl overflow-hidden">
+    <div id={id} className="container mx-auto mt-16 relative bg-gradient-to-r from-blue-800 to-sky-400 border border-blue-500 rounded-xl shadow-xl overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
       <div
         className="absolute inset-0 bg-cover bg-center rounded-lg"
@@ -95,7 +97,7 @@ export default function ClinicComponent({
               {services.map((service, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-2 bg-blue-700/30 p-2 rounded-lg transition-all hover:bg-blue-600/40 hover:translate-x-1"
+                  className="flex items-center space-x-2 bg-blue-700/30 p-2 rounded-lg transition-all"
                 >
                   <svg
                     className="w-4 h-4 text-sky-300 flex-shrink-0"
