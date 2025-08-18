@@ -39,7 +39,7 @@ export default function Banner() {
       <Image
       src={banner.image.src}
       alt={banner.alt}
-      className="w-full h-full object-center object-cover md:mt-0 mt-16"
+      className="w-full h-full object-center object-cover md:mt-0 mt-16 animate-fade"
       height={5000}
       width={5000}
       priority
