@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -26,6 +27,7 @@ export default function ClinicComponent({
   reverse = false,
   imageBackground,
 }: ClinicComponentProps) {
+  const t = useTranslations("Clinics")
   return (
     <div id={id} className="container mx-auto mt-16 relative bg-gradient-to-r from-blue-800 to-sky-400 border border-blue-500 rounded-xl shadow-xl overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
@@ -91,7 +93,7 @@ export default function ClinicComponent({
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 ></path>
               </svg>
-              Serviços
+              {t("services")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {services.map((service, index) => (

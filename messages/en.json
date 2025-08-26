@@ -1,28 +1,28 @@
 {
   "Navbar": {
-    "about": "About Us",
-    "exam": "Exam Result",
+    "about": "About us",
+    "exam": "Test results",
     "unit": "Units"
   },
   "About": {
-    "title": "TEACHING CLINICS",
+    "title": "UNIVERSITY CLINICS",
     "subtitle": "UNICHRISTUS",
     "description": "Excellence in education, care, and commitment to the community's health.",
-    "about": "The Unichristus Teaching Clinics represent a model of integration between academic training, healthcare, and social responsibility. In Fortaleza, we are a reference in humanized and technically qualified care, with modern infrastructure and experienced professionals guiding the practical training of students.",
+    "about": "A fundamental partner since 2016, the University Clinical Analysis Laboratory (LEAC) works in close collaboration with the University Health Clinic and the School of Dentistry Teaching Clinic. Operating from a modern facility under the highest quality standards, LEAC delivers diagnostic services that are essential for patient care and for preparing a new generation of skilled professionals.",
     "units": {
-      "medicine": "Teaching Clinic of Medicine",
-      "dentistry": "Teaching Clinic of Dentistry",
-      "physiotherapy": "Physiotherapy Clinic",
-      "psychology": "Psychology Clinic",
-      "imaging": "Imaging and Diagnostic Center",
-      "lab": "Clinical Analysis Laboratory"
+      "medicine": "University Health Clinic",
+      "dentistry": "School of Dentistry Teaching Clinic",
+      "physiotherapy": "Physiotherapy Teaching Clinic",
+      "psychology": "Applied Psychology Training Clinic",
+      "imaging": "University Imaging and Diagnostic Center (CESIU)",
+      "lab": "University Clinical Analysis Laboratory (LEAC)"
     },
     "cta": "Discover our specialized units"
   },
   "ExamResults": {
-    "title": "RESULTS",
-    "subtitle": "EXAM",
-    "description": "Unichristus Clinics offers a variety of laboratory and imaging exams for you and your family. We have a team of highly qualified professionals ready to serve you.",
+    "title": "TEST",
+    "subtitle": "RESULTS",
+    "description": "Unichristus University Clinics offers a variety of laboratory and imaging exams for you and your family. We have a team of highly qualified professionals ready to serve you.",
     "imageExams": {
       "title": "Imaging Exams",
       "items": {
@@ -46,32 +46,32 @@
     "directions": "Get Directions",
     "cards": {
       "dentistry": {
-        "name": "Teaching Dentistry Clinic",
-        "address": "Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
+        "name": "School of Dentistry Teaching Clinic",
+        "address": "Rua Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
       },
       "health": {
-        "name": "Teaching Health Clinic",
-        "address": "Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
+        "name": "School of Medicine Teaching Clinic",
+        "address": "Rua Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
       },
       "psychology": {
-        "name": "Applied Psychology School Service (SEPA)",
-        "address": "Des. Moreira Avenue, 2120 - Aldeota, Fortaleza - CE, 60170-002"
+        "name": "Applied Psychology Training Clinic",
+        "address": "Av. Des. Moreira Avenue, 2120 - Aldeota, Fortaleza - CE, 60170-002"
       },
       "physiotherapyEcological": {
-        "name": "Teaching Physiotherapy Clinic - Ecological Park Campus",
-        "address": "Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
+        "name": "Physiotherapy Teaching Clinic - Parque Ecológico Campus",
+        "address": "Rua Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
       },
       "physiotherapyParquelandia": {
-        "name": "Teaching Physiotherapy Clinic - Parquelândia Campus",
-        "address": "Uruguai Street, 11 - Bela Vista - ZIP: 60442-590"
+        "name": "Physiotherapy Teaching Clinic - Parquelândia Campus",
+        "address": "Rua Uruguai, 11 - Bela Vista - ZIP: 60442-590"
       },
       "imaging": {
-        "name": "Teaching Health and Imaging Clinic (CESIU)",
-        "address": "Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
+        "name": "University Imaging and Diagnostic Center",
+        "address": "Rua Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
       },
       "laboratory": {
-        "name": "Teaching Clinical Analysis Laboratory - LEAC",
-        "address": "Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
+        "name": "University Clinical Analysis Laboratory - LEAC",
+        "address": "Rua Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
       }
     }
   },
@@ -80,224 +80,224 @@
     "about": "Developed by LIT – Technological Innovations Laboratory"
   },
   "ContactDialog": {
-    "phoneHeader": "Clinic Contacts",
+    "phoneHeader": "Clinic Contact Information",
     "emailHeader": "Clinic Emails",
     "whatsappHeader": "Clinic WhatsApp",
     "phoneLabel": "Phone:",
     "phone": "Phone",
     "emailLabel": "Email:",
-    "phoneDescription": "Contact information for the clinics:",
-    "whatsappDescription": "Choose one of our clinics to start a service via WhatsApp:",
-    "emailDescription": "Email information for the clinics:",
+    "phoneDescription": "Clinic Contact Information: ",
+    "whatsappDescription": "Choose one of our clinics to start assistance via WhatsApp:",
+    "emailDescription": "Clinic E-mail Information: ",
     "clinics": {
-      "cesiu": "Teaching Health and Imaging Clinic (CESIU)",
-      "sepa": "Applied Psychology School Service (SEPA)",
-      "dentistry": "Teaching Dentistry Clinic",
-      "healthClinic": "Teaching Health Clinic (CES)",
-      "physiotherapyEcological": "Teaching Physiotherapy Clinic - Ecological Park Campus",
-      "physiotherapyParquelandia": "Teaching Physiotherapy Clinic - Parquelândia Campus"
+      "cesiu": "University Imaging and Diagnostic Center (CESIU)",
+      "sepa": "Applied Psychology Training Clinic",
+      "dentistry": "School of Dentistry Teaching Clinic",
+      "healthClinic": "University Health Clinic",
+      "physiotherapyEcological": "Physiotherapy Teaching Clinic - Parque Ecológico Campus",
+      "physiotherapyParquelandia": "Physiotherapy Teaching Clinic - Parquelândia Campus"
     }
   },
 
   "MobileNav": {
     "units": "Discover our specialized units",
-    "imageExam": "Imaging Exams",
-    "labExams": "Laboratory Exams"
+    "imageExam": "Imaging Tests",
+    "labExams": "Laboratory Tests"
   },
 
   "Clinics": {
     "title": "EXCELLENCE IN",
-    "titleHighlight": "HEALTH",
-    "subtitle": "CLOSE TO",
+    "titleHighlight": "CARE",
+    "subtitle": "NEAR",
     "subtitleHighlight": "YOU",
-    "description": "Modern and equipped clinics, with professionals dedicated to the complete care of your health and your family's.",
-    "badgeText": "UNICHRISTUS TEACHING CLINICS",
+    "description": "Modern, well equipped clinics with professionals dedicated to comprehensive care for you and your family.",
+    "badgeText": "UNICHRISTUS UNIVERSITY CLINICS",
     "units": {
       "title": "Our",
       "titleHighlight": "Units"
     },
+    "services": "Services:",
     "dentistry": {
-      "title": "Teaching Dentistry Clinic",
+      "title": "School of Dentistry Teaching Clinic",
       "description": [
-        "The Unichristus Teaching Dentistry Clinic (CEO) is a modern dental complex where undergraduate and graduate students develop the most current dental techniques guided by experienced professionals, with the mission of treating patients comprehensively, bringing well-being and transforming smiles.",
-        "There are 117 dental stations, where more than 2,800 free and affordable treatments are performed monthly in the most diverse specialties."
+        "A modern dental complex where undergraduate and postgraduate students apply current techniques under the guidance of experienced faculty. Our mission is to provide comprehensive care, promote well being, and transform smiles",
+        "There are 117 dental stations, where over 2800 free and affordable appointments are performed monthly across the most diverse specialties."
       ],
       "address": [
-        "Our central unit is located at: Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
+        "Our main unit is located at: Rua Vereador Paulo Mamede Street, 130 - Cocó, Fortaleza - CE, 60192-350"
       ],
       "services": [
-        "Dental Screening",
-        "Health Promotion",
-        "Dentistry",
+        "Dental triage",
+        "Health promotion",
+        "Restorative dentistry",
         "Periodontics",
         "Endodontics",
-        "Dental Prosthetics",
+        "Dental prosthetics",
         "Maxillofacial Prosthetics",
-        "Surgery",
-        "Radiology",
-        "Treatment of Patients with Special Needs",
+        "Oral & maxillofacial Surgery",
+        "Oral & maxillofacial Radiology",
+        "Care for patients with special needs",
         "Implantology",
         "Orthodontics",
-        "Aesthetics",
-        "Collective Health",
-        "Pain and TMJ Disorders",
+        "Esthetics (cosmetic) dentistry",
+        "Public oral health (community dentistry)",
+        "Temporomandibular disorders (TMD)",
         "Hospital Dentistry",
-        "Stomatology",
+        "Oral medicine (Stomatology)",
         "Pediatric Dentistry",
-        "Functional Orthodontics of the Jaws",
-        "Oral Pathology",
-        "Geriatric Dentistry",
-        "Health and Sexual Education",
-        "Orofacial Harmonization"
+        "Dentofacial orthopedics (functional jaw orthopedics)",
+        "Oral pathology",
+        "Geriatric dentistry",
+        "Sexual health education",
+       "Orofacial aesthetics (harmonization)"
       ],
       "buttonText": ["Get Directions"]
     },
     "health": {
-      "title": "Teaching Health Clinic",
+      "title": "University Health Clinic",
       "description": [
-        "At the Unichristus Teaching Health Clinic (CES), students from Nursing, Medicine, Nutrition, and Psychology courses provide supervised care by specialist professors, recognized for their academic and professional excellence. The focus is on comprehensive care, with emphasis on humanization, welcoming, and patient well-being.",
-        "CES offers consultations in 13 medical specialties, providing the community with quality health services, ethics, and social commitment.",
+        "Students of Nursing, Medicine, Nutrition, and Psychology provide care to the community under close supervision by specialist professors recognized for academic and professional excellence. We deliver humane, welcoming, and comprehensive care focused on each patient’s well being.",
+        "The University Health Clinic offers consultations in 13 medical specialties, providing the community with health services characterized by quality, ethics, and social commitment.",
         "Two programs of great community relevance stand out among its actions:",
         "• Specialized Care Service (SAE) in STI/AIDS, developed in partnership with the Unified Health System (SUS), offering comprehensive and free follow-up to people living with sexually transmitted infections.",
         "• Gynecological Cancer Prevention Program, aimed at early detection, screening, and monitoring of women at higher risk for lower genital tract neoplasms."
       ],
       "address": [
-        "Our central unit is located at: Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
+        "Our central unit is located at: Rua Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
       ],
-      "services": [
+      "services": [ 
         "Pediatrics",
         "Gynecology",
         "Cardiology",
-        "Internal Medicine",
+        "Internal medicine",
         "Dermatology",
         "Endocrinology",
         "Gastroenterology",
         "Geriatrics",
-        "Infectious Diseases",
+        "Infectious diseases",
         "Nephrology",
         "Neurology",
         "Pulmonology",
         "Psychiatry",
         "Rheumatology",
-        "Psychological and Psychopedagogical Care",
-        "Child Nursing Consultation",
-        "Elderly Nursing Consultation",
-        "Men's Health Nursing Consultation",
-        "Mental Health Nursing Consultation",
-        "HPV Nursing Consultation",
-        "Gynecological Nursing Consultation",
-        "DM / HAS / Tb / Leprosy Nursing Consultation"
+        "Psychological and psychopedagogical care",
+        "child nursing consultation",
+        "Elderly adult cursing consultation",
+        "Men's health nursing consultation",
+        "Mental health nursing consultation",
+        "HPV nursing consultation",
+        "Gynecological nursing consultation",
+        "Chronic conditions: diabetes, hypertension, tuberculosis, and leprosy"
       ],
       "buttonText": ["Get Directions"]
     },
     "physiotherapy": {
-      "title": "Teaching Physiotherapy Clinic",
+      "title": "Physiotherapy Teaching Clinic",
       "description": [
-        "The Unichristus Teaching Physiotherapy Clinic is a space for health care and academic excellence, focused on the promotion and functional rehabilitation of community patients. With modern structure, updated equipment, and humanized care, we offer free physiotherapy services in various specialties.",
-        "The treatments are performed by Physiotherapy students, under direct supervision of professors with extensive clinical and academic experience, ensuring quality, safety, and commitment to our patients' well-being.",
+        "A space for health care and academic excellence, dedicated to health promotion and functional rehabilitation. With modern infrastructure, up to date equipment, and humanized care, we offer free physiotherapy services under the direct supervision of experienced faculty.",
         "Our commitment is twofold: to contribute to the practical training of our students and to offer the population ethical, accessible, and evidence-based physiotherapy care."
       ],
       "address": [
-        "We have two units of the Unichristus Teaching Physiotherapy Clinic",
-        "Ecological Park Campus (Vereador Paulo Mamede Street, 130 - Papicu - ZIP: 60190-050)",
-        "Parquelândia Campus (Uruguai Street, 11 - Bela Vista - ZIP: 60442-590)"
+        "The two units of the Physiotherapy Teaching Clinic are located at:",
+        "Parque Ecológico Campus (Rua Vereador Paulo Mamede Street, 130 - Papicu - ZIP Code: 60190-050)",
+        "Parquelândia Campus (Rua Uruguai, 11 - Bela Vista - ZIP Code: 60442-590)"
       ],
       "services": [
-        "Trauma-orthopedic Physiotherapy",
-        "Sports Physiotherapy",
-        "Neurofunctional Physiotherapy",
-        "Pediatric Physiotherapy",
-        "Aquatic Physiotherapy",
-        "Rheumatology Physiotherapy",
-        "Women's Health Physiotherapy",
-        "Oncology Physiotherapy",
-        "Respiratory Physiotherapy",
-        "Cardiovascular Physiotherapy",
-        "Gerontology Physiotherapy",
-        "Dermatofunctional Physiotherapy"
+        "Trauma-orthopedic physiotherapy",
+        "Sports physiotherapy",
+        "Neurofunctional physiotherapy",
+        "Pediatric physiotherapy",
+        "Aquatic physiotherapy",
+        "Rheumatologic physiotherapy",
+        "Women's Health physiotherapy",
+        "Oncologic physiotherapy",
+        "Respiratory physiotherapy",
+        "Cardiovascular physiotherapy",
+        "Gerontology physiotherapy",
+        "Dermatofunctional physiotherapy"
       ],
       "buttonText": ["Ecological Park Campus", "Parquelândia Campus"]
     },
     "imaging": {
-      "title": "Teaching Health and Imaging Clinic Unichristus (CESIU)",
+      "title": "University Imaging and Diagnostic Center",
       "description": [
-        "The Teaching Health and Imaging Clinic Unichristus (CESIU) is a space that combines health education, excellent care, and quality in diagnostic imaging.",
-        "Our space was fully developed so that students from health courses at Unichristus can follow, in real time, care procedures, learning from specialist professionals and focusing on patient care.",
-        "Additionally, the environment has state-of-the-art equipment for performing magnetic resonance imaging, computed tomography, ultrasound, and X-ray exams, with the objective of providing the best image quality and reliable diagnoses.",
-        "CESIU is strategically located in the heart of the city, with easy access and a modern environment, designed to provide the best experience for you. Here, your health is in the best hands."
+        "A teaching and care environment that brings together clinical excellence and quality diagnostic imaging.",
+        "Students learn in real time alongside specialized professionals, always with patient care as the priority.",
+        "We offer state of the art equipment for MRI, ultrasound, and X-ray, ensuring high quality images and reliable diagnoses.",
+        "CESIU is centrally located for easy access, with a modern environment designed to provide the best experience."
       ],
       "address": [
-        "Our central unit is located at: Vicente Linhares Street, 308 - Aldeota, Fortaleza - CE, 60135-270"
+        "Our main unit is located at: Rua Vicente Linhares, 308 - Aldeota, Fortaleza - CE, 60135-270"
       ],
       "services": [
         "Magnetic Resonance Imaging",
-        "Computed Tomography",
+        "Computed Tomography (CT)",
         "Ultrasound",
         "X-ray"
       ],
       "buttonText": ["Get Directions"]
     },
     "psychology": {
-      "title": "Applied Psychology School Service (SEPA)",
+      "title": "Applied Psychology Training Clinic",
       "description": [
-        "The Applied Psychology School Service (SEPA) is a teaching and practice space where Psychology students at Unichristus develop skills in listening, welcoming, clinical practice, and teamwork, always under the supervision of reference professors in various areas of practice.",
-        "With a commitment to social responsibility, SEPA offers free psychological care to the community, benefiting children, adolescents, and adults, and promoting quality of life and mental health of users.",
-        "Care modalities include individual psychotherapy, therapeutic groups, psychological assessment, neuropsychological assessment, professional guidance, and psychological emergency care. In addition to offices for clinical care, SEPA has a properly structured and updated test library, which offers a diversified collection of psychological instruments authorized by the Federal Council of Psychology (CFP) also used in assessment practices with the community."
+        "A teaching and practice space where Psychology students develop skills in listening, welcoming, clinical practice, and teamwork, always under the supervision of senior faculty across areas of practice.",
+        "Committed to social responsibility, the Applied Psychology Training Clinic offers free psychological care to the community—benefiting children, adolescents, and adults—and promotes mental health and quality of life.",
+        "Modalities of care include individual psychotherapy, therapeutic groups, psychological assessment, neuropsychological assessment, career guidance, and psychological emergency care."
       ],
       "address": [
-        "SEPA operates Monday to Friday at the following addresses and times:",
-        "Campus A: Des. Moreira Avenue, 2120 – Dionísio Torres (8am to 12pm and 2pm to 6pm) - SEPA",
-        "Campus B: Vicente Linhares Street, 308 – Aldeota (5pm to 8pm) - CESIU"
+        "The Applied Psychology Training Clinic operates from Monday to Friday at the following addresses and hours:",
+        "Campus A: Av Desembargador Moreira, 2120 – Dionísio Torres (8:00 am to 12 pm and 2:00 pm to 6:00 pm) - SEPA",
+        "Campus B: Vicente Linhares Street, 308 – Aldeota (5:00 pm to 8:00 pm) - CESIU"
       ],
       "services": [
-        "Group Care",
-        "Psychological Assessment",
-        "Couples Therapy",
-        "Professional Guidance",
-        "Individual care for children, adolescents, adults, and elderly",
-        "Neuropsychological Assessment",
-        "Psychological Emergency Care"
+        "Group therapy",
+        "Psychological assessment",
+        "Couples therapy",
+        "Professional guidance",
+        "Individual psychotherapy (children, adolescents, adults, older adults)",
+        "Neuropsychological assessment",
+        "Psychological emergency care"
       ],
       "buttonText": ["Campus A", "Campus B"]
     },
     "laboratory": {
-      "title": "LEAC - Teaching Clinical Analysis Laboratory",
+      "title": "University Clinical Analysis Laboratory (LEAC)",
       "description": [
-        "Since 2016, the Teaching Clinical Analysis Laboratory (LEAC) acts as a strategic partner of the health services of the Teaching Health Clinic (CES) and the Teaching Dentistry Clinic (CEO). With a modern structure aligned with the best quality practices, it offers laboratory services that support diagnosis and patient care, in addition to contributing to the training of highly qualified professionals."
+        "Since 2016, LEAC has supported the health services of the University Health Clinic and the School of Dentistry Teaching Clinic. With modern infrastructure and best practice quality systems, we provide laboratory services that support diagnosis and patient care while strengthening the training of highly skilled professionals."
       ],
       "address": [
-        "Scheduling for collection should be done directly at the clinic where the treatments take place:",
-        "Teaching Health and Imaging Clinic Unichristus (CESIU) / Phones: 3306-8932 / 3306-8933 / Address: Vicente Linhares Street, 308 - Aldeota."
+        "Scheduling:",
+        "Sample‑collection appointments are scheduled directly at the University Imaging and Diagnostic Center (CESIU) - Phones: 3306-8932 / 3306-8933 / Address: Rua Vicente Linhares, 308 - Aldeota."
       ],
       "services": [
-        "Total Cholesterol",
+        "Lipid profile (total cholesterol; HDL, LDL, VLDL)",
         "Fractions",
         "Triglycerides",
         "Glycated Hemoglobin (HbA1c)",
         "Creatinine",
-        "Total and Fractionated Bilirubin",
-        "Uric Acid",
+        "Bilirubin (total, direct, indirect)",
+        "Uric acid",
         "Albumin",
         "Calcium",
-        "CPK (Creatine Phosphokinase)",
-        "Serum Iron",
-        "CRP (C-Reactive Protein)",
+        "Creatine kinase (CK)",
+        "Serum iron",
+        "C-Reactive protein (CRP)",
         "Urea",
-        "Blood Glucose",
+        "Glucose",
         "AST and ALT",
         "Total T3",
         "Free T4",
         "TSH",
-        "VDRL",
-        "Complete Blood Count",
-        "PT and PTT",
-        "ESR (Erythrocyte Sedimentation Rate)",
+        "Syphilis (VDRL)",
+        "Complete blood count (CBC)",
+        "Coagulation: PT and aPTT",
+        "Erythrocyte sedimentation rate (ESR)",
         "Urinalysis (EAS)",
-        "Urine Bacterioscopy",
-        "Parasitological Examination of Feces",
-        "Direct Examination for Fungi",
-        "Fungal Culture",
-        "Urine Culture"
+        "Urine microscopy",
+        "Stool ova & parasites (O & P)",
+        "Direct exam for fungi",
+        "Fungal culture",
+        "Urine culture"
       ],
       "buttonText": ["Get Directions"]
     }
@@ -305,16 +305,16 @@
 
   "maintenance": {
     "title": "Portal Under Maintenance",
-    "description": "We are making improvements to our system to provide an even better experience.",
+    "description": "We are making improvements to our system to offer an even better experience.",
     "systemUpdates": {
       "title": "System Updates",
-      "description": "We are implementing new features and improving portal security."
+      "description": "We are implementing new functionalities and enhancing portal security."
     },
     "nextSteps": {
       "title": "Next Steps",
-      "description": "Come back soon to access your results with our new interface."
+      "description": "Check back soon to access your results with our new interface."
     },
-    "backToSite": "Back to site",
+    "backToSite": "Return to site",
     "copyright": "© {year} Unichristus - All rights reserved"
   }
 
