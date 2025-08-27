@@ -2,8 +2,9 @@ import backgroundExam from "@/assets/background-exam.png";
 import xRay from "@/assets/x-ray.png";
 import blood from "@/assets/blood.png";
 import { MdBloodtype } from "react-icons/md";
-import { FaCircle, FaXRay } from "react-icons/fa";
+import { FaCircle, FaMicroscope, FaStethoscope, FaXRay } from "react-icons/fa";
 import { HiSparkles, HiLightningBolt } from "react-icons/hi";
+import { BiTestTube } from "react-icons/bi";
 
 import {
   ScrollFadeIn,
@@ -18,15 +19,16 @@ import { useTranslations } from "next-intl";
 export default function ExamSection() {
   const t = useTranslations("ExamResults");
 
-  const labExams = [
-    t("imageExams.items.mri"),
-    t("imageExams.items.ct"),
-    t("imageExams.items.ultrasound"),
-    t("imageExams.items.xray"),
-  ];
   const imageExams = [
-    t("labExams.items.clinicalAnalysis"),
-    t("labExams.items.biopsies"),
+    { name: t("imageExams.items.mri"), icon: <FaStethoscope /> },
+    { name: t("imageExams.items.ct"), icon: <FaMicroscope /> },
+    { name: t("imageExams.items.ultrasound"), icon: <BiTestTube /> },
+    { name: t("imageExams.items.xray"), icon: <FaXRay /> },
+  ];
+
+  const labExams = [
+    { name: t("labExams.items.clinicalAnalysis"), icon: <BiTestTube /> },
+    { name: t("labExams.items.biopsies"), icon: <FaMicroscope /> },
   ];
 
   return (
@@ -59,14 +61,11 @@ export default function ExamSection() {
                 {/* Enhanced Title */}
                 <div className="relative">
                   <h2 className="text-[#1F2B6C] md:leading-none md:text-[9vh] font-black mb-10 md:mb-[6vh] max-lg:text-center text-4xl relative">
-                    <span className="relative">
-                      {t("title")}
-                     
-                    </span>
+                    <span className="relative">{t("title")}</span>
                     <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-t from-[#159EEC] via-blue-500 to-purple-600 relative text-5xl md:text-[9vh]">
                       {t("subtitle")}
-                       <div className="absolute -top-1 -right-4 md:-top-[-6] text-yellow-400">
+                      <div className="absolute -top-1 -right-4 md:-top-[-6] text-yellow-400">
                         <HiSparkles className="w-6 h-6 animate-spin-slow" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-r from-[#159EEC] to-purple-600 opacity-10 blur-xl -z-10"></div>
@@ -89,69 +88,79 @@ export default function ExamSection() {
               </div>
 
               <ScrollFromLeft>
-                <div className="w-full max-w-4xl mx-auto ">
-                  <div className="flex space-y-5 md:space-y-0 md:space-x-5 flex-col md:flex-row justify-end items-center md:justify-normal">
-                    {/* Enhanced X-Ray Button */}
-                    <div className="group relative">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 rounded-3xl  blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                      <div className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-purple-900 rounded-3xl  shadow-md transform transition-all duration-300 group-hover:scale-105 group-hover:rotate-1">
-                        <a
-                          href="https://unichristus.naja.app/portal/login"
-                          target="_blank"
-                        >
-                          <button className="w-full md:w-full px-8 py-4 text-white font-bold rounded-3xl flex items-center gap-3 relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                            <FaXRay className="md:text-[4vh] text-2xl relative z-10 animate-pulse" />
-                            <span className="text-base md:text-[2vh] relative z-10 font-black tracking-wide">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="group relative">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-300"></div>
+                    <div className="relative bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:-rotate-1">
+                      <Link
+                        href="https://unichristus.naja.app/portal/login"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <div className="p-6 pb-4 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                          <div className="flex items-center space-x-3 relative z-10">
+                            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <FaXRay className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-white font-bold text-lg lg:text-xl">
                               {t("imageExams.title")}
-                            </span>
-                          </button>
-
-                          <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-b-3xl shadow-inner">
-                            <div className="grid grid-cols-2 gap-3">
-                              {labExams.map((exam, index) => (
-                                <div
-                                  key={index}
-                                  className="text-white md:text-[1.8vh] text-sm flex items-center p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
-                                >
-                                  <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mr-3 animate-pulse"></div>
-                                  <span className="font-semibold">{exam}</span>
-                                </div>
-                              ))}
-                            </div>
+                            </h3>
                           </div>
-                        </a>
-                      </div>
+                        </div>
+
+                        <div className="px-6 pb-6">
+                          <div className="grid grid-cols-2 gap-3">
+                            {imageExams.map((exam, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center space-x-2 p-3 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-200 text-sm text-white font-medium"
+                              >
+                                <span className="flex-shrink-0">
+                                  {exam.icon}
+                                </span>
+                                <span className="truncate">{exam.name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </Link>
                     </div>
+                  </div>
 
-                    <div className="group relative">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-600 to-red-700 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                      <div className="relative bg-gradient-to-br from-red-500 via-red-600 to-red-800 rounded-3xl shadow-md transform transition-all duration-300 group-hover:scale-105 group-hover:-rotate-1">
-                        <Link href="/maintenance">
-                          <button className="w-full md:w-auto px-8 py-4 text-white font-bold rounded-3xl flex items-center gap-3 relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                            <MdBloodtype className="text-2xl md:text-[4vh] relative z-10 animate-pulse" />
-                            <span className="text-base md:text-[2vh] relative z-10 font-black tracking-wide">
-                              {t("labExams.title")}
-                            </span>
-                          </button>
-
-                          {/* Enhanced Dropdown */}
-                          <div className="bg-gradient-to-br from-red-600 to-red-700 p-6 rounded-b-3xl shadow-inner">
-                            <div className="space-y-3">
-                              {imageExams.map((exam, index) => (
-                                <div
-                                  key={index}
-                                  className="text-white md:text-[1.8vh] text-sm flex items-center p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
-                                >
-                                  <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mr-3 animate-pulse"></div>
-                                  <span className="font-semibold">{exam}</span>
-                                </div>
-                              ))}
+                  <div className="group relative">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-300"></div>
+                    <div className="relative bg-gradient-to-br from-red-500 to-red-700 rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:rotate-1">
+                      <a href="/maintenance" className="block">
+                        <div className="p-6 pb-4 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                          <div className="flex items-center space-x-3 relative z-10">
+                            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <MdBloodtype className="w-6 h-6 text-white" />
                             </div>
+                            <h3 className="text-white font-bold text-lg lg:text-xl">
+                              {t("labExams.title")}
+                            </h3>
                           </div>
-                        </Link>
-                      </div>
+                        </div>
+
+                        <div className="px-6 pb-6">
+                          <div className="space-y-3">
+                            {labExams.map((exam, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center space-x-2 p-3 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-200 text-sm text-white font-medium"
+                              >
+                                <span className="flex-shrink-0">
+                                  {exam.icon}
+                                </span>
+                                <span>{exam.name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -159,16 +168,26 @@ export default function ExamSection() {
             </div>
 
             <div className="relative w-1/2 mb-28 md:mt-36 mt-8">
-            
-              <div className="absolute inset-0 flex justify-center items-center z-0 md:ml-[5vh]">
-                
-                <Image
-                  src={backgroundExam.src}
-                  alt="Background Image"
-                  className="md:w-[70vh] md:h-auto mx-auto md:scale-100 scale-[20vh]"
-                  width={1000}
-                  height={1000}
-                />
+              <div className="absolute inset-0 flex justify-center items-center z-0 md:ml-[5vh] overflow-hidden">
+                <div className="absolute md:w-80 md:h-80 w-32 h-32 bg-gradient-to-r from-blue-500/70 via-cyan-400/80 to-blue-600/70 rounded-full md:blur-2xl blur-xl animate-pulse-smooth"></div>
+
+                <div className="absolute md:w-96 md:h-96 w-32 h-32 border-4 border-cyan-400/60 rounded-full animate-expand-ring-1"></div>
+                <div className="absolute md:w-96 md:h-96 w-32 h-32 border-4 border-cyan-400/60 rounded-full animate-expand-ring-2"></div>
+                <div className="absolute md:w-96 md:h-96 w-32 h-32 border-4 border-cyan-400/60 rounded-full animate-expand-ring-3"></div>
+
+                <div className="absolute md:w-4 md:h-4 w-2 h-2 bg-cyan-400 rounded-full animate-particle-border-1 shadow-lg shadow-cyan-400/60 top-10 right-20"></div>
+                <div className="absolute md:w-3 md:h-3 w-2 h-2 bg-blue-500 rounded-full animate-particle-border-2 shadow-lg shadow-blue-500/60 bottom-16 left-24"></div>
+                <div className="absolute md:w-5 md:h-5 w-2 h-2 bg-purple-400 rounded-full animate-particle-border-3 shadow-lg shadow-purple-400/60 top-24 left-16"></div>
+                <div className="absolute md:w-3 md:h-3 w-2 h-2 bg-cyan-300 rounded-full animate-particle-border-4 shadow-lg shadow-cyan-300/60 bottom-20 right-16"></div>
+                <div className="absolute md:w-4 md:h-4 w-2 h-2 bg-blue-400 rounded-full animate-particle-border-5 shadow-lg shadow-blue-400/60 top-32 right-32"></div>
+                <div className="absolute md:w-2 md:h-2 w-2 h-2 bg-white rounded-full animate-particle-border-6 shadow-lg shadow-white/80 bottom-32 left-32"></div>
+
+                <div className="absolute md:w-3 md:h-3 w-2 h-2 bg-cyan-500 rounded-full animate-particle-far-1 shadow-lg shadow-cyan-500/60 top-8 left-40"></div>
+                <div className="absolute md:w-2 md:h-2 w-2 h-2 bg-blue-300 rounded-full animate-particle-far-2 shadow-lg shadow-blue-300/60 bottom-12 right-40"></div>
+                <div className="absolute md:w-4 md:h-4 w-2 h-2 bg-purple-300 rounded-full animate-particle-far-3 shadow-lg shadow-purple-300/60 top-40 right-8"></div>
+                <div className="absolute md:w-3 md:h-3 w-2 h-2 bg-cyan-200 rounded-full animate-particle-far-4 shadow-lg shadow-cyan-200/60 bottom-40 left-8"></div>
+
+                <div className="absolute w-full h-full bg-gradient-radial from-blue-300/20 via-transparent to-transparent animate-glow-subtle"></div>
               </div>
 
               <div className="relative z-10 md:bottom-32 bottom-16 md:ml-[8vh]">
@@ -184,7 +203,6 @@ export default function ExamSection() {
               </div>
 
               <div className="absolute inset-0 z-10 md:ml-[14vh]">
-
                 <ScrollFadeIn>
                   <Image
                     src={xRay.src}
