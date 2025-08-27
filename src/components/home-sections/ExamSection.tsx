@@ -1,9 +1,8 @@
-import backgroundExam from "@/assets/background-exam.png";
 import xRay from "@/assets/x-ray.png";
 import blood from "@/assets/blood.png";
 import { MdBloodtype } from "react-icons/md";
-import { FaCircle, FaMicroscope, FaStethoscope, FaXRay } from "react-icons/fa";
-import { HiSparkles, HiLightningBolt } from "react-icons/hi";
+import { FaMicroscope, FaStethoscope, FaXRay } from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi";
 import { BiTestTube } from "react-icons/bi";
 
 import {
